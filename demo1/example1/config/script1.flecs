@@ -1,0 +1,65 @@
+@color #FF99FF
+xmcu {}
+module xmcu
+
+
+
+
+
+STM32G030 {
+	AF {
+		AF0{}
+		AF1{}
+		AF2{}
+		AF3{}
+		AF4{}
+		AF5{}
+		AF6{}
+		AF7{}
+	}
+	peripheral {
+		USART1 {
+			TX {
+			}
+			RX {
+			}
+		}
+		I2C1 {
+			SCL {
+			}
+			SDA {
+			}
+		}
+	}
+}
+
+
+STM32G030.peripheral.GPIOB {
+	(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
+	PB6 {
+		(AF.AF0, USART1.TX)
+		(AF.AF6, I2C1.SCL)
+	}
+	PB7 {
+		(AF.AF0, USART1.RX)
+		(AF.AF6, I2C1.SDA)
+	}
+}
+
+
+STM32G030.peripheral.USART1.registers {
+	CR1 {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
+	}
+	CR2 {
+		
+	}
+	CR3 {
+	}
+	BRR {
+	}
+	RDR {
+	}
+	TDR {
+	}
+}

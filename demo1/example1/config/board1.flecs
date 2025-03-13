@@ -1,0 +1,12 @@
+@color #FF99FF
+xboard1 {}
+module xboard1
+
+busses {
+	LIN {
+
+	}
+	sercom {
+		
+	}
+}
