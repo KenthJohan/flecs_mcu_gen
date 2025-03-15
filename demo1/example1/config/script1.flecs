@@ -4,62 +4,14 @@ module xmcu
 
 
 
-
-
-STM32G030 {
-	AF {
-		AF0{}
-		AF1{}
-		AF2{}
-		AF3{}
-		AF4{}
-		AF5{}
-		AF6{}
-		AF7{}
-	}
-	peripheral {
-		USART1 {
-			TX {
-			}
-			RX {
-			}
-		}
-		I2C1 {
-			SCL {
-			}
-			SDA {
-			}
-		}
-	}
+struct Register {
+  address = u32,1,flecs.units.Data.Bytes
+  offset = u32,1,flecs.units.Data.Bytes
+  size = u32,1,flecs.units.Data.Bytes
 }
 
-
-STM32G030.peripheral.GPIOB {
-	(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
-	PB6 {
-		(AF.AF0, USART1.TX)
-		(AF.AF6, I2C1.SCL)
-	}
-	PB7 {
-		(AF.AF0, USART1.RX)
-		(AF.AF6, I2C1.SDA)
-	}
+struct Field {
+  offset = u32,1,flecs.units.Data.Bits
+  size = u32,1,flecs.units.Data.Bits
 }
 
-
-STM32G030.peripheral.USART1.registers {
-	CR1 {
-		(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
-	}
-	CR2 {
-		
-	}
-	CR3 {
-	}
-	BRR {
-	}
-	RDR {
-	}
-	TDR {
-	}
-}

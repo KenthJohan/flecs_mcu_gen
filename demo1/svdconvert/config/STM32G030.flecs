@@ -1,0 +1,149 @@
+@color #FF99FF
+xmcu.STM32G030 {}
+module xmcu.STM32G030
+
+
+AF {
+	AF0{}
+	AF1{}
+	AF2{}
+	AF3{}
+	AF4{}
+	AF5{}
+	AF6{}
+	AF7{}
+}
+
+peripheral {
+}
+
+
+peripheral.USART1 {
+	TX {
+	}
+	RX {
+	}
+}
+
+peripheral.I2C1 {
+	SCL {
+	}
+	SDA {
+	}
+}
+
+peripheral.GPIOB {
+	(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
+	PB6 {
+		(AF.AF0, USART1.TX)
+		(AF.AF6, I2C1.SCL)
+	}
+	PB7 {
+		(AF.AF0, USART1.RX)
+		(AF.AF6, I2C1.SDA)
+	}
+}
+peripheral.GPIOB.registers {
+	CRL {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Port configuration register low"}
+		Register : {
+			address: 0x48000400,
+			offset: 0x00,
+			size: 0x20
+		}
+	}
+	CRH {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Port configuration register high"}
+		Register : {
+			address: 0x48000400,
+			offset: 0x04,
+			size: 0x20
+		}
+	}
+	IDR {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Input data register"}
+		Register : {
+			address: 0x48000400,
+			offset: 0x08,
+			size: 0x20
+		}
+	}
+	ODR {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Output data register"}
+		Register : {
+			address: 0x48000400,
+			offset: 0x0C,
+			size: 0x20
+		}
+	}
+	BSRR {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Bit set/reset register"}
+		Register : {
+			address: 0x48000400,
+			offset: 0x10,
+			size: 0x20
+		}
+	}
+	BRR {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Bit reset register"}
+		Register : {
+			address: 0x48000400,
+			offset: 0x14,
+			size: 0x20
+		}
+	}
+	LCKR {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Lock register"}
+		Register : {
+			address: 0x48000400,
+			offset: 0x18,
+			size: 0x20
+		}
+	}
+}
+
+peripheral.USART1.registers {
+	CR1 {
+		(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
+		Register : {
+			address: 0x40013800,
+			offset: 0x00,
+			size: 0x20
+		}
+	}
+	CR2 {
+		Register : {
+			address: 0x40013800,
+			offset: 0x04,
+			size: 0x20
+		}
+	}
+	CR3 {
+		Register : {
+			address: 0x40013800,
+			offset: 0x08,
+			size: 0x20
+		}
+	}
+	BRR {
+		Register : {
+			address: 0x40013800,
+			offset: 0x0C,
+			size: 0x20
+		}
+	}
+	RDR {
+		Register : {
+			address: 0x40013800,
+			offset: 0x14,
+			size: 0x20
+		}
+	}
+	TDR {
+		Register : {
+			address: 0x40013800,
+			offset: 0x28,
+			size: 0x20
+		}
+	}
+}
