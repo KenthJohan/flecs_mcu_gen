@@ -12,12 +12,17 @@ struct Register {
   size = u32,1,flecs.units.Data.Bytes
 }
 
-Register {
-	flecs.core.Inheritable
-}
-
 struct Field {
   bitoffset = u32,1,flecs.units.Data.Bits
   bitwidth = u32,1,flecs.units.Data.Bits
 }
 
+struct Usart_Binding {
+  controller = entity
+  tx = entity
+}
+
+struct Pin_Mapping {
+  port = entity
+  offset = u32
+}

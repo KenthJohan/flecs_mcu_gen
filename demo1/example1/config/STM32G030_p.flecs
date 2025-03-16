@@ -1,0 +1,12 @@
+@color #AA99AF
+xmcu {}
+module xmcu
+module STM32G030
+module pins
+
+p1 {
+	Pin_Mapping : {
+		port: GPIOA
+		offset: 0
+	}
+}
