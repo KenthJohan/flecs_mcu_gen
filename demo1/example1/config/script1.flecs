@@ -2,7 +2,9 @@
 xmcu {}
 module xmcu
 
-
+struct Peripheral {
+  offset = u32,1,flecs.units.Data.Bits
+}
 
 struct Register {
   address = u32,1,flecs.units.Data.Bytes
@@ -10,8 +12,12 @@ struct Register {
   size = u32,1,flecs.units.Data.Bytes
 }
 
+Register {
+	flecs.core.Inheritable
+}
+
 struct Field {
-  offset = u32,1,flecs.units.Data.Bits
-  size = u32,1,flecs.units.Data.Bits
+  bitoffset = u32,1,flecs.units.Data.Bits
+  bitwidth = u32,1,flecs.units.Data.Bits
 }
 
