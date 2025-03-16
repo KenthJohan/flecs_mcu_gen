@@ -109,7 +109,8 @@
 		"eggpu_system_eggputransfer.h": "c",
 		"egrenderers.h": "c",
 		"ec.h": "c",
-		"mxml.h": "c"
+		"mxml.h": "c",
+		"mxml-private.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""
