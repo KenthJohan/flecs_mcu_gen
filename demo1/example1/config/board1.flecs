@@ -5,13 +5,13 @@ module xboard1
 busses {
 	LIN {
 		xmcu.Usart_Binding : {
-			controller: xmcu.STM32G030.USART1
+			controller: xmcu.STM32G030.peripherals.USART1
 			tx: xmcu.STM32G030.pins.p1
 		}
 	}
 	sercom {
 		xmcu.Usart_Binding : {
-			controller: xmcu.STM32G030.USART1
+			controller: xmcu.STM32G030.peripherals.USART1
 			tx: xmcu.STM32G030.pins.p1
 		}
 	}
