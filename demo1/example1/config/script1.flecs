@@ -22,13 +22,13 @@ struct Usart_Binding {
   tx = entity
 }
 
-struct Pin_Mapping {
+struct GPIO {
   port = entity
   offset = u32
 }
 
 
-enum AlternateFunction {
+enum AF {
   AF0,
   AF1,
   AF2,
@@ -46,3 +46,54 @@ enum AlternateFunction {
   AF14,
   AF15
 }
+
+AF.AF0 {
+	flecs.core.Symmetric
+}
+
+AF.AF1 {
+	flecs.core.Symmetric
+}
+
+AF.AF2 {
+	flecs.core.Symmetric
+}
+
+AF.AF3 {
+	flecs.core.Symmetric
+}
+
+AF.AF4 {
+	flecs.core.Symmetric
+}
+
+AF.AF5 {
+	flecs.core.Symmetric
+}
+
+AF.AF6 {
+	flecs.core.Symmetric
+}
+
+AF.AF7 {
+	flecs.core.Symmetric
+}
+
+enum pinout {
+  d1,
+  d2,
+  d3,
+  d4,
+  d5,
+  d6,
+  d7,
+  d8,
+  d9,
+  d10,
+  d11,
+  d12,
+  d13,
+  d14,
+  d15
+}
+
