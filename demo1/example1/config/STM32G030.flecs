@@ -2,7 +2,6 @@
 xmcu {}
 module xmcu
 module STM32G030
-module peripherals
 
 ADC {
 	(flecs.doc.Description, flecs.doc.Brief) : {"Analog to Digital ConverteR"}
