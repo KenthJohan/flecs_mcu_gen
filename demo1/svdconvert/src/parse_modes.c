@@ -33,6 +33,22 @@ char const * get_af_str(mxml_node_t *node, mxml_node_t *top)
 	return mxmlGetOpaque(node);
 }
 
+void result_print_af(result_t * result, char const * af)
+{
+	char buf[256] = {0};
+	if (strncmp(af, "GPIO_", 5) != 0) {
+		return;
+	}
+	af += 5;
+	char * e = strchr(af, '_');
+	if (e == NULL) {
+		return;
+	}
+	*e = 0;
+	sprintf(buf, "%s", af);
+	fprintf(result->file, "%s", buf);
+}
+
 void iterate_sigs(mxml_node_t *node, mxml_node_t *top, result_t * result)
 {
 	while(1) {
@@ -40,7 +56,10 @@ void iterate_sigs(mxml_node_t *node, mxml_node_t *top, result_t * result)
 		if (node == NULL) {
 			break;
 		}
-		fprintf(result->file, "PinSignal-Name: %s, %s\n", mxmlElementGetAttr(node, "Name"), get_af_str(node, top));
+		fprintf(result->file, "(AF.");
+		result_print_af(result, get_af_str(node, top));
+		fprintf(result->file, ", signals.%s)", mxmlElementGetAttr(node, "Name"));
+		fprintf(result->file, "\n");
 	}
 }
 

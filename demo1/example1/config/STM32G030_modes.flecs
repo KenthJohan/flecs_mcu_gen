@@ -4,260 +4,260 @@ module xmcu
 module STM32G030
 
 PinSignal: PA0
-PinSignal-Name: LPTIM1_OUT, GPIO_AF5_LPTIM1
-PinSignal-Name: SPI2_SCK, GPIO_AF0_SPI2
-PinSignal-Name: TIM2_CH1, GPIO_AF2_TIM2
-PinSignal-Name: TIM2_ETR, GPIO_AF2_TIM2
-PinSignal-Name: USART2_CTS, GPIO_AF1_USART2
-PinSignal-Name: USART2_NSS, GPIO_AF1_USART2
+(AF.AF5, signals.LPTIM1_OUT)
+(AF.AF0, signals.SPI2_SCK)
+(AF.AF2, signals.TIM2_CH1)
+(AF.AF2, signals.TIM2_ETR)
+(AF.AF1, signals.USART2_CTS)
+(AF.AF1, signals.USART2_NSS)
 PinSignal: PA1
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SMBA, GPIO_AF6_I2C1
-PinSignal-Name: I2S1_CK, GPIO_AF0_SPI1
-PinSignal-Name: SPI1_SCK, GPIO_AF0_SPI1
-PinSignal-Name: TIM2_CH2, GPIO_AF2_TIM2
-PinSignal-Name: USART2_CK, GPIO_AF1_USART2
-PinSignal-Name: USART2_DE, GPIO_AF1_USART2
-PinSignal-Name: USART2_RTS, GPIO_AF1_USART2
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SMBA)
+(AF.AF0, signals.I2S1_CK)
+(AF.AF0, signals.SPI1_SCK)
+(AF.AF2, signals.TIM2_CH2)
+(AF.AF1, signals.USART2_CK)
+(AF.AF1, signals.USART2_DE)
+(AF.AF1, signals.USART2_RTS)
 PinSignal: PA10
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SDA, GPIO_AF6_I2C1
-PinSignal-Name: SPI2_MOSI, GPIO_AF0_SPI2
-PinSignal-Name: TIM17_BK, GPIO_AF5_TIM17
-PinSignal-Name: TIM1_CH3, GPIO_AF2_TIM1
-PinSignal-Name: USART1_RX, GPIO_AF1_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SDA)
+(AF.AF0, signals.SPI2_MOSI)
+(AF.AF5, signals.TIM17_BK)
+(AF.AF2, signals.TIM1_CH3)
+(AF.AF1, signals.USART1_RX)
 PinSignal: PA10 [PA12]
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SDA, GPIO_AF6_I2C1
-PinSignal-Name: SPI2_MOSI, GPIO_AF0_SPI2
-PinSignal-Name: TIM17_BK, GPIO_AF5_TIM17
-PinSignal-Name: TIM1_CH3, GPIO_AF2_TIM1
-PinSignal-Name: USART1_RX, GPIO_AF1_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SDA)
+(AF.AF0, signals.SPI2_MOSI)
+(AF.AF5, signals.TIM17_BK)
+(AF.AF2, signals.TIM1_CH3)
+(AF.AF1, signals.USART1_RX)
 PinSignal: PA11 [PA9]
-PinSignal-Name: I2C2_SCL, GPIO_AF6_I2C2
-PinSignal-Name: I2S1_MCK, GPIO_AF0_SPI1
-PinSignal-Name: SPI1_MISO, GPIO_AF0_SPI1
-PinSignal-Name: TIM1_BK2, GPIO_AF5_TIM1
-PinSignal-Name: TIM1_CH4, GPIO_AF2_TIM1
-PinSignal-Name: USART1_CTS, GPIO_AF1_USART1
-PinSignal-Name: USART1_NSS, GPIO_AF1_USART1
+(AF.AF6, signals.I2C2_SCL)
+(AF.AF0, signals.I2S1_MCK)
+(AF.AF0, signals.SPI1_MISO)
+(AF.AF5, signals.TIM1_BK2)
+(AF.AF2, signals.TIM1_CH4)
+(AF.AF1, signals.USART1_CTS)
+(AF.AF1, signals.USART1_NSS)
 PinSignal: PA12 [PA10]
-PinSignal-Name: I2C2_SDA, GPIO_AF6_I2C2
-PinSignal-Name: I2S1_SD, GPIO_AF0_SPI1
-PinSignal-Name: I2S_CKIN, GPIO_AF5_SPI1
-PinSignal-Name: SPI1_MOSI, GPIO_AF0_SPI1
-PinSignal-Name: TIM1_ETR, GPIO_AF2_TIM1
-PinSignal-Name: USART1_CK, GPIO_AF1_USART1
-PinSignal-Name: USART1_DE, GPIO_AF1_USART1
-PinSignal-Name: USART1_RTS, GPIO_AF1_USART1
+(AF.AF6, signals.I2C2_SDA)
+(AF.AF0, signals.I2S1_SD)
+(AF.AF5, signals.I2S_CKIN)
+(AF.AF0, signals.SPI1_MOSI)
+(AF.AF2, signals.TIM1_ETR)
+(AF.AF1, signals.USART1_CK)
+(AF.AF1, signals.USART1_DE)
+(AF.AF1, signals.USART1_RTS)
 PinSignal: PA13
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: IR_OUT, GPIO_AF1_IR
-PinSignal-Name: SYS_SWDIO, GPIO_AF0_TRACE
+(AF.AF7, signals.EVENTOUT)
+(AF.AF1, signals.IR_OUT)
+(AF.AF0, signals.SYS_SWDIO)
 PinSignal: PA14-BOOT0
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: SYS_SWCLK, GPIO_AF0_TRACE
-PinSignal-Name: USART2_TX, GPIO_AF1_USART2
+(AF.AF7, signals.EVENTOUT)
+(AF.AF0, signals.SYS_SWCLK)
+(AF.AF1, signals.USART2_TX)
 PinSignal: PA15
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2S1_WS, GPIO_AF0_SPI1
-PinSignal-Name: SPI1_NSS, GPIO_AF0_SPI1
-PinSignal-Name: TIM2_CH1, GPIO_AF2_TIM2
-PinSignal-Name: TIM2_ETR, GPIO_AF2_TIM2
-PinSignal-Name: USART2_RX, GPIO_AF1_USART2
+(AF.AF7, signals.EVENTOUT)
+(AF.AF0, signals.I2S1_WS)
+(AF.AF0, signals.SPI1_NSS)
+(AF.AF2, signals.TIM2_CH1)
+(AF.AF2, signals.TIM2_ETR)
+(AF.AF1, signals.USART2_RX)
 PinSignal: PA2
-PinSignal-Name: I2S1_SD, GPIO_AF0_SPI1
-PinSignal-Name: LPUART1_TX, GPIO_AF6_LPUART1
-PinSignal-Name: SPI1_MOSI, GPIO_AF0_SPI1
-PinSignal-Name: TIM2_CH3, GPIO_AF2_TIM2
-PinSignal-Name: USART2_TX, GPIO_AF1_USART2
+(AF.AF0, signals.I2S1_SD)
+(AF.AF6, signals.LPUART1_TX)
+(AF.AF0, signals.SPI1_MOSI)
+(AF.AF2, signals.TIM2_CH3)
+(AF.AF1, signals.USART2_TX)
 PinSignal: PA3
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: LPUART1_RX, GPIO_AF6_LPUART1
-PinSignal-Name: SPI2_MISO, GPIO_AF0_SPI2
-PinSignal-Name: TIM2_CH4, GPIO_AF2_TIM2
-PinSignal-Name: USART2_RX, GPIO_AF1_USART2
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.LPUART1_RX)
+(AF.AF0, signals.SPI2_MISO)
+(AF.AF2, signals.TIM2_CH4)
+(AF.AF1, signals.USART2_RX)
 PinSignal: PA4
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2S1_WS, GPIO_AF0_SPI1
-PinSignal-Name: LPTIM2_OUT, GPIO_AF5_LPTIM2
-PinSignal-Name: SPI1_NSS, GPIO_AF0_SPI1
-PinSignal-Name: SPI2_MOSI, GPIO_AF1_SPI2
-PinSignal-Name: TIM14_CH1, GPIO_AF4_TIM14
+(AF.AF7, signals.EVENTOUT)
+(AF.AF0, signals.I2S1_WS)
+(AF.AF5, signals.LPTIM2_OUT)
+(AF.AF0, signals.SPI1_NSS)
+(AF.AF1, signals.SPI2_MOSI)
+(AF.AF4, signals.TIM14_CH1)
 PinSignal: PA5
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2S1_CK, GPIO_AF0_SPI1
-PinSignal-Name: LPTIM2_ETR, GPIO_AF5_LPTIM2
-PinSignal-Name: SPI1_SCK, GPIO_AF0_SPI1
-PinSignal-Name: TIM2_CH1, GPIO_AF2_TIM2
-PinSignal-Name: TIM2_ETR, GPIO_AF2_TIM2
+(AF.AF7, signals.EVENTOUT)
+(AF.AF0, signals.I2S1_CK)
+(AF.AF5, signals.LPTIM2_ETR)
+(AF.AF0, signals.SPI1_SCK)
+(AF.AF2, signals.TIM2_CH1)
+(AF.AF2, signals.TIM2_ETR)
 PinSignal: PA6
-PinSignal-Name: I2S1_MCK, GPIO_AF0_SPI1
-PinSignal-Name: LPUART1_CTS, GPIO_AF6_LPUART1
-PinSignal-Name: SPI1_MISO, GPIO_AF0_SPI1
-PinSignal-Name: TIM16_CH1, GPIO_AF5_TIM16
-PinSignal-Name: TIM1_BK, GPIO_AF2_TIM1
-PinSignal-Name: TIM3_CH1, GPIO_AF1_TIM3
+(AF.AF0, signals.I2S1_MCK)
+(AF.AF6, signals.LPUART1_CTS)
+(AF.AF0, signals.SPI1_MISO)
+(AF.AF5, signals.TIM16_CH1)
+(AF.AF2, signals.TIM1_BK)
+(AF.AF1, signals.TIM3_CH1)
 PinSignal: PA7
-PinSignal-Name: I2S1_SD, GPIO_AF0_SPI1
-PinSignal-Name: SPI1_MOSI, GPIO_AF0_SPI1
-PinSignal-Name: TIM14_CH1, GPIO_AF4_TIM14
-PinSignal-Name: TIM17_CH1, GPIO_AF5_TIM17
-PinSignal-Name: TIM1_CH1N, GPIO_AF2_TIM1
-PinSignal-Name: TIM3_CH2, GPIO_AF1_TIM3
+(AF.AF0, signals.I2S1_SD)
+(AF.AF0, signals.SPI1_MOSI)
+(AF.AF4, signals.TIM14_CH1)
+(AF.AF5, signals.TIM17_CH1)
+(AF.AF2, signals.TIM1_CH1N)
+(AF.AF1, signals.TIM3_CH2)
 PinSignal: PA8
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: LPTIM2_OUT, GPIO_AF5_LPTIM2
-PinSignal-Name: RCC_MCO, GPIO_AF0_MCO
-PinSignal-Name: SPI2_NSS, GPIO_AF1_SPI2
-PinSignal-Name: TIM1_CH1, GPIO_AF2_TIM1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF5, signals.LPTIM2_OUT)
+(AF.AF0, signals.RCC_MCO)
+(AF.AF1, signals.SPI2_NSS)
+(AF.AF2, signals.TIM1_CH1)
 PinSignal: PA9
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SCL, GPIO_AF6_I2C1
-PinSignal-Name: RCC_MCO, GPIO_AF0_MCO
-PinSignal-Name: SPI2_MISO, GPIO_AF4_SPI2
-PinSignal-Name: TIM15_BK, GPIO_AF5_TIM15
-PinSignal-Name: TIM1_CH2, GPIO_AF2_TIM1
-PinSignal-Name: USART1_TX, GPIO_AF1_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SCL)
+(AF.AF0, signals.RCC_MCO)
+(AF.AF4, signals.SPI2_MISO)
+(AF.AF5, signals.TIM15_BK)
+(AF.AF2, signals.TIM1_CH2)
+(AF.AF1, signals.USART1_TX)
 PinSignal: PA9 [PA11]
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SCL, GPIO_AF6_I2C1
-PinSignal-Name: RCC_MCO, GPIO_AF0_MCO
-PinSignal-Name: SPI2_MISO, GPIO_AF4_SPI2
-PinSignal-Name: TIM1_CH2, GPIO_AF2_TIM1
-PinSignal-Name: USART1_TX, GPIO_AF1_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SCL)
+(AF.AF0, signals.RCC_MCO)
+(AF.AF4, signals.SPI2_MISO)
+(AF.AF2, signals.TIM1_CH2)
+(AF.AF1, signals.USART1_TX)
 PinSignal: PB0
-PinSignal-Name: I2S1_WS, GPIO_AF0_SPI1
-PinSignal-Name: LPTIM1_OUT, GPIO_AF5_LPTIM1
-PinSignal-Name: SPI1_NSS, GPIO_AF0_SPI1
-PinSignal-Name: TIM1_CH2N, GPIO_AF2_TIM1
-PinSignal-Name: TIM3_CH3, GPIO_AF1_TIM3
+(AF.AF0, signals.I2S1_WS)
+(AF.AF5, signals.LPTIM1_OUT)
+(AF.AF0, signals.SPI1_NSS)
+(AF.AF2, signals.TIM1_CH2N)
+(AF.AF1, signals.TIM3_CH3)
 PinSignal: PB1
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: LPTIM2_IN1, GPIO_AF5_LPTIM2
-PinSignal-Name: LPUART1_DE, GPIO_AF6_LPUART1
-PinSignal-Name: LPUART1_RTS, GPIO_AF6_LPUART1
-PinSignal-Name: TIM14_CH1, GPIO_AF0_TIM14
-PinSignal-Name: TIM1_CH3N, GPIO_AF2_TIM1
-PinSignal-Name: TIM3_CH4, GPIO_AF1_TIM3
+(AF.AF7, signals.EVENTOUT)
+(AF.AF5, signals.LPTIM2_IN1)
+(AF.AF6, signals.LPUART1_DE)
+(AF.AF6, signals.LPUART1_RTS)
+(AF.AF0, signals.TIM14_CH1)
+(AF.AF2, signals.TIM1_CH3N)
+(AF.AF1, signals.TIM3_CH4)
 PinSignal: PB10
-PinSignal-Name: I2C2_SCL, GPIO_AF6_I2C2
-PinSignal-Name: LPUART1_RX, GPIO_AF1_LPUART1
-PinSignal-Name: SPI2_SCK, GPIO_AF5_SPI2
-PinSignal-Name: TIM2_CH3, GPIO_AF2_TIM2
+(AF.AF6, signals.I2C2_SCL)
+(AF.AF1, signals.LPUART1_RX)
+(AF.AF5, signals.SPI2_SCK)
+(AF.AF2, signals.TIM2_CH3)
 PinSignal: PB11
-PinSignal-Name: I2C2_SDA, GPIO_AF6_I2C2
-PinSignal-Name: LPUART1_TX, GPIO_AF1_LPUART1
-PinSignal-Name: SPI2_MOSI, GPIO_AF0_SPI2
-PinSignal-Name: TIM2_CH4, GPIO_AF2_TIM2
+(AF.AF6, signals.I2C2_SDA)
+(AF.AF1, signals.LPUART1_TX)
+(AF.AF0, signals.SPI2_MOSI)
+(AF.AF2, signals.TIM2_CH4)
 PinSignal: PB12
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: LPUART1_DE, GPIO_AF1_LPUART1
-PinSignal-Name: LPUART1_RTS, GPIO_AF1_LPUART1
-PinSignal-Name: SPI2_NSS, GPIO_AF0_SPI2
-PinSignal-Name: TIM1_BK, GPIO_AF2_TIM1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF1, signals.LPUART1_DE)
+(AF.AF1, signals.LPUART1_RTS)
+(AF.AF0, signals.SPI2_NSS)
+(AF.AF2, signals.TIM1_BK)
 PinSignal: PB13
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C2_SCL, GPIO_AF6_I2C2
-PinSignal-Name: LPUART1_CTS, GPIO_AF1_LPUART1
-PinSignal-Name: SPI2_SCK, GPIO_AF0_SPI2
-PinSignal-Name: TIM1_CH1N, GPIO_AF2_TIM1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C2_SCL)
+(AF.AF1, signals.LPUART1_CTS)
+(AF.AF0, signals.SPI2_SCK)
+(AF.AF2, signals.TIM1_CH1N)
 PinSignal: PB14
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C2_SDA, GPIO_AF6_I2C2
-PinSignal-Name: SPI2_MISO, GPIO_AF0_SPI2
-PinSignal-Name: TIM1_CH2N, GPIO_AF2_TIM1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C2_SDA)
+(AF.AF0, signals.SPI2_MISO)
+(AF.AF2, signals.TIM1_CH2N)
 PinSignal: PB15
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: SPI2_MOSI, GPIO_AF0_SPI2
-PinSignal-Name: TIM1_CH3N, GPIO_AF2_TIM1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF0, signals.SPI2_MOSI)
+(AF.AF2, signals.TIM1_CH3N)
 PinSignal: PB2
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: LPTIM1_OUT, GPIO_AF5_LPTIM1
-PinSignal-Name: SPI2_MISO, GPIO_AF1_SPI2
+(AF.AF7, signals.EVENTOUT)
+(AF.AF5, signals.LPTIM1_OUT)
+(AF.AF1, signals.SPI2_MISO)
 PinSignal: PB3
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2S1_CK, GPIO_AF0_SPI1
-PinSignal-Name: SPI1_SCK, GPIO_AF0_SPI1
-PinSignal-Name: TIM1_CH2, GPIO_AF1_TIM1
-PinSignal-Name: TIM2_CH2, GPIO_AF2_TIM2
-PinSignal-Name: USART1_CK, GPIO_AF4_USART1
-PinSignal-Name: USART1_DE, GPIO_AF4_USART1
-PinSignal-Name: USART1_RTS, GPIO_AF4_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF0, signals.I2S1_CK)
+(AF.AF0, signals.SPI1_SCK)
+(AF.AF1, signals.TIM1_CH2)
+(AF.AF2, signals.TIM2_CH2)
+(AF.AF4, signals.USART1_CK)
+(AF.AF4, signals.USART1_DE)
+(AF.AF4, signals.USART1_RTS)
 PinSignal: PB4
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2S1_MCK, GPIO_AF0_SPI1
-PinSignal-Name: SPI1_MISO, GPIO_AF0_SPI1
-PinSignal-Name: TIM17_BK, GPIO_AF5_TIM17
-PinSignal-Name: TIM3_CH1, GPIO_AF1_TIM3
-PinSignal-Name: USART1_CTS, GPIO_AF4_USART1
-PinSignal-Name: USART1_NSS, GPIO_AF4_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF0, signals.I2S1_MCK)
+(AF.AF0, signals.SPI1_MISO)
+(AF.AF5, signals.TIM17_BK)
+(AF.AF1, signals.TIM3_CH1)
+(AF.AF4, signals.USART1_CTS)
+(AF.AF4, signals.USART1_NSS)
 PinSignal: PB5
-PinSignal-Name: I2C1_SMBA, GPIO_AF6_I2C1
-PinSignal-Name: I2S1_SD, GPIO_AF0_SPI1
-PinSignal-Name: LPTIM1_IN1, GPIO_AF5_LPTIM1
-PinSignal-Name: SPI1_MOSI, GPIO_AF0_SPI1
-PinSignal-Name: TIM16_BK, GPIO_AF2_TIM16
-PinSignal-Name: TIM3_CH2, GPIO_AF1_TIM3
+(AF.AF6, signals.I2C1_SMBA)
+(AF.AF0, signals.I2S1_SD)
+(AF.AF5, signals.LPTIM1_IN1)
+(AF.AF0, signals.SPI1_MOSI)
+(AF.AF2, signals.TIM16_BK)
+(AF.AF1, signals.TIM3_CH2)
 PinSignal: PB6
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SCL, GPIO_AF6_I2C1
-PinSignal-Name: LPTIM1_ETR, GPIO_AF5_LPTIM1
-PinSignal-Name: SPI2_MISO, GPIO_AF4_SPI2
-PinSignal-Name: TIM16_CH1N, GPIO_AF2_TIM16
-PinSignal-Name: TIM1_CH3, GPIO_AF1_TIM1
-PinSignal-Name: USART1_TX, GPIO_AF0_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SCL)
+(AF.AF5, signals.LPTIM1_ETR)
+(AF.AF4, signals.SPI2_MISO)
+(AF.AF2, signals.TIM16_CH1N)
+(AF.AF1, signals.TIM1_CH3)
+(AF.AF0, signals.USART1_TX)
 PinSignal: PB7
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SDA, GPIO_AF6_I2C1
-PinSignal-Name: LPTIM1_IN2, GPIO_AF5_LPTIM1
-PinSignal-Name: SPI2_MOSI, GPIO_AF1_SPI2
-PinSignal-Name: TIM17_CH1N, GPIO_AF2_TIM17
-PinSignal-Name: USART1_RX, GPIO_AF0_USART1
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SDA)
+(AF.AF5, signals.LPTIM1_IN2)
+(AF.AF1, signals.SPI2_MOSI)
+(AF.AF2, signals.TIM17_CH1N)
+(AF.AF0, signals.USART1_RX)
 PinSignal: PB8
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SCL, GPIO_AF6_I2C1
-PinSignal-Name: SPI2_SCK, GPIO_AF1_SPI2
-PinSignal-Name: TIM16_CH1, GPIO_AF2_TIM16
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SCL)
+(AF.AF1, signals.SPI2_SCK)
+(AF.AF2, signals.TIM16_CH1)
 PinSignal: PB9
-PinSignal-Name: EVENTOUT, GPIO_AF7_EVENTOUT
-PinSignal-Name: I2C1_SDA, GPIO_AF6_I2C1
-PinSignal-Name: IR_OUT, GPIO_AF0_IR
-PinSignal-Name: SPI2_NSS, GPIO_AF5_SPI2
-PinSignal-Name: TIM17_CH1, GPIO_AF2_TIM17
+(AF.AF7, signals.EVENTOUT)
+(AF.AF6, signals.I2C1_SDA)
+(AF.AF0, signals.IR_OUT)
+(AF.AF5, signals.SPI2_NSS)
+(AF.AF2, signals.TIM17_CH1)
 PinSignal: PC13
-PinSignal-Name: TIM1_BK, GPIO_AF2_TIM1
+(AF.AF2, signals.TIM1_BK)
 PinSignal: PC14-OSC32_IN (PC14)
-PinSignal-Name: TIM1_BK2, GPIO_AF2_TIM1
+(AF.AF2, signals.TIM1_BK2)
 PinSignal: PC15-OSC32_OUT (PC15)
-PinSignal-Name: RCC_OSC32_EN, GPIO_AF0_OSC32
-PinSignal-Name: RCC_OSC_EN, GPIO_AF1_OSC
+(AF.AF0, signals.RCC_OSC32_EN)
+(AF.AF1, signals.RCC_OSC_EN)
 PinSignal: PC6
-PinSignal-Name: TIM2_CH3, GPIO_AF2_TIM2
-PinSignal-Name: TIM3_CH1, GPIO_AF1_TIM3
+(AF.AF2, signals.TIM2_CH3)
+(AF.AF1, signals.TIM3_CH1)
 PinSignal: PC7
-PinSignal-Name: TIM2_CH4, GPIO_AF2_TIM2
-PinSignal-Name: TIM3_CH2, GPIO_AF1_TIM3
+(AF.AF2, signals.TIM2_CH4)
+(AF.AF1, signals.TIM3_CH2)
 PinSignal: PD0
-PinSignal-Name: EVENTOUT, GPIO_AF0_EVENTOUT
-PinSignal-Name: SPI2_NSS, GPIO_AF1_SPI2
-PinSignal-Name: TIM16_CH1, GPIO_AF2_TIM16
+(AF.AF0, signals.EVENTOUT)
+(AF.AF1, signals.SPI2_NSS)
+(AF.AF2, signals.TIM16_CH1)
 PinSignal: PD1
-PinSignal-Name: EVENTOUT, GPIO_AF0_EVENTOUT
-PinSignal-Name: SPI2_SCK, GPIO_AF1_SPI2
-PinSignal-Name: TIM17_CH1, GPIO_AF2_TIM17
+(AF.AF0, signals.EVENTOUT)
+(AF.AF1, signals.SPI2_SCK)
+(AF.AF2, signals.TIM17_CH1)
 PinSignal: PD2
-PinSignal-Name: TIM1_CH1N, GPIO_AF2_TIM1
-PinSignal-Name: TIM3_ETR, GPIO_AF1_TIM3
+(AF.AF2, signals.TIM1_CH1N)
+(AF.AF1, signals.TIM3_ETR)
 PinSignal: PD3
-PinSignal-Name: SPI2_MISO, GPIO_AF1_SPI2
-PinSignal-Name: TIM1_CH2N, GPIO_AF2_TIM1
-PinSignal-Name: USART2_CTS, GPIO_AF0_USART2
-PinSignal-Name: USART2_NSS, GPIO_AF0_USART2
+(AF.AF1, signals.SPI2_MISO)
+(AF.AF2, signals.TIM1_CH2N)
+(AF.AF0, signals.USART2_CTS)
+(AF.AF0, signals.USART2_NSS)
 PinSignal: PF0-OSC_IN (PF0)
-PinSignal-Name: TIM14_CH1, GPIO_AF2_TIM14
+(AF.AF2, signals.TIM14_CH1)
 PinSignal: PF1-OSC_OUT (PF1)
-PinSignal-Name: RCC_OSC_EN, GPIO_AF0_OSC
+(AF.AF0, signals.RCC_OSC_EN)
 PinSignal: PF2 - NRST
-PinSignal-Name: RCC_MCO, GPIO_AF0_MCO
+(AF.AF0, signals.RCC_MCO)
 PinSignal: PI8
