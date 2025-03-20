@@ -12,6 +12,7 @@ https://jsonformatter.org/xml-viewer
 
 int main(int argc, char *argv[])
 {
+	ecs_world_t *world = ecs_init();
 
 	result_t result = {0, NULL};
 	result.file = fopen("../example1/config/STM32G030.flecs", "w");
@@ -26,13 +27,18 @@ int main(int argc, char *argv[])
 	fprintf(result.file, "module STM32G030\n\n");
 
 
-	result_flecs_entity_open(&result, "peripherals");
 	parse_svd_init(&result);
-	result_flecs_entity_close(&result);
+	parse_modes_init(world, &result);
 
-	result_flecs_entity_open(&result, "pins");
-	parse_modes_init(&result);
-	result_flecs_entity_close(&result);
+
+	/*
+	ecs_set(world, EcsWorld, EcsRest, {.port = 0});
+	printf("Remote: %s\n", "https://www.flecs.dev/explorer/?remote=true");
+	while (1) {
+		ecs_progress(world, 0.0f);
+		ecs_sleepf(0.016f);
+	}
+	*/
 
 	return 0;
 }

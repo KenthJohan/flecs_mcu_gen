@@ -133,6 +133,8 @@ int parse_svd_init(result_t *result)
 	tree = mxmlLoadFilename(NULL, options, "config/STM32G030.svd");
 	mxml_node_t *node = tree;
 	node = mxmlFindElement(node, tree, "peripherals", NULL, NULL, MXML_DESCEND_ALL);
+	result_flecs_entity_open(result, "peripherals");
 	iterate_peripherals(node, tree, result);
+	result_flecs_entity_close(result);
 	return tree != NULL;
 }
