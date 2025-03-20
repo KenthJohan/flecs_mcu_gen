@@ -110,7 +110,10 @@
 		"egrenderers.h": "c",
 		"ec.h": "c",
 		"mxml.h": "c",
-		"mxml-private.h": "c"
+		"mxml-private.h": "c",
+		"parse_svd.h": "c",
+		"printer.h": "c",
+		"parse_modes.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

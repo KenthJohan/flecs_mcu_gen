@@ -8,13 +8,10 @@ https://jsonformatter.org/xml-viewer
 #include <flecs.h>
 #include <flecs.h>
 #include <libmxml4/mxml.h>
-#include "parse_svd.h"
+#include "printer.h"
 
 
-typedef struct {
-	int ident;
-	FILE * file;
-} result_t;
+
 
 typedef struct {
 	mxml_node_t * pinsignal;
@@ -33,6 +30,7 @@ char const * get_af_str(mxml_node_t *node, mxml_node_t *top)
 	return mxmlGetOpaque(node);
 }
 
+/*
 void result_print_af(result_t * result, char const * af)
 {
 	char buf[256] = {0};
@@ -48,6 +46,23 @@ void result_print_af(result_t * result, char const * af)
 	sprintf(buf, "%s", af);
 	fprintf(result->file, "%s", buf);
 }
+*/
+
+void copy_af_string(char *dst, int size, char const *src)
+{
+	if (strncmp(src, "GPIO_", 5) != 0) {
+		return;
+	}
+	src += 5;
+	while(*src && size > 1) {
+		if (*src == '_') {
+			*dst = 0;
+			break;
+		}
+		*dst++ = *src++;
+	}
+	*dst = 0;
+}
 
 void iterate_sigs(mxml_node_t *node, mxml_node_t *top, result_t * result)
 {
@@ -56,11 +71,23 @@ void iterate_sigs(mxml_node_t *node, mxml_node_t *top, result_t * result)
 		if (node == NULL) {
 			break;
 		}
-		fprintf(result->file, "(AF.");
-		result_print_af(result, get_af_str(node, top));
-		fprintf(result->file, ", signals.%s)", mxmlElementGetAttr(node, "Name"));
-		fprintf(result->file, "\n");
+		char buf[256] = {0};
+		copy_af_string(buf, sizeof(buf), get_af_str(node, top));
+		result_flecs_pair(result, "AF", buf, "signals", mxmlElementGetAttr(node, "Name"));
 	}
+}
+
+void copy_alphanumeric(char *dst, char const *src)
+{
+	while(*src) {
+		if (isalnum(*src)) {
+			*dst++ = *src;
+		}else {
+			*dst++ = '_';
+		}
+		src++;
+	}
+	*dst = 0;
 }
 
 void iterate_pins(mxml_node_t *node, mxml_node_t *top, result_t * result)
@@ -70,37 +97,22 @@ void iterate_pins(mxml_node_t *node, mxml_node_t *top, result_t * result)
 		if (node == NULL) {
 			break;
 		}
-		fprintf(result->file, "PinSignal: %s\n", mxmlElementGetAttr(node, "Name"));
+		char buf[256] = {0};
+		copy_alphanumeric(buf, mxmlElementGetAttr(node, "Name"));
+		result_flecs_entity_open(result, buf);
 		iterate_sigs(mxmlGetFirstChild(node), top, result);
+		result_flecs_entity_close(result);
 	}
 }
 
-int parse_modes_init()
+int parse_modes_init(result_t *result)
 {
-
 	mxml_node_t *tree;
-
 	mxml_options_t *options = mxmlOptionsNew();
 	mxmlOptionsSetTypeValue(options, MXML_TYPE_OPAQUE);
 	tree = mxmlLoadFilename(NULL, options, "config/GPIO-STM32G03x_gpio_v1_0_Modes.xml");
 	mxml_node_t *node = tree;
-
-	
-	result_t result = {0, NULL};
-	result.file = fopen("../example1/config/STM32G030_modes.flecs", "w");
-	if (result.file == NULL) {
-		printf("Error opening file!\n");
-		exit(1);
-	}
-
-	fprintf(result.file, "@color #AA99AF\n");
-	fprintf(result.file, "xmcu {}\n");
-	fprintf(result.file, "module xmcu\n");
-	fprintf(result.file, "module STM32G030\n\n");
-
-	
 	node = mxmlFindElement(node, tree, "IP", NULL, NULL, MXML_DESCEND_ALL);
-	iterate_pins(mxmlGetFirstChild(node), tree, &result);
-
+	iterate_pins(mxmlGetFirstChild(node), tree, result);
 	return tree != NULL;
 }
