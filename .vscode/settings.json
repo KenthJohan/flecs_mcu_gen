@@ -113,7 +113,8 @@
 		"mxml-private.h": "c",
 		"parse_svd.h": "c",
 		"printer.h": "c",
-		"parse_modes.h": "c"
+		"parse_modes.h": "c",
+		"sdl.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""
