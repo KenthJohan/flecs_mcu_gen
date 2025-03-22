@@ -14,26 +14,12 @@
  * dependencies will automatically show up in this file. Include bake_config.h
  * in your main project file. Do not edit! */
 
-#ifndef CIMGUI_IMPL_BAKE_CONFIG_H
-#define CIMGUI_IMPL_BAKE_CONFIG_H
+#ifndef EXAMPLE_IMGUI_BAKE_CONFIG_H
+#define EXAMPLE_IMGUI_BAKE_CONFIG_H
 
 /* Headers of public dependencies */
-/* No dependencies */
-
-/* Convenience macro for exporting symbols */
-#ifndef cimgui_impl_STATIC
-#if defined(cimgui_impl_EXPORTS) && (defined(_MSC_VER) || defined(__MINGW32__))
-  #define CIMGUI_IMPL_API __declspec(dllexport)
-#elif defined(cimgui_impl_EXPORTS)
-  #define CIMGUI_IMPL_API __attribute__((__visibility__("default")))
-#elif defined(_MSC_VER)
-  #define CIMGUI_IMPL_API __declspec(dllimport)
-#else
-  #define CIMGUI_IMPL_API
-#endif
-#else
-  #define CIMGUI_IMPL_API
-#endif
+#include <flecs.h>
+#include <cimgui.h>
 
 #endif
 

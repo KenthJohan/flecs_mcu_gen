@@ -1,5 +1,5 @@
 {
-	"id": "cimgui_impl",
+	"id": "imgui",
 	"type": "package",
 	"value": {
 		"language": "cpp",

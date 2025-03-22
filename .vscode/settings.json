@@ -117,7 +117,9 @@
 		"sdl.h": "c",
 		"sdl_ttf.h": "c",
 		"sdl_image.h": "c",
-		"clay.h": "c"
+		"clay.h": "c",
+		"cimgui_impl.h": "c",
+		"test.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""
