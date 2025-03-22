@@ -114,7 +114,10 @@
 		"parse_svd.h": "c",
 		"printer.h": "c",
 		"parse_modes.h": "c",
-		"sdl.h": "c"
+		"sdl.h": "c",
+		"sdl_ttf.h": "c",
+		"sdl_image.h": "c",
+		"clay.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""
