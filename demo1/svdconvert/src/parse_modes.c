@@ -11,11 +11,15 @@ https://jsonformatter.org/xml-viewer
 #include "printer.h"
 #include "str.h"
 
-typedef struct {
-	mxml_node_t *pinsignal;
-} gpio_pin_t;
 
-char const *get_af_str(mxml_node_t *node, mxml_node_t *top)
+/*
+<PinSignal Name="I2S1_CK"> : node
+	<SpecificParameter Name="GPIO_AF">
+		<PossibleValue>(return this)</PossibleValue>
+	</SpecificParameter>
+</PinSignal>
+*/
+char const *node_extract_af(mxml_node_t *node, mxml_node_t *top)
 {
 	node = mxmlFindElement(node, top, "SpecificParameter", "Name", "GPIO_AF", MXML_DESCEND_ALL);
 	if (node == NULL) {
@@ -28,21 +32,9 @@ char const *get_af_str(mxml_node_t *node, mxml_node_t *top)
 	return mxmlGetOpaque(node);
 }
 
-void iterate_sigs(mxml_node_t *node, mxml_node_t *top, result_t *result)
-{
-	while (1) {
-		node = mxmlFindElement(node, top, "PinSignal", NULL, NULL, MXML_DESCEND_NONE);
-		if (node == NULL) {
-			break;
-		}
-		char buf[256] = {0};
-		str_copy_gpioaf(buf, sizeof(buf), get_af_str(node, top));
-		char const *signame = mxmlElementGetAttr(node, "Name");
-		result_flecs_pair(result, "AF", buf, "signals", signame);
-	}
-}
 
-void iterate_sigs1(ecs_world_t *world, ecs_entity_t base, mxml_node_t *node, mxml_node_t *top, result_t *result)
+
+void node_get_uniqie_signals(ecs_world_t *world, ecs_entity_t base, mxml_node_t *node, mxml_node_t *top, result_t *result)
 {
 	while (1) {
 		node = mxmlFindElement(node, top, "PinSignal", NULL, NULL, MXML_DESCEND_NONE);
@@ -54,7 +46,7 @@ void iterate_sigs1(ecs_world_t *world, ecs_entity_t base, mxml_node_t *node, mxm
 	}
 }
 
-void iterate_pins1(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, result_t *result)
+void node_print_signals(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, result_t *result)
 {
 	ecs_entity_t base = ecs_new(world);
 	mxml_node_t *node1 = node;
@@ -63,7 +55,7 @@ void iterate_pins1(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, resu
 		if (node1 == NULL) {
 			break;
 		}
-		iterate_sigs1(world, base, mxmlGetFirstChild(node1), top, result);
+		node_get_uniqie_signals(world, base, mxmlGetFirstChild(node1), top, result);
 	}
 	result_flecs_entity_open(result, "signals");
 	ecs_query_t *q = ecs_query_init(world,
@@ -83,7 +75,27 @@ void iterate_pins1(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, resu
 	result_flecs_entity_close(result);
 }
 
-void iterate_pins2(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, result_t *result)
+
+/*
+<PinSignal Name="EVENTOUT"></PinSignal> : node iteration 1
+<PinSignal Name="I2C1_SMBA"></PinSignal> : node iteration 2
+<PinSignal Name="I2S1_CK"></PinSignal> : node iteration 3
+*/
+void node_print_pins_af(mxml_node_t *node, mxml_node_t *top, result_t *result)
+{
+	while (1) {
+		node = mxmlFindElement(node, top, "PinSignal", NULL, NULL, MXML_DESCEND_NONE);
+		if (node == NULL) {
+			break;
+		}
+		char buf[256] = {0};
+		str_copy_gpioaf(buf, sizeof(buf), node_extract_af(node, top));
+		char const *signame = mxmlElementGetAttr(node, "Name");
+		result_flecs_pair(result, "AF", buf, "signals", signame);
+	}
+}
+
+void node_print_pins(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, result_t *result)
 {
 	result_flecs_entity_open(result, "pins");
 	mxml_node_t *node1 = node;
@@ -95,7 +107,7 @@ void iterate_pins2(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, resu
 		char buf[256] = {0};
 		str_copy_af(buf, mxmlElementGetAttr(node1, "Name"));
 		result_flecs_entity_open(result, buf);
-		iterate_sigs(mxmlGetFirstChild(node1), top, result);
+		node_print_pins_af(mxmlGetFirstChild(node1), top, result);
 		result_flecs_entity_close(result);
 	}
 	result_flecs_entity_close(result);
@@ -109,7 +121,7 @@ int parse_modes_init(ecs_world_t *world, result_t *result)
 	tree = mxmlLoadFilename(NULL, options, "config/GPIO-STM32G03x_gpio_v1_0_Modes.xml");
 	mxml_node_t *node = tree;
 	node = mxmlFindElement(node, tree, "IP", NULL, NULL, MXML_DESCEND_ALL);
-	iterate_pins1(world, mxmlGetFirstChild(node), tree, result);
-	iterate_pins2(world, mxmlGetFirstChild(node), tree, result);
+	node_print_signals(world, mxmlGetFirstChild(node), tree, result);
+	node_print_pins(world, mxmlGetFirstChild(node), tree, result);
 	return tree != NULL;
 }

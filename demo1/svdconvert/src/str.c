@@ -31,3 +31,38 @@ void str_copy_af(char *dst, char const *src)
 	}
 	*dst = 0;
 }
+
+
+void str_copy_escape(char *dst, int size, const char *src)
+{
+	while (*src && size > 1) {
+		switch (*src) {
+		case '\n':
+			*dst++ = '\\';
+			*dst++ = 'n';
+			break;
+		case '\r':
+			*dst++ = '\\';
+			*dst++ = 'r';
+			break;
+		case '\t':
+			*dst++ = '\\';
+			*dst++ = 't';
+			break;
+		case '\\':
+			*dst++ = '\\';
+			*dst++ = '\\';
+			break;
+		case '\"':
+			*dst++ = '\\';
+			*dst++ = '\"';
+			break;
+		default:
+			*dst++ = *src;
+			break;
+		}
+		src++;
+		size--;
+	}
+	*dst = 0;
+}

@@ -1,4 +1,5 @@
 #include "printer.h"
+#include "str.h"
 
 void result_indent(result_t *result)
 {
@@ -7,44 +8,12 @@ void result_indent(result_t *result)
 	}
 }
 
-void escape_string(char *dst, int size, const char *src)
-{
-	while (*src && size > 1) {
-		switch (*src) {
-		case '\n':
-			*dst++ = '\\';
-			*dst++ = 'n';
-			break;
-		case '\r':
-			*dst++ = '\\';
-			*dst++ = 'r';
-			break;
-		case '\t':
-			*dst++ = '\\';
-			*dst++ = 't';
-			break;
-		case '\\':
-			*dst++ = '\\';
-			*dst++ = '\\';
-			break;
-		case '\"':
-			*dst++ = '\\';
-			*dst++ = '\"';
-			break;
-		default:
-			*dst++ = *src;
-			break;
-		}
-		src++;
-		size--;
-	}
-	*dst = 0;
-}
+
 
 void result_flecs_description(result_t *result, const char *description)
 {
 	char buf[256] = {0};
-	escape_string(buf, sizeof(buf), description);
+	str_copy_escape(buf, sizeof(buf), description);
 	result_indent(result);
 	fprintf(result->file, "(flecs.doc.Description, flecs.doc.Brief) : {\"%s\"}\n", buf);
 }
