@@ -6,48 +6,47 @@
 
 static void Sys_GuiListPins(ecs_iter_t *it)
 {
-	eximgui_t *eximgui = it->ctx;
 	EcPin *pin = ecs_field(it, EcPin, 0); // self, in
-	if (eximgui->show_another_window == false) {
-		return;
-	}
-	gui_begin(eximgui, "Pins", &eximgui->show_another_window);
+	gui_begin("Pins", NULL);
 	for (int i = 0; i < it->count; ++i, ++pin) {
-		gui_text(eximgui, ecs_get_name(it->world, it->entities[i]));
+		gui_text(ecs_get_name(it->world, it->entities[i]));
 	}
-	gui_end(eximgui);
+	gui_end();
+}
+
+static void Sys_GuiListFields(ecs_iter_t *it, eximgui_t *eximgui)
+{
+	// eximgui_t *eximgui = it->ctx;
+	EcField *field = ecs_field(it, EcField, 0); // self, in
+	for (int i = 0; i < it->count; ++i, ++field) {
+		gui_text(ecs_get_name(it->world, it->entities[i]));
+	}
 }
 
 static void Sys_GuiListRegisters(ecs_iter_t *it, eximgui_t *eximgui)
 {
-	//eximgui_t *eximgui = it->ctx;
 	EcRegister *reg = ecs_field(it, EcRegister, 0); // self, in
-	if (eximgui->show_demo_window == false) {
-		return;
-	}
 	for (int i = 0; i < it->count; ++i, ++reg) {
-		gui_text(eximgui, ecs_get_name(it->world, it->entities[i]));
+		bool a = gui_tree(ecs_get_name(it->world, it->entities[i]));
+		if (a) {
+			ecs_iter_t it2 = ecs_query_iter(it->world, eximgui->query2);
+			ecs_iter_set_group(&it2, it->entities[i]);
+			while (ecs_query_next(&it2)) {
+				Sys_GuiListFields(&it2, eximgui);
+			}
+			gui_tree_pop();
+		}
 	}
 }
 
-int compare_position(ecs_entity_t e1, const EcRegister *p1, ecs_entity_t e2, const EcRegister *p2)
-{
-	(void)e1;
-	(void)e2;
-	return (p1->address > p2->address);
-}
 
 static void Sys_GuiListPeripherals(ecs_iter_t *it)
 {
 	eximgui_t *eximgui = it->ctx;
 	EcPeripheral *per = ecs_field(it, EcPeripheral, 0); // self, in
-	if (eximgui->show_demo_window == false) {
-		return;
-	}
-
-	gui_begin(eximgui, "Peripherals", &eximgui->show_demo_window);
+	gui_begin("Peripherals", NULL);
 	for (int i = 0; i < it->count; ++i, ++per) {
-		bool a = gui_collapsing_header(eximgui, ecs_get_name(it->world, it->entities[i]));
+		bool a = gui_collapsing_header(ecs_get_name(it->world, it->entities[i]));
 		if (a) {
 			ecs_iter_t it2 = ecs_query_iter(it->world, eximgui->query1);
 			ecs_iter_set_group(&it2, it->entities[i]);
@@ -56,7 +55,7 @@ static void Sys_GuiListPeripherals(ecs_iter_t *it)
 			}
 		}
 	}
-	gui_end(eximgui);
+	gui_end();
 }
 
 int main(int argc, char *argv[])
@@ -87,15 +86,19 @@ int main(int argc, char *argv[])
 	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
 	eximgui_init(&eximgui);
 
-    eximgui.query1 = ecs_query(world, {
-		//.ctx = &eximgui,
-        .terms = {
-            { .id = ecs_id(EcRegister), .inout = EcsIn }
-        },
-        //.group_by_callback = group_by_relation,
-        .group_by = EcsChildOf
-    });
+	eximgui.query1 = ecs_query(world,
+	{//.ctx = &eximgui,
+	.terms = {
+	{.id = ecs_id(EcRegister), .inout = EcsIn}},
+	//.group_by_callback = group_by_relation,
+	.group_by = EcsChildOf});
 
+	eximgui.query2 = ecs_query(world,
+		{//.ctx = &eximgui,
+		.terms = {
+		{.id = ecs_id(EcField), .inout = EcsIn}},
+		//.group_by_callback = group_by_relation,
+		.group_by = EcsChildOf});
 
 	ecs_system(world,
 	{.entity = ecs_entity(world, {.name = "Sys_GuiListPins", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),

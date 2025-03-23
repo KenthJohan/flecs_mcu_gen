@@ -15,6 +15,7 @@ typedef struct {
 	SDL_Window *window;
 	SDL_GPUDevice *gpu_device;
 	void * query1;
+	void * query2;
 } eximgui_t;
 
 
@@ -24,10 +25,12 @@ int eximgui_fini(eximgui_t *eximgui);
 void eximgui_begin_frame(eximgui_t *eximgui);
 void eximgui_end_frame(eximgui_t *eximgui);
 
-void gui_begin(eximgui_t *eximgui, const char *name, bool *p_open);
-void gui_end(eximgui_t *eximgui);
-void gui_text(eximgui_t *eximgui, const char *text);
-bool gui_collapsing_header(eximgui_t *eximgui, const char *name);
+void gui_begin(const char *name, bool *p_open);
+void gui_end();
+void gui_text(const char *text);
+bool gui_collapsing_header(const char *name);
+bool gui_tree(const char *name);
+void gui_tree_pop();
 
 #ifdef __cplusplus
 }
