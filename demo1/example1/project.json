@@ -5,7 +5,9 @@
 		"language": "c",
 		"public": false,
 		"use": [
-			"flecs"
+			"flecs",
+			"imgui",
+			"eximgui"
 		]
 	},
 	"lang.c": {
@@ -15,6 +17,10 @@
 		],
 		"lib": [
 			"flecs",
+			"eximgui",
+			"imgui",
+			"stdc++",
+			"SDL3",
 			"m"
 		],
 		"cflags": [
