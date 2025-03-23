@@ -2,11 +2,12 @@
 	"id": "example_imgui",
 	"type": "application",
 	"value": {
-		"language": "c++",
+		"language": "c",
 		"public": false,
 		"use": [
 			"flecs",
-			"cimgui"
+			"imgui",
+			"eximgui"
 		]
 	},
 	"lang.c": {
@@ -16,10 +17,11 @@
 		],
 		"lib": [
 			"flecs",
-			"m",
-			"SDL3",
+			"eximgui",
 			"imgui",
-			"stdc++"
+			"stdc++",
+			"SDL3",
+			"m"
 		],
 		"cflags": [
 			"-Werror",
