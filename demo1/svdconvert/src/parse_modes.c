@@ -67,6 +67,7 @@ void node_print_signals(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top,
 	while (ecs_query_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			result_flecs_entity_open(result, ecs_get_name(world, it.entities[i]));
+			result_flecs_signal(result);
 			result_flecs_entity_close(result);
 			// printf("Found %s\n", ecs_get_name(world, it.entities[i]));
 		}

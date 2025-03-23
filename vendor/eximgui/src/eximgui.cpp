@@ -40,6 +40,11 @@ void gui_text(eximgui_t *eximgui, const char *text)
 	ImGui::Text("%s", text);
 }
 
+bool gui_collapsing_header(eximgui_t *eximgui, const char *name)
+{
+	return ImGui::CollapsingHeader(name);
+}
+
 void eximgui_begin_frame(eximgui_t *eximgui)
 {
 	// Poll and handle events (inputs, window resize, etc.)

@@ -18,6 +18,24 @@ static void Sys_GuiListPins(ecs_iter_t *it)
 	gui_end(eximgui);
 }
 
+static void Sys_GuiListRegisters(ecs_iter_t *it, eximgui_t *eximgui)
+{
+	//eximgui_t *eximgui = it->ctx;
+	EcRegister *reg = ecs_field(it, EcRegister, 0); // self, in
+	if (eximgui->show_demo_window == false) {
+		return;
+	}
+	for (int i = 0; i < it->count; ++i, ++reg) {
+		gui_text(eximgui, ecs_get_name(it->world, it->entities[i]));
+	}
+}
+
+int compare_position(ecs_entity_t e1, const EcRegister *p1, ecs_entity_t e2, const EcRegister *p2)
+{
+	(void)e1;
+	(void)e2;
+	return (p1->address > p2->address);
+}
 
 static void Sys_GuiListPeripherals(ecs_iter_t *it)
 {
@@ -26,15 +44,20 @@ static void Sys_GuiListPeripherals(ecs_iter_t *it)
 	if (eximgui->show_demo_window == false) {
 		return;
 	}
-	gui_begin(eximgui, "Pins", &eximgui->show_demo_window);
+
+	gui_begin(eximgui, "Peripherals", &eximgui->show_demo_window);
 	for (int i = 0; i < it->count; ++i, ++per) {
-		gui_text(eximgui, ecs_get_name(it->world, it->entities[i]));
+		bool a = gui_collapsing_header(eximgui, ecs_get_name(it->world, it->entities[i]));
+		if (a) {
+			ecs_iter_t it2 = ecs_query_iter(it->world, eximgui->query1);
+			ecs_iter_set_group(&it2, it->entities[i]);
+			while (ecs_query_next(&it2)) {
+				Sys_GuiListRegisters(&it2, eximgui);
+			}
+		}
 	}
 	gui_end(eximgui);
 }
-
-
-
 
 int main(int argc, char *argv[])
 {
@@ -53,7 +76,6 @@ int main(int argc, char *argv[])
 	ecs_set(world, EcsWorld, EcsRest, {.port = 0});
 	printf("Remote: %s\n", "https://www.flecs.dev/explorer/?remote=true");
 
-	
 	ecs_log_set_level(0);
 	ecs_script_run_file(world, "config/script1.flecs");
 	ecs_log_set_level(-1);
@@ -61,11 +83,19 @@ int main(int argc, char *argv[])
 	ecs_log_set_level(0);
 	ecs_script_run_file(world, "config/STM32G030.flecs");
 	ecs_log_set_level(-1);
-	
-
 
 	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
 	eximgui_init(&eximgui);
+
+    eximgui.query1 = ecs_query(world, {
+		//.ctx = &eximgui,
+        .terms = {
+            { .id = ecs_id(EcRegister), .inout = EcsIn }
+        },
+        //.group_by_callback = group_by_relation,
+        .group_by = EcsChildOf
+    });
+
 
 	ecs_system(world,
 	{.entity = ecs_entity(world, {.name = "Sys_GuiListPins", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),

@@ -14,6 +14,7 @@ typedef struct {
 	float clear_color[4];
 	SDL_Window *window;
 	SDL_GPUDevice *gpu_device;
+	void * query1;
 } eximgui_t;
 
 
@@ -26,6 +27,7 @@ void eximgui_end_frame(eximgui_t *eximgui);
 void gui_begin(eximgui_t *eximgui, const char *name, bool *p_open);
 void gui_end(eximgui_t *eximgui);
 void gui_text(eximgui_t *eximgui, const char *text);
+bool gui_collapsing_header(eximgui_t *eximgui, const char *name);
 
 #ifdef __cplusplus
 }

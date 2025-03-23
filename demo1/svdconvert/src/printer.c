@@ -21,13 +21,13 @@ void result_flecs_description(result_t *result, const char *description)
 void result_flecs_register(result_t *result, uint32_t address)
 {
 	result_indent(result);
-	fprintf(result->file, "Register : {address:%X}\n", address);
+	fprintf(result->file, "ec.Register : {address:%X}\n", address);
 }
 
 void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth)
 {
 	result_indent(result);
-	fprintf(result->file, "Field : {bitoffset:%s, bitwidth:%s}\n", bitoffset, bitwidth);
+	fprintf(result->file, "ec.Field : {bitoffset:%s, bitwidth:%s}\n", bitoffset, bitwidth);
 }
 
 void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char const *pre1, char const *a1)
@@ -48,4 +48,16 @@ void result_flecs_entity_close(result_t *result)
 	result->ident--;
 	result_indent(result);
 	fprintf(result->file, "}\n");
+}
+
+void result_flecs_peripheral(result_t *result)
+{
+	result_indent(result);
+	fprintf(result->file, "%s\n", "ec.Peripheral : {0}");
+}
+
+void result_flecs_signal(result_t *result)
+{
+	result_indent(result);
+	fprintf(result->file, "%s\n", "ec.Signal : {0}");
 }
