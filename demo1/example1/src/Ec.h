@@ -13,7 +13,14 @@ typedef struct {
 	EcPinAttribute attribute;
 } EcPin;
 
+
+typedef struct {
+	int32_t dummy;
+} EcPeripheral;
+
+
 extern ECS_COMPONENT_DECLARE(EcPinAttribute);
 extern ECS_COMPONENT_DECLARE(EcPin);
+extern ECS_COMPONENT_DECLARE(EcPeripheral);
 
 void EcImport(ecs_world_t *world);

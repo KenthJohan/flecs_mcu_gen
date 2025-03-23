@@ -2,6 +2,8 @@
 
 ECS_COMPONENT_DECLARE(EcPinAttribute);
 ECS_COMPONENT_DECLARE(EcPin);
+ECS_COMPONENT_DECLARE(EcPeripheral);
+
 
 void EcImport(ecs_world_t *world)
 {
@@ -10,6 +12,7 @@ void EcImport(ecs_world_t *world)
 
 	ECS_COMPONENT_DEFINE(world, EcPinAttribute);
 	ECS_COMPONENT_DEFINE(world, EcPin);
+	ECS_COMPONENT_DEFINE(world, EcPeripheral);
 
     ecs_bitmask(world,{
         .entity = ecs_id(EcPinAttribute),
@@ -25,6 +28,12 @@ void EcImport(ecs_world_t *world)
 	.members = {
 	{.name = "pad", .type = ecs_id(ecs_i32_t)},
 	{.name = "attribute", .type = ecs_id(EcPinAttribute)},
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(EcPeripheral),
+	.members = {
+	{.name = "dummy", .type = ecs_id(ecs_i32_t)},
 	}});
 
 }

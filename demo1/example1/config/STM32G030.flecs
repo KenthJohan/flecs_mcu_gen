@@ -5,6 +5,7 @@ module STM32G030
 
 peripherals {
 	ADC {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Analog to Digital ConverteR"}
 		ADC_ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC interrupt and status register"}
@@ -656,6 +657,7 @@ peripherals {
 		}
 	}
 	IWDG {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Independent watchdog"}
 		KR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Key register"}
@@ -707,6 +709,7 @@ peripherals {
 		}
 	}
 	WWDG {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"System window watchdog"}
 		CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register"}
@@ -746,6 +749,7 @@ peripherals {
 		}
 	}
 	FLASH {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Flash"}
 		ACR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Access control register"}
@@ -1033,6 +1037,7 @@ peripherals {
 		}
 	}
 	RCC {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Reset and clock control"}
 		CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Clock control register"}
@@ -1900,6 +1905,7 @@ peripherals {
 		}
 	}
 	PWR {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Power control"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power control register 1"}
@@ -2903,6 +2909,7 @@ peripherals {
 		}
 	}
 	DMA1 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"DMA controller"}
 		DMA_ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA interrupt status register "}
@@ -3670,6 +3677,7 @@ peripherals {
 		}
 	}
 	DMA2 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"DMA controller"}
 		DMA_ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA interrupt status register "}
@@ -4437,6 +4445,7 @@ peripherals {
 		}
 	}
 	DMAMUX {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"DMAMUX"}
 		C0CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
@@ -4776,6 +4785,7 @@ peripherals {
 		}
 	}
 	GPIOA {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
@@ -5531,6 +5541,7 @@ peripherals {
 		}
 	}
 	GPIOB {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
@@ -6286,6 +6297,7 @@ peripherals {
 		}
 	}
 	GPIOC {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
@@ -7041,6 +7053,7 @@ peripherals {
 		}
 	}
 	GPIOD {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
@@ -7796,6 +7809,7 @@ peripherals {
 		}
 	}
 	GPIOF {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
@@ -8551,6 +8565,7 @@ peripherals {
 		}
 	}
 	CRC {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Cyclic redundancy check calculation\n      unit"}
 		DR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Data register"}
@@ -8606,6 +8621,7 @@ peripherals {
 		}
 	}
 	EXTI {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"External interrupt/event\n      controller"}
 		RTSR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI rising trigger selection\n          register"}
@@ -9221,6 +9237,7 @@ peripherals {
 		}
 	}
 	TIM16 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General purpose timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -9568,6 +9585,7 @@ peripherals {
 		}
 	}
 	TIM17 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General purpose timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -9915,6 +9933,7 @@ peripherals {
 		}
 	}
 	USART1 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Universal synchronous asynchronous receiver\n      transmitter"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
@@ -10470,6 +10489,7 @@ peripherals {
 		}
 	}
 	USART2 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Universal synchronous asynchronous receiver\n      transmitter"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
@@ -11025,6 +11045,7 @@ peripherals {
 		}
 	}
 	SPI1 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Serial peripheral interface/Inter-IC\n      sound"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -11272,6 +11293,7 @@ peripherals {
 		}
 	}
 	SPI2 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Serial peripheral interface/Inter-IC\n      sound"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -11519,6 +11541,7 @@ peripherals {
 		}
 	}
 	TIM1 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Advanced-timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -12434,6 +12457,7 @@ peripherals {
 		}
 	}
 	SYSCFG {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"System configuration controller"}
 		CFGR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"SYSCFG configuration register\n          1"}
@@ -12889,6 +12913,7 @@ peripherals {
 		}
 	}
 	TAMP {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Tamper and backup registers"}
 		TAMP_CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP control register 1 "}
@@ -13152,6 +13177,7 @@ peripherals {
 		}
 	}
 	I2C1 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Inter-integrated circuit"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
@@ -13511,6 +13537,7 @@ peripherals {
 		}
 	}
 	I2C2 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Inter-integrated circuit"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
@@ -13870,6 +13897,7 @@ peripherals {
 		}
 	}
 	RTC {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"Real-time clock"}
 		RTC_TR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC time register "}
@@ -14445,6 +14473,7 @@ peripherals {
 		}
 	}
 	TIM14 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General purpose timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -14624,6 +14653,7 @@ peripherals {
 		}
 	}
 	TIM2 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose-timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -15191,6 +15221,7 @@ peripherals {
 		}
 	}
 	TIM3 {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose-timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
@@ -15758,6 +15789,7 @@ peripherals {
 		}
 	}
 	VREFBUF {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"System configuration controller"}
 		CSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"VREFBUF control and status\n          register"}
@@ -15789,6 +15821,7 @@ peripherals {
 		}
 	}
 	DBG {
+		ec.Peripheral : {0}
 		(flecs.doc.Description, flecs.doc.Brief) : {"MCU debug component"}
 		IDCODE {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DBGMCU_IDCODE"}

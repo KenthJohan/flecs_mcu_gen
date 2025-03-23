@@ -19,6 +19,21 @@ static void Sys_GuiListPins(ecs_iter_t *it)
 }
 
 
+static void Sys_GuiListPeripherals(ecs_iter_t *it)
+{
+	eximgui_t *eximgui = it->ctx;
+	EcPeripheral *per = ecs_field(it, EcPeripheral, 0); // self, in
+	if (eximgui->show_demo_window == false) {
+		return;
+	}
+	gui_begin(eximgui, "Pins", &eximgui->show_demo_window);
+	for (int i = 0; i < it->count; ++i, ++per) {
+		gui_text(eximgui, ecs_get_name(it->world, it->entities[i]));
+	}
+	gui_end(eximgui);
+}
+
+
 
 
 int main(int argc, char *argv[])
@@ -58,6 +73,14 @@ int main(int argc, char *argv[])
 	.ctx = &eximgui,
 	.query.terms = {
 	{.id = ecs_id(EcPin), .inout = EcsIn},
+	}});
+
+	ecs_system(world,
+	{.entity = ecs_entity(world, {.name = "Sys_GuiListPeripherals", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
+	.callback = Sys_GuiListPeripherals,
+	.ctx = &eximgui,
+	.query.terms = {
+	{.id = ecs_id(EcPeripheral), .inout = EcsIn},
 	}});
 
 	while (!eximgui.done) {

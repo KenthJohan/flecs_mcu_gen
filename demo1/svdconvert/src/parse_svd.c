@@ -112,6 +112,8 @@ void iterate_peripherals(mxml_node_t *node, mxml_node_t *top, result_t *result)
 
 		if (peripheral.name) {
 			result_flecs_entity_open(result, mxmlGetOpaque(peripheral.name));
+			result_indent(result);
+			fprintf(result->file, "%s\n", "ec.Peripheral : {0}");
 			if (peripheral.description) {
 				result_flecs_description(result, mxmlGetOpaque(peripheral.description));
 			}
