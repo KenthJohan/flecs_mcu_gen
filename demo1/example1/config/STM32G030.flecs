@@ -13,8 +13,8 @@ peripherals {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ADC ready\nThis bit is set by hardware after the ADC has been enabled (ADEN=1) and when the ADC reaches a state where it is ready to accept conversion requests.\nIt is cleared by software writing 1 to it."}
 				Field : {bitoffset:0, bitwidth:1}
 			}
-			@brief "End of sampling flag\nThis bit is set by hardware during the conversion, at the end of the sampling phase.It is cleared by software by programming it to '1'."
 			EOSMP {
+				(flecs.doc.Description, flecs.doc.Brief) : {"End of sampling flag\nThis bit is set by hardware during the conversion, at the end of the sampling phase.It is cleared by software by programming it to '1'."}
 				Field : {bitoffset:1, bitwidth:1}
 			}
 			EOC {
@@ -16026,6 +16026,7 @@ signals {
 }
 pins {
 	PA0 {
+		ec.Pin : {}
 		(AF.AF5, signals.LPTIM1_OUT)
 		(AF.AF0, signals.SPI2_SCK)
 		(AF.AF2, signals.TIM2_CH1)
@@ -16034,6 +16035,7 @@ pins {
 		(AF.AF1, signals.USART2_NSS)
 	}
 	PA1 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SMBA)
 		(AF.AF0, signals.I2S1_CK)
@@ -16044,6 +16046,7 @@ pins {
 		(AF.AF1, signals.USART2_RTS)
 	}
 	PA10 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SDA)
 		(AF.AF0, signals.SPI2_MOSI)
@@ -16052,6 +16055,7 @@ pins {
 		(AF.AF1, signals.USART1_RX)
 	}
 	PA10__PA12_ {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SDA)
 		(AF.AF0, signals.SPI2_MOSI)
@@ -16060,6 +16064,7 @@ pins {
 		(AF.AF1, signals.USART1_RX)
 	}
 	PA11__PA9_ {
+		ec.Pin : {}
 		(AF.AF6, signals.I2C2_SCL)
 		(AF.AF0, signals.I2S1_MCK)
 		(AF.AF0, signals.SPI1_MISO)
@@ -16069,6 +16074,7 @@ pins {
 		(AF.AF1, signals.USART1_NSS)
 	}
 	PA12__PA10_ {
+		ec.Pin : {}
 		(AF.AF6, signals.I2C2_SDA)
 		(AF.AF0, signals.I2S1_SD)
 		(AF.AF5, signals.I2S_CKIN)
@@ -16079,16 +16085,19 @@ pins {
 		(AF.AF1, signals.USART1_RTS)
 	}
 	PA13 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF1, signals.IR_OUT)
 		(AF.AF0, signals.SYS_SWDIO)
 	}
 	PA14_BOOT0 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF0, signals.SYS_SWCLK)
 		(AF.AF1, signals.USART2_TX)
 	}
 	PA15 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF0, signals.I2S1_WS)
 		(AF.AF0, signals.SPI1_NSS)
@@ -16097,6 +16106,7 @@ pins {
 		(AF.AF1, signals.USART2_RX)
 	}
 	PA2 {
+		ec.Pin : {}
 		(AF.AF0, signals.I2S1_SD)
 		(AF.AF6, signals.LPUART1_TX)
 		(AF.AF0, signals.SPI1_MOSI)
@@ -16104,6 +16114,7 @@ pins {
 		(AF.AF1, signals.USART2_TX)
 	}
 	PA3 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.LPUART1_RX)
 		(AF.AF0, signals.SPI2_MISO)
@@ -16111,6 +16122,7 @@ pins {
 		(AF.AF1, signals.USART2_RX)
 	}
 	PA4 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF0, signals.I2S1_WS)
 		(AF.AF5, signals.LPTIM2_OUT)
@@ -16119,6 +16131,7 @@ pins {
 		(AF.AF4, signals.TIM14_CH1)
 	}
 	PA5 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF0, signals.I2S1_CK)
 		(AF.AF5, signals.LPTIM2_ETR)
@@ -16127,6 +16140,7 @@ pins {
 		(AF.AF2, signals.TIM2_ETR)
 	}
 	PA6 {
+		ec.Pin : {}
 		(AF.AF0, signals.I2S1_MCK)
 		(AF.AF6, signals.LPUART1_CTS)
 		(AF.AF0, signals.SPI1_MISO)
@@ -16135,6 +16149,7 @@ pins {
 		(AF.AF1, signals.TIM3_CH1)
 	}
 	PA7 {
+		ec.Pin : {}
 		(AF.AF0, signals.I2S1_SD)
 		(AF.AF0, signals.SPI1_MOSI)
 		(AF.AF4, signals.TIM14_CH1)
@@ -16143,6 +16158,7 @@ pins {
 		(AF.AF1, signals.TIM3_CH2)
 	}
 	PA8 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF5, signals.LPTIM2_OUT)
 		(AF.AF0, signals.RCC_MCO)
@@ -16150,6 +16166,7 @@ pins {
 		(AF.AF2, signals.TIM1_CH1)
 	}
 	PA9 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SCL)
 		(AF.AF0, signals.RCC_MCO)
@@ -16159,6 +16176,7 @@ pins {
 		(AF.AF1, signals.USART1_TX)
 	}
 	PA9__PA11_ {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SCL)
 		(AF.AF0, signals.RCC_MCO)
@@ -16167,6 +16185,7 @@ pins {
 		(AF.AF1, signals.USART1_TX)
 	}
 	PB0 {
+		ec.Pin : {}
 		(AF.AF0, signals.I2S1_WS)
 		(AF.AF5, signals.LPTIM1_OUT)
 		(AF.AF0, signals.SPI1_NSS)
@@ -16174,6 +16193,7 @@ pins {
 		(AF.AF1, signals.TIM3_CH3)
 	}
 	PB1 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF5, signals.LPTIM2_IN1)
 		(AF.AF6, signals.LPUART1_DE)
@@ -16183,18 +16203,21 @@ pins {
 		(AF.AF1, signals.TIM3_CH4)
 	}
 	PB10 {
+		ec.Pin : {}
 		(AF.AF6, signals.I2C2_SCL)
 		(AF.AF1, signals.LPUART1_RX)
 		(AF.AF5, signals.SPI2_SCK)
 		(AF.AF2, signals.TIM2_CH3)
 	}
 	PB11 {
+		ec.Pin : {}
 		(AF.AF6, signals.I2C2_SDA)
 		(AF.AF1, signals.LPUART1_TX)
 		(AF.AF0, signals.SPI2_MOSI)
 		(AF.AF2, signals.TIM2_CH4)
 	}
 	PB12 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF1, signals.LPUART1_DE)
 		(AF.AF1, signals.LPUART1_RTS)
@@ -16202,6 +16225,7 @@ pins {
 		(AF.AF2, signals.TIM1_BK)
 	}
 	PB13 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C2_SCL)
 		(AF.AF1, signals.LPUART1_CTS)
@@ -16209,22 +16233,26 @@ pins {
 		(AF.AF2, signals.TIM1_CH1N)
 	}
 	PB14 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C2_SDA)
 		(AF.AF0, signals.SPI2_MISO)
 		(AF.AF2, signals.TIM1_CH2N)
 	}
 	PB15 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF0, signals.SPI2_MOSI)
 		(AF.AF2, signals.TIM1_CH3N)
 	}
 	PB2 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF5, signals.LPTIM1_OUT)
 		(AF.AF1, signals.SPI2_MISO)
 	}
 	PB3 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF0, signals.I2S1_CK)
 		(AF.AF0, signals.SPI1_SCK)
@@ -16235,6 +16263,7 @@ pins {
 		(AF.AF4, signals.USART1_RTS)
 	}
 	PB4 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF0, signals.I2S1_MCK)
 		(AF.AF0, signals.SPI1_MISO)
@@ -16244,6 +16273,7 @@ pins {
 		(AF.AF4, signals.USART1_NSS)
 	}
 	PB5 {
+		ec.Pin : {}
 		(AF.AF6, signals.I2C1_SMBA)
 		(AF.AF0, signals.I2S1_SD)
 		(AF.AF5, signals.LPTIM1_IN1)
@@ -16252,6 +16282,7 @@ pins {
 		(AF.AF1, signals.TIM3_CH2)
 	}
 	PB6 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SCL)
 		(AF.AF5, signals.LPTIM1_ETR)
@@ -16261,6 +16292,7 @@ pins {
 		(AF.AF0, signals.USART1_TX)
 	}
 	PB7 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SDA)
 		(AF.AF5, signals.LPTIM1_IN2)
@@ -16269,12 +16301,14 @@ pins {
 		(AF.AF0, signals.USART1_RX)
 	}
 	PB8 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SCL)
 		(AF.AF1, signals.SPI2_SCK)
 		(AF.AF2, signals.TIM16_CH1)
 	}
 	PB9 {
+		ec.Pin : {}
 		(AF.AF7, signals.EVENTOUT)
 		(AF.AF6, signals.I2C1_SDA)
 		(AF.AF0, signals.IR_OUT)
@@ -16282,52 +16316,65 @@ pins {
 		(AF.AF2, signals.TIM17_CH1)
 	}
 	PC13 {
+		ec.Pin : {}
 		(AF.AF2, signals.TIM1_BK)
 	}
 	PC14_OSC32_IN__PC14_ {
+		ec.Pin : {}
 		(AF.AF2, signals.TIM1_BK2)
 	}
 	PC15_OSC32_OUT__PC15_ {
+		ec.Pin : {}
 		(AF.AF0, signals.RCC_OSC32_EN)
 		(AF.AF1, signals.RCC_OSC_EN)
 	}
 	PC6 {
+		ec.Pin : {}
 		(AF.AF2, signals.TIM2_CH3)
 		(AF.AF1, signals.TIM3_CH1)
 	}
 	PC7 {
+		ec.Pin : {}
 		(AF.AF2, signals.TIM2_CH4)
 		(AF.AF1, signals.TIM3_CH2)
 	}
 	PD0 {
+		ec.Pin : {}
 		(AF.AF0, signals.EVENTOUT)
 		(AF.AF1, signals.SPI2_NSS)
 		(AF.AF2, signals.TIM16_CH1)
 	}
 	PD1 {
+		ec.Pin : {}
 		(AF.AF0, signals.EVENTOUT)
 		(AF.AF1, signals.SPI2_SCK)
 		(AF.AF2, signals.TIM17_CH1)
 	}
 	PD2 {
+		ec.Pin : {}
 		(AF.AF2, signals.TIM1_CH1N)
 		(AF.AF1, signals.TIM3_ETR)
 	}
 	PD3 {
+		ec.Pin : {}
 		(AF.AF1, signals.SPI2_MISO)
 		(AF.AF2, signals.TIM1_CH2N)
 		(AF.AF0, signals.USART2_CTS)
 		(AF.AF0, signals.USART2_NSS)
 	}
 	PF0_OSC_IN__PF0_ {
+		ec.Pin : {}
 		(AF.AF2, signals.TIM14_CH1)
 	}
 	PF1_OSC_OUT__PF1_ {
+		ec.Pin : {}
 		(AF.AF0, signals.RCC_OSC_EN)
 	}
 	PF2___NRST {
+		ec.Pin : {}
 		(AF.AF0, signals.RCC_MCO)
 	}
 	PI8 {
+		ec.Pin : {}
 	}
 }

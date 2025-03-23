@@ -107,6 +107,8 @@ void node_print_pins(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, re
 		char buf[256] = {0};
 		str_copy_af(buf, mxmlElementGetAttr(node1, "Name"));
 		result_flecs_entity_open(result, buf);
+		result_indent(result);
+		fprintf(result->file, "%s\n", "ec.Pin : {}");
 		node_print_pins_af(mxmlGetFirstChild(node1), top, result);
 		result_flecs_entity_close(result);
 	}

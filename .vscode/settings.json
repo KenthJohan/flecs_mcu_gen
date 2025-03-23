@@ -120,7 +120,8 @@
 		"clay.h": "c",
 		"cimgui_impl.h": "c",
 		"test.h": "c",
-		"eximgui.h": "c"
+		"eximgui.h": "c",
+		"str.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

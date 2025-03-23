@@ -19,13 +19,13 @@ typedef struct {
 
 int eximgui_init(eximgui_t *eximgui);
 int eximgui_fini(eximgui_t *eximgui);
-void eximgui_progress(eximgui_t *eximgui);
+//void eximgui_progress(eximgui_t *eximgui);
+void eximgui_begin_frame(eximgui_t *eximgui);
+void eximgui_end_frame(eximgui_t *eximgui);
 
-int test2();
-
-
-int test1();
-
+void gui_begin(eximgui_t *eximgui, const char *name, bool *p_open);
+void gui_end(eximgui_t *eximgui);
+void gui_text(eximgui_t *eximgui, const char *text);
 
 #ifdef __cplusplus
 }

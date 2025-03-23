@@ -25,7 +25,22 @@
 
 ImGuiIO *io;
 
-void eximgui_progress(eximgui_t *eximgui)
+void gui_begin(eximgui_t *eximgui, const char *name, bool *p_open)
+{
+	ImGui::Begin(name, p_open);
+}
+
+void gui_end(eximgui_t *eximgui)
+{
+	ImGui::End();
+}
+
+void gui_text(eximgui_t *eximgui, const char *text)
+{
+	ImGui::Text("%s", text);
+}
+
+void eximgui_begin_frame(eximgui_t *eximgui)
 {
 	// Poll and handle events (inputs, window resize, etc.)
 	// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -89,6 +104,11 @@ void eximgui_progress(eximgui_t *eximgui)
 		ImGui::End();
 	}
 
+
+}
+
+void eximgui_end_frame(eximgui_t *eximgui)
+{
 	// Rendering
 	ImGui::Render();
 	ImDrawData *draw_data = ImGui::GetDrawData();
