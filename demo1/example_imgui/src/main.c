@@ -7,6 +7,11 @@
 
 int main()
 {
-	test1();
+	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
+	eximgui_init(&eximgui);
+	while (!eximgui.done) {
+		eximgui_progress(&eximgui);
+	}
+	eximgui_fini(&eximgui);
 	return 0;
 }
