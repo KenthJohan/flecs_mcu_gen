@@ -46,13 +46,18 @@ static void Sys_GuiListPeripherals(ecs_iter_t *it)
 	EcPeripheral *per = ecs_field(it, EcPeripheral, 0); // self, in
 	gui_begin("Peripherals", NULL);
 	for (int i = 0; i < it->count; ++i, ++per) {
-		bool a = gui_collapsing_header(ecs_get_name(it->world, it->entities[i]));
+
+		bool a = gui_tree(ecs_get_name(it->world, it->entities[i]));
+		gui_sameline();
+		gui_button_small("Hej##xx");
+		//bool a = gui_collapsing_header(ecs_get_name(it->world, it->entities[i]));
 		if (a) {
 			ecs_iter_t it2 = ecs_query_iter(it->world, eximgui->query1);
 			ecs_iter_set_group(&it2, it->entities[i]);
 			while (ecs_query_next(&it2)) {
 				Sys_GuiListRegisters(&it2, eximgui);
 			}
+			gui_tree_pop();
 		}
 	}
 	gui_end();

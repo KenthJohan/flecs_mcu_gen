@@ -32,6 +32,10 @@ bool gui_collapsing_header(const char *name);
 bool gui_tree(const char *name);
 void gui_tree_pop();
 
+bool gui_button(const char *label);
+bool gui_button_small(const char *label);
+void gui_sameline();
+
 #ifdef __cplusplus
 }
 #endif

@@ -35,6 +35,27 @@ void gui_end()
 	ImGui::End();
 }
 
+void gui_checkbox(const char *name, bool *v)
+{
+	ImGui::Checkbox(name, v);
+}
+
+void gui_slider_float(const char *name, float *v, float v_min, float v_max)
+{
+	ImGui::SliderFloat(name, v, v_min, v_max);
+}
+
+bool gui_button(const char *label)
+{
+	return ImGui::Button(label);
+}
+
+bool gui_button_small(const char *label)
+{
+	bool r = ImGui::SmallButton(label);
+	return r;
+}
+
 void gui_text(const char *text)
 {
 	ImGui::Text("%s", text);
@@ -53,6 +74,11 @@ bool gui_tree(const char *name)
 void gui_tree_pop()
 {
 	ImGui::TreePop();
+}
+
+void gui_sameline()
+{
+	ImGui::SameLine();
 }
 
 void eximgui_begin_frame(eximgui_t *eximgui)
