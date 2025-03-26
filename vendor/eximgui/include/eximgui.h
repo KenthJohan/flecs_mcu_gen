@@ -32,6 +32,12 @@ bool gui_collapsing_header(const char *name);
 bool gui_tree(const char *name);
 void gui_tree_pop();
 
+void gui_push_id_u64(uint64_t id);
+
+void gui_pop_id();
+
+
+
 bool gui_button(const char *label);
 bool gui_button_small(const char *label);
 void gui_sameline();

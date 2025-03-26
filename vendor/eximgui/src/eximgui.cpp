@@ -35,6 +35,17 @@ void gui_end()
 	ImGui::End();
 }
 
+void gui_push_id_u64(uint64_t id)
+{
+	ImGui::PushID((void*)id);
+}
+
+void gui_pop_id()
+{
+	ImGui::PopID();
+}
+
+
 void gui_checkbox(const char *name, bool *v)
 {
 	ImGui::Checkbox(name, v);
