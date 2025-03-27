@@ -26,22 +26,26 @@ int eximgui_fini(eximgui_t *eximgui);
 void eximgui_begin_frame(eximgui_t *eximgui);
 void eximgui_end_frame(eximgui_t *eximgui);
 
+
+
+
 void gui_begin(const char *name, bool *p_open);
 void gui_end();
 void gui_text(const char *text);
 bool gui_collapsing_header(const char *name);
 bool gui_tree(const char *name);
 void gui_tree_pop();
-
 void gui_push_id_u64(uint64_t id);
-
 void gui_pop_id();
-
-
-
 bool gui_button(const char *label);
 bool gui_button_small(const char *label);
 void gui_sameline();
+bool gui_table_begin(const char *name, int columns, int flags);
+void gui_table_end();
+void gui_table_setup_column(const char *name, int flags, float width);
+void gui_table_header_row();
+void gui_table_next_row(int flags);
+void gui_table_next_column();
 
 #ifdef __cplusplus
 }

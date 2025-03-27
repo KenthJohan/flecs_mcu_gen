@@ -75,17 +75,50 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			if (!name) {
 				continue;
 			}
+			gui_table_next_row(0);
+			gui_table_next_column();
 			/*
 			char * path = ecs_get_path_w_sep(world, 0, it.entities[i], ".", NULL);
 			ecs_os_free(path);
 			*/
 			bool a = gui_tree(name);
+
+			EcField const * field = ecs_get(world, it.entities[i], EcField);
+			if (field) {
+				gui_table_next_column();
+				char str[32];
+				snprintf(str, sizeof(str), "%d", field->bitoffset);
+				gui_text(str);
+				gui_table_next_column();
+				snprintf(str, sizeof(str), "%d", field->bitwidth);
+				gui_text(str);
+			} else {
+				gui_table_next_column();
+				gui_text("");
+				gui_table_next_column();
+				gui_text("");
+			}
+
 			if (a) {
 				draw_tree(world, it.entities[i], ex);
 				gui_tree_pop();
 			}
 		}
 	}
+}
+
+void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
+{
+	bool a = gui_table_begin("Peripherals", 3, 0);
+	if (a == false) {
+		return;
+	}
+	gui_table_setup_column("Name", 128, 0);
+	gui_table_setup_column("bitoffset", 16, 12.0f);
+	gui_table_setup_column("bitwidth", 16, 18.0f);
+	gui_table_header_row();
+	draw_tree(world, parent, ex);
+	gui_table_end();
 }
 
 int main(int argc, char *argv[])
@@ -186,7 +219,7 @@ ecs_system(world,
 
 	while (!eximgui.done) {
 		eximgui_begin_frame(&eximgui);
-		draw_tree(world, parent, &eximgui);
+		draw_tree0(world, parent, &eximgui);
 		ecs_progress(world, 0.0f);
 		eximgui_end_frame(&eximgui);
 		ecs_sleepf(0.016f);
