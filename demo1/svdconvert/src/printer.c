@@ -18,10 +18,10 @@ void result_flecs_description(result_t *result, const char *description)
 	fprintf(result->file, "(flecs.doc.Description, flecs.doc.Brief) : {\"%s\"}\n", buf);
 }
 
-void result_flecs_register(result_t *result, uint32_t address)
+void result_flecs_register(result_t *result, const char *address)
 {
 	result_indent(result);
-	fprintf(result->file, "ec.Register : {address:%X}\n", address);
+	fprintf(result->file, "ec.Register : {address:%s}\n", address);
 }
 
 void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth)

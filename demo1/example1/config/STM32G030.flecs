@@ -9,7 +9,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Analog to Digital ConverteR"}
 		ADC_ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC interrupt and status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			ADRDY {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ADC ready\nThis bit is set by hardware after the ADC has been enabled (ADEN=1) and when the ADC reaches a state where it is ready to accept conversion requests.\nIt is cleared by software writing 1 to it."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -53,7 +53,7 @@ peripherals {
 		}
 		ADC_IER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC interrupt enable register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			ADRDYIE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ADC ready interrupt enable\nThis bit is set and cleared by software to enable/disable the ADC Ready interrupt.\nNote: The software is allowed to write this bit only when ADSTART bit is cleared to 0 (this ensures that no conversion is ongoing)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -97,7 +97,7 @@ peripherals {
 		}
 		ADC_CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			ADEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ADC enable command\nThis bit is set by software to enable the ADC. The ADC is effectively ready to operate once the ADRDY flag has been set.\nIt is cleared by hardware when the ADC is disabled, after the execution of the ADDIS command.\nNote: The software is"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -125,7 +125,7 @@ peripherals {
 		}
 		ADC_CFGR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC configuration register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xc}
 			DMAEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Direct memory access enable\nThis bit is set and cleared by software to enable the generation of DMA requests. This allows the DMA controller to be used to manage automatically the converted data. For more details, refer to .\nNote: The software is allowed "}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -193,7 +193,7 @@ peripherals {
 		}
 		ADC_CFGR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC configuration register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			OVSE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Oversampler Enable\nThis bit is set and cleared by software.\nNote: Software is allowed to write this bit only when ADSTART=0 (which ensures that no conversion is ongoing)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -221,7 +221,7 @@ peripherals {
 		}
 		ADC_SMPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC sampling time register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			SMP1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Sampling time selection 1\nThese bits are written by software to select the sampling time that applies to all channels.\nNote: The software is allowed to write this bit only when ADSTART=0 (which ensures that no conversion is ongoing)."}
 				ec.Field : {bitoffset:0, bitwidth:3}
@@ -309,7 +309,7 @@ peripherals {
 		}
 		ADC_AWD1TR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC watchdog threshold register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			LT1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Analog watchdog 1 lower threshold\nThese bits are written by software to define the lower threshold for the analog watchdog.\nRefer to ADC_AWDxTR) on page355."}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -321,7 +321,7 @@ peripherals {
 		}
 		ADC_AWD2TR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC watchdog threshold register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			LT2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Analog watchdog 2 lower threshold\nThese bits are written by software to define the lower threshold for the analog watchdog.\nRefer to ADC_AWDxTR) on page355."}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -333,7 +333,7 @@ peripherals {
 		}
 		ADC_CHSELR_0 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC channel selection register [alternate] "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			CHSEL0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Channel-x selection\nThese bits are written by software and define which channels are part of the sequence of channels to be converted. Refer to  for ADC inputs connected to external channels and internal sources.\nNote: The software is allowed to write thi"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -413,7 +413,7 @@ peripherals {
 		}
 		ADC_CHSELR_1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"channel selection register CHSELRMOD = 1 in\n            ADC_CFGR1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			SQ1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"1st conversion of the sequence\nThese bits are programmed by software with the channel number (0...14) assigned to the 8th conversion of the sequence. 0b1111 indicates end of the sequence.\nWhen 0b1111 (end of sequence) is programmed to the lower sequence c"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -449,7 +449,7 @@ peripherals {
 		}
 		ADC_AWD3TR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC watchdog threshold register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2c}
 			LT3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Analog watchdog 3lower threshold\nThese bits are written by software to define the lower threshold for the analog watchdog.\nRefer to ADC_AWDxTR) on page355."}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -461,7 +461,7 @@ peripherals {
 		}
 		ADC_DR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x40}
 			DATA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Converted data\nThese bits are read-only. They contain the conversion result from the last converted channel. The data are left- or right-aligned as shown in OVSE = 0) on page349.\nJust after a calibration is complete, DATA[6:0] contains the calibration fac"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -469,7 +469,7 @@ peripherals {
 		}
 		ADC_AWD2CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC Analog Watchdog 2 Configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xa0}
 			AWD2CH0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Analog watchdog channel selection\nThese bits are set and cleared by software. They enable and select the input channels to be guarded by analog watchdog 2 (AWD2).\nNote: The channels selected through ADC_AWD2CR must be also configured into the ADC_CHSELR r"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -549,7 +549,7 @@ peripherals {
 		}
 		ADC_AWD3CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC Analog Watchdog 3 Configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xa4}
 			AWD3CH0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Analog watchdog channel selection\nThese bits are set and cleared by software. They enable and select the input channels to be guarded by analog watchdog 3 (AWD3).\nNote: The channels selected through ADC_AWD3CR must be also configured into the ADC_CHSELR r"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -629,7 +629,7 @@ peripherals {
 		}
 		ADC_CALFACT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC Calibration factor"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xb4}
 			CALFACT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Calibration factor\nThese bits are written by hardware or by software.\nOnce a calibration is complete,they are updated by hardware with the calibration factors.\nSoftware can write these bits with a new calibration factor. If the new calibration factor is d"}
 				ec.Field : {bitoffset:0, bitwidth:7}
@@ -637,7 +637,7 @@ peripherals {
 		}
 		ADC_CCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"ADC common configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x308}
 			PRESC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ADC prescaler\nSet and cleared by software to select the frequency of the clock to the ADC.\nOther: Reserved\nNote: Software is allowed to write these bits only when the ADC is disabled (ADCAL=0, ADSTART=0, ADSTP=0, ADDIS=0 and ADEN=0)."}
 				ec.Field : {bitoffset:18, bitwidth:4}
@@ -661,7 +661,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Independent watchdog"}
 		KR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Key register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			KEY {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Key value (write only, read\n              0x0000)"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -669,7 +669,7 @@ peripherals {
 		}
 		PR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			PR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler divider"}
 				ec.Field : {bitoffset:0, bitwidth:3}
@@ -677,7 +677,7 @@ peripherals {
 		}
 		RLR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Reload register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			RL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Watchdog counter reload\n              value"}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -685,7 +685,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			WVU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Watchdog counter window value\n              update"}
 				ec.Field : {bitoffset:2, bitwidth:1}
@@ -701,7 +701,7 @@ peripherals {
 		}
 		WINR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Window register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			WIN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Watchdog counter window\n              value"}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -713,7 +713,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"System window watchdog"}
 		CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			WDGA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Activation bit"}
 				ec.Field : {bitoffset:7, bitwidth:1}
@@ -725,7 +725,7 @@ peripherals {
 		}
 		CFR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			WDGTB {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Timer base"}
 				ec.Field : {bitoffset:11, bitwidth:3}
@@ -741,7 +741,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			EWIF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Early wakeup interrupt\n              flag"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -753,7 +753,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Flash"}
 		ACR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Access control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			LATENCY {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Latency"}
 				ec.Field : {bitoffset:0, bitwidth:3}
@@ -777,7 +777,7 @@ peripherals {
 		}
 		KEYR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Flash key register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			KEYR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"KEYR"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -785,7 +785,7 @@ peripherals {
 		}
 		OPTKEYR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Option byte key register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			OPTKEYR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Option byte key"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -793,7 +793,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			EOP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"End of operation"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -849,7 +849,7 @@ peripherals {
 		}
 		CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Flash control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			PG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Programming"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -909,7 +909,7 @@ peripherals {
 		}
 		ECCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Flash ECC register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			ADDR_ECC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ECC fail address"}
 				ec.Field : {bitoffset:0, bitwidth:14}
@@ -933,7 +933,7 @@ peripherals {
 		}
 		OPTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Flash option register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			RDP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Read protection level"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -989,7 +989,7 @@ peripherals {
 		}
 		WRP1AR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Flash WRP area A address\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			WRP1A_STRT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"WRP area A start offset"}
 				ec.Field : {bitoffset:0, bitwidth:7}
@@ -1001,7 +1001,7 @@ peripherals {
 		}
 		WRP1BR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Flash WRP area B address\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			WRP1B_STRT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"WRP area B start offset"}
 				ec.Field : {bitoffset:0, bitwidth:7}
@@ -1013,7 +1013,7 @@ peripherals {
 		}
 		WRP2AR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"FLASH WRP2 area A address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			WRP2A_STRT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"WRP2A_STRT"}
 				ec.Field : {bitoffset:0, bitwidth:7}
@@ -1025,7 +1025,7 @@ peripherals {
 		}
 		WRP2BR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"FLASH WRP2 area B address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			WRP2B_STRT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"WRP2B_STRT"}
 				ec.Field : {bitoffset:0, bitwidth:7}
@@ -1041,7 +1041,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Reset and clock control"}
 		CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Clock control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			HSION {
 				(flecs.doc.Description, flecs.doc.Brief) : {"HSI16 clock enable"}
 				ec.Field : {bitoffset:8, bitwidth:1}
@@ -1085,7 +1085,7 @@ peripherals {
 		}
 		ICSCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Internal clock sources calibration\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			HSICAL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"HSI16 clock calibration"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -1097,7 +1097,7 @@ peripherals {
 		}
 		CFGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Clock configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			MCOPRE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Microcontroller clock output\n              prescaler"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -1133,7 +1133,7 @@ peripherals {
 		}
 		PLLSYSCFGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"PLL configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			PLLSRC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"PLL input clock source"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -1173,7 +1173,7 @@ peripherals {
 		}
 		CIER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Clock interrupt enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			LSIRDYIE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"LSI ready interrupt enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1197,7 +1197,7 @@ peripherals {
 		}
 		CIFR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Clock interrupt flag register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			LSIRDYF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"LSI ready interrupt flag"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1229,7 +1229,7 @@ peripherals {
 		}
 		CICR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Clock interrupt clear register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			LSIRDYC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"LSI ready interrupt clear"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1261,7 +1261,7 @@ peripherals {
 		}
 		IOPRSTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"I/O port reset register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			GPIOARST {
 				(flecs.doc.Description, flecs.doc.Brief) : {"GPIOARST"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1289,7 +1289,7 @@ peripherals {
 		}
 		AHBRSTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"AHB peripheral reset register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			DMA1RST {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA1 reset"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1309,7 +1309,7 @@ peripherals {
 		}
 		APBRSTR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"APB peripheral reset register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			TIM3RST {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM3 timer reset"}
 				ec.Field : {bitoffset:1, bitwidth:1}
@@ -1381,7 +1381,7 @@ peripherals {
 		}
 		APBRSTR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"APB peripheral reset register\n          2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			SYSCFGRST {
 				(flecs.doc.Description, flecs.doc.Brief) : {"SYSCFG, COMP and VREFBUF\n              reset"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1421,7 +1421,7 @@ peripherals {
 		}
 		IOPENR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO clock enable register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			GPIOAEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"I/O port A clock enable during Sleep\n              mode"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1449,7 +1449,7 @@ peripherals {
 		}
 		AHBENR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"AHB peripheral clock enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			DMA1EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA1 clock enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1469,7 +1469,7 @@ peripherals {
 		}
 		APBENR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"APB peripheral clock enable register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3C}
 			TIM3EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM3 timer clock enable"}
 				ec.Field : {bitoffset:1, bitwidth:1}
@@ -1549,7 +1549,7 @@ peripherals {
 		}
 		APBENR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"APB peripheral clock enable register\n          2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x40}
 			SYSCFGEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"SYSCFG, COMP and VREFBUF clock\n              enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1589,7 +1589,7 @@ peripherals {
 		}
 		IOPSMENR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO in Sleep mode clock enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			GPIOASMEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"I/O port A clock enable during Sleep\n              mode"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1617,7 +1617,7 @@ peripherals {
 		}
 		AHBSMENR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"AHB peripheral clock enable in Sleep mode\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			DMA1SMEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA1 clock enable during Sleep\n              mode"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1641,7 +1641,7 @@ peripherals {
 		}
 		APBSMENR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"APB peripheral clock enable in Sleep mode\n          register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			TIM3SMEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM3 timer clock enable during Sleep\n              mode"}
 				ec.Field : {bitoffset:1, bitwidth:1}
@@ -1721,7 +1721,7 @@ peripherals {
 		}
 		APBSMENR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"APB peripheral clock enable in Sleep mode\n          register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			SYSCFGSMEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"SYSCFG, COMP and VREFBUF clock enable\n              during Sleep mode"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1761,7 +1761,7 @@ peripherals {
 		}
 		CCIPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Peripherals independent clock configuration\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x54}
 			USART1SEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"USART1 clock source\n              selection"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -1797,7 +1797,7 @@ peripherals {
 		}
 		CCIPR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Peripherals independent clock configuration register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x58}
 			I2S1SEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"2S1SEL"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -1813,7 +1813,7 @@ peripherals {
 		}
 		BDCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC domain control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x5C}
 			LSEON {
 				(flecs.doc.Description, flecs.doc.Brief) : {"LSE oscillator enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1861,7 +1861,7 @@ peripherals {
 		}
 		CSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control/status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			LSION {
 				(flecs.doc.Description, flecs.doc.Brief) : {"LSI oscillator enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1909,7 +1909,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Power control"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			LPR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Low-power run"}
 				ec.Field : {bitoffset:14, bitwidth:1}
@@ -1941,7 +1941,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			USV {
 				(flecs.doc.Description, flecs.doc.Brief) : {"USV"}
 				ec.Field : {bitoffset:10, bitwidth:1}
@@ -1949,7 +1949,7 @@ peripherals {
 		}
 		CR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power control register 3"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			EWUP1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Enable Wakeup pin WKUP1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -1985,7 +1985,7 @@ peripherals {
 		}
 		CR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power control register 4"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			WP1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Wakeup pin WKUP1 polarity"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -2021,7 +2021,7 @@ peripherals {
 		}
 		SR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power status register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			WUF1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Wakeup flag 1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -2057,7 +2057,7 @@ peripherals {
 		}
 		SR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power status register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			VOSF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Voltage scaling flag"}
 				ec.Field : {bitoffset:10, bitwidth:1}
@@ -2077,7 +2077,7 @@ peripherals {
 		}
 		SCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power status clear register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			CSBF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Clear standby flag"}
 				ec.Field : {bitoffset:8, bitwidth:1}
@@ -2109,7 +2109,7 @@ peripherals {
 		}
 		PUCRA {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port A pull-up control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			PU15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port A pull-up bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2177,7 +2177,7 @@ peripherals {
 		}
 		PDCRA {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port A pull-down control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			PD15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port A pull-down bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2245,7 +2245,7 @@ peripherals {
 		}
 		PUCRB {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port B pull-up control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			PU15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port B pull-up bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2313,7 +2313,7 @@ peripherals {
 		}
 		PDCRB {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port B pull-down control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			PD15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port B pull-down bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2381,7 +2381,7 @@ peripherals {
 		}
 		PUCRC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port C pull-up control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			PU15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port C pull-up bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2449,7 +2449,7 @@ peripherals {
 		}
 		PDCRC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port C pull-down control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			PD15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port C pull-down bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2517,7 +2517,7 @@ peripherals {
 		}
 		PUCRD {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port D pull-up control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			PU15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port D pull-up bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2585,7 +2585,7 @@ peripherals {
 		}
 		PDCRD {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port D pull-down control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3C}
 			PD15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port D pull-down bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2653,7 +2653,7 @@ peripherals {
 		}
 		PUCRE {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port E pull-UP control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x40}
 			PU15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port E pull-up bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2721,7 +2721,7 @@ peripherals {
 		}
 		PDCRE {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port E pull-down control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			PD15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port E pull-down bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -2789,7 +2789,7 @@ peripherals {
 		}
 		PUCRF {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port F pull-up control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			PU13 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port F pull-up bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:13, bitwidth:1}
@@ -2849,7 +2849,7 @@ peripherals {
 		}
 		PDCRF {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Power Port F pull-down control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			PD13 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port F pull-down bit y\n              (y=0..15)"}
 				ec.Field : {bitoffset:13, bitwidth:1}
@@ -2913,7 +2913,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"DMA controller"}
 		DMA_ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA interrupt status register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			GIF1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"global interrupt flag for channel 1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3029,7 +3029,7 @@ peripherals {
 		}
 		DMA_IFCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA interrupt flag clear register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			CGIF1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"global interrupt flag clear for channel 1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3145,7 +3145,7 @@ peripherals {
 		}
 		DMA_CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 1 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3197,7 +3197,7 @@ peripherals {
 		}
 		DMA_CNDTR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x number of data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xc}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3205,7 +3205,7 @@ peripherals {
 		}
 		DMA_CPAR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3213,7 +3213,7 @@ peripherals {
 		}
 		DMA_CMAR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3221,7 +3221,7 @@ peripherals {
 		}
 		DMA_CCR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 2 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1c}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3273,7 +3273,7 @@ peripherals {
 		}
 		DMA_CNDTR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x number of data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3281,7 +3281,7 @@ peripherals {
 		}
 		DMA_CPAR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3289,7 +3289,7 @@ peripherals {
 		}
 		DMA_CMAR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3297,7 +3297,7 @@ peripherals {
 		}
 		DMA_CCR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 3 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3349,7 +3349,7 @@ peripherals {
 		}
 		DMA_CNDTR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3357,7 +3357,7 @@ peripherals {
 		}
 		DMA_CPAR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3365,7 +3365,7 @@ peripherals {
 		}
 		DMA_CMAR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3c}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3373,7 +3373,7 @@ peripherals {
 		}
 		DMA_CCR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 4 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3425,7 +3425,7 @@ peripherals {
 		}
 		DMA_CNDTR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3433,7 +3433,7 @@ peripherals {
 		}
 		DMA_CPAR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4c}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3441,7 +3441,7 @@ peripherals {
 		}
 		DMA_CMAR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3449,7 +3449,7 @@ peripherals {
 		}
 		DMA_CCR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 5 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x58}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3501,7 +3501,7 @@ peripherals {
 		}
 		DMA_CNDTR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x5c}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3509,7 +3509,7 @@ peripherals {
 		}
 		DMA_CPAR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3517,7 +3517,7 @@ peripherals {
 		}
 		DMA_CMAR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x64}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3525,7 +3525,7 @@ peripherals {
 		}
 		DMA_CCR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 6 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x6c}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3577,7 +3577,7 @@ peripherals {
 		}
 		DMA_CNDTR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x70}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3585,7 +3585,7 @@ peripherals {
 		}
 		DMA_CPAR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x74}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3593,7 +3593,7 @@ peripherals {
 		}
 		DMA_CMAR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x78}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3601,7 +3601,7 @@ peripherals {
 		}
 		DMA_CCR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 7 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x80}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3653,7 +3653,7 @@ peripherals {
 		}
 		DMA_CNDTR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x84}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3661,7 +3661,7 @@ peripherals {
 		}
 		DMA_CPAR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x88}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3669,7 +3669,7 @@ peripherals {
 		}
 		DMA_CMAR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8c}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3681,7 +3681,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"DMA controller"}
 		DMA_ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA interrupt status register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			GIF1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"global interrupt flag for channel 1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3797,7 +3797,7 @@ peripherals {
 		}
 		DMA_IFCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA interrupt flag clear register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			CGIF1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"global interrupt flag clear for channel 1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3913,7 +3913,7 @@ peripherals {
 		}
 		DMA_CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 1 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -3965,7 +3965,7 @@ peripherals {
 		}
 		DMA_CNDTR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x number of data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xc}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -3973,7 +3973,7 @@ peripherals {
 		}
 		DMA_CPAR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3981,7 +3981,7 @@ peripherals {
 		}
 		DMA_CMAR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -3989,7 +3989,7 @@ peripherals {
 		}
 		DMA_CCR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 2 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1c}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -4041,7 +4041,7 @@ peripherals {
 		}
 		DMA_CNDTR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x number of data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -4049,7 +4049,7 @@ peripherals {
 		}
 		DMA_CPAR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4057,7 +4057,7 @@ peripherals {
 		}
 		DMA_CMAR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4065,7 +4065,7 @@ peripherals {
 		}
 		DMA_CCR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 3 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -4117,7 +4117,7 @@ peripherals {
 		}
 		DMA_CNDTR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -4125,7 +4125,7 @@ peripherals {
 		}
 		DMA_CPAR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4133,7 +4133,7 @@ peripherals {
 		}
 		DMA_CMAR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3c}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4141,7 +4141,7 @@ peripherals {
 		}
 		DMA_CCR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 4 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -4193,7 +4193,7 @@ peripherals {
 		}
 		DMA_CNDTR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -4201,7 +4201,7 @@ peripherals {
 		}
 		DMA_CPAR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4c}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4209,7 +4209,7 @@ peripherals {
 		}
 		DMA_CMAR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4217,7 +4217,7 @@ peripherals {
 		}
 		DMA_CCR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 5 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x58}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -4269,7 +4269,7 @@ peripherals {
 		}
 		DMA_CNDTR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x5c}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -4277,7 +4277,7 @@ peripherals {
 		}
 		DMA_CPAR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4285,7 +4285,7 @@ peripherals {
 		}
 		DMA_CMAR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x64}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4293,7 +4293,7 @@ peripherals {
 		}
 		DMA_CCR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 6 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x6c}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -4345,7 +4345,7 @@ peripherals {
 		}
 		DMA_CNDTR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x70}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -4353,7 +4353,7 @@ peripherals {
 		}
 		DMA_CPAR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x74}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4361,7 +4361,7 @@ peripherals {
 		}
 		DMA_CMAR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x78}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4369,7 +4369,7 @@ peripherals {
 		}
 		DMA_CCR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel 7 configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x80}
 			EN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"channel enable\nWhen a channel transfer error occurs, this bit is cleared by hardware. It can not be set again by software (channel x re-activated) until the TEIFx bit of the DMA_ISR register is cleared (by setting the CTEIFx bit of the DMA_IFCR register)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -4421,7 +4421,7 @@ peripherals {
 		}
 		DMA_CNDTR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x84}
 			NDT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"number of data to transfer (0 to 216-1)\nThis field is updated by hardware when the channel is enabled:\nIt is decremented after each single DMA 'read followed by write' transfer, indicating the remaining amount of data items to transfer.\nIt is kept at zero"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -4429,7 +4429,7 @@ peripherals {
 		}
 		DMA_CPAR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x peripheral address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x88}
 			PA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the peripheral data register from/to which the data will be read/written.\nWhen PSIZE[1:0]=01 (16 bits), bit 0 of PA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen PSIZE=10 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4437,7 +4437,7 @@ peripherals {
 		}
 		DMA_CMAR7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA channel x memory address register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8c}
 			MA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"peripheral address\nIt contains the base address of the memory from/to which the data will be read/written.\nWhen MSIZE[1:0]=01 (16 bits), bit 0 of MA[31:0] is ignored. Access is automatically aligned to a half-word address.\nWhen MSIZE=10 (32 bits), bits 1 "}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -4449,7 +4449,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"DMAMUX"}
 		C0CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			DMAREQ_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input DMA request line\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -4481,7 +4481,7 @@ peripherals {
 		}
 		C1CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			DMAREQ_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input DMA request line\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -4513,7 +4513,7 @@ peripherals {
 		}
 		C2CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			DMAREQ_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input DMA request line\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -4545,7 +4545,7 @@ peripherals {
 		}
 		C3CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			DMAREQ_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input DMA request line\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -4577,7 +4577,7 @@ peripherals {
 		}
 		C4CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			DMAREQ_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input DMA request line\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -4609,7 +4609,7 @@ peripherals {
 		}
 		C5CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			DMAREQ_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input DMA request line\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -4641,7 +4641,7 @@ peripherals {
 		}
 		C6CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request line multiplexer\n          channel x control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			DMAREQ_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input DMA request line\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -4673,7 +4673,7 @@ peripherals {
 		}
 		RG0CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request generator channel x\n          control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x100}
 			SIG_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA request trigger input\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:5}
@@ -4697,7 +4697,7 @@ peripherals {
 		}
 		RG1CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request generator channel x\n          control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x104}
 			SIG_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA request trigger input\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:5}
@@ -4721,7 +4721,7 @@ peripherals {
 		}
 		RG2CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request generator channel x\n          control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x108}
 			SIG_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA request trigger input\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:5}
@@ -4745,7 +4745,7 @@ peripherals {
 		}
 		RG3CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request generator channel x\n          control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10C}
 			SIG_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA request trigger input\n              selected"}
 				ec.Field : {bitoffset:0, bitwidth:5}
@@ -4769,7 +4769,7 @@ peripherals {
 		}
 		RGSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request generator status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x140}
 			OF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trigger event overrun flag The flag is\n              set when a trigger event occurs on DMA request\n              generator channel x, while the DMA request generator\n              counter value is lower than GNBREQ. The flag is\n              cleared by w"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -4777,7 +4777,7 @@ peripherals {
 		}
 		RGCFR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMAMux - DMA request generator clear flag\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x144}
 			COF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Clear trigger event overrun flag Upon\n              setting, this bit clears the corresponding overrun\n              flag OFx in the DMAMUX_RGCSR register."}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -4789,7 +4789,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			MODER15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -4857,7 +4857,7 @@ peripherals {
 		}
 		OTYPER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output type register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			OT15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -4925,7 +4925,7 @@ peripherals {
 		}
 		OSPEEDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output speed\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			OSPEEDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -4993,7 +4993,7 @@ peripherals {
 		}
 		PUPDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port pull-up/pull-down\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			PUPDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -5061,7 +5061,7 @@ peripherals {
 		}
 		IDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port input data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			IDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port input data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -5129,7 +5129,7 @@ peripherals {
 		}
 		ODR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			ODR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port output data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -5197,7 +5197,7 @@ peripherals {
 		}
 		BSRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port bit set/reset\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			BR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x reset bit y (y =\n              0..15)"}
 				ec.Field : {bitoffset:31, bitwidth:1}
@@ -5329,7 +5329,7 @@ peripherals {
 		}
 		LCKR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port configuration lock\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			LCKK {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x lock bit y (y=\n              0..15)"}
 				ec.Field : {bitoffset:16, bitwidth:1}
@@ -5401,7 +5401,7 @@ peripherals {
 		}
 		AFRL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function low\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			AFSEL7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 0..7)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -5437,7 +5437,7 @@ peripherals {
 		}
 		AFRH {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function high\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			AFSEL15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 8..15)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -5473,7 +5473,7 @@ peripherals {
 		}
 		BRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"port bit reset register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			BR0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port Reset bit"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -5545,7 +5545,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			MODER15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -5613,7 +5613,7 @@ peripherals {
 		}
 		OTYPER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output type register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			OT15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -5681,7 +5681,7 @@ peripherals {
 		}
 		OSPEEDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output speed\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			OSPEEDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -5749,7 +5749,7 @@ peripherals {
 		}
 		PUPDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port pull-up/pull-down\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			PUPDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -5817,7 +5817,7 @@ peripherals {
 		}
 		IDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port input data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			IDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port input data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -5885,7 +5885,7 @@ peripherals {
 		}
 		ODR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			ODR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port output data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -5953,7 +5953,7 @@ peripherals {
 		}
 		BSRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port bit set/reset\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			BR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x reset bit y (y =\n              0..15)"}
 				ec.Field : {bitoffset:31, bitwidth:1}
@@ -6085,7 +6085,7 @@ peripherals {
 		}
 		LCKR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port configuration lock\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			LCKK {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x lock bit y (y=\n              0..15)"}
 				ec.Field : {bitoffset:16, bitwidth:1}
@@ -6157,7 +6157,7 @@ peripherals {
 		}
 		AFRL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function low\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			AFSEL7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 0..7)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -6193,7 +6193,7 @@ peripherals {
 		}
 		AFRH {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function high\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			AFSEL15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 8..15)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -6229,7 +6229,7 @@ peripherals {
 		}
 		BRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"port bit reset register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			BR0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port Reset bit"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -6301,7 +6301,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			MODER15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -6369,7 +6369,7 @@ peripherals {
 		}
 		OTYPER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output type register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			OT15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -6437,7 +6437,7 @@ peripherals {
 		}
 		OSPEEDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output speed\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			OSPEEDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -6505,7 +6505,7 @@ peripherals {
 		}
 		PUPDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port pull-up/pull-down\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			PUPDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -6573,7 +6573,7 @@ peripherals {
 		}
 		IDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port input data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			IDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port input data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -6641,7 +6641,7 @@ peripherals {
 		}
 		ODR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			ODR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port output data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -6709,7 +6709,7 @@ peripherals {
 		}
 		BSRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port bit set/reset\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			BR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x reset bit y (y =\n              0..15)"}
 				ec.Field : {bitoffset:31, bitwidth:1}
@@ -6841,7 +6841,7 @@ peripherals {
 		}
 		LCKR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port configuration lock\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			LCKK {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x lock bit y (y=\n              0..15)"}
 				ec.Field : {bitoffset:16, bitwidth:1}
@@ -6913,7 +6913,7 @@ peripherals {
 		}
 		AFRL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function low\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			AFSEL7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 0..7)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -6949,7 +6949,7 @@ peripherals {
 		}
 		AFRH {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function high\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			AFSEL15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 8..15)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -6985,7 +6985,7 @@ peripherals {
 		}
 		BRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"port bit reset register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			BR0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port Reset bit"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -7057,7 +7057,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			MODER15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -7125,7 +7125,7 @@ peripherals {
 		}
 		OTYPER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output type register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			OT15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -7193,7 +7193,7 @@ peripherals {
 		}
 		OSPEEDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output speed\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			OSPEEDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -7261,7 +7261,7 @@ peripherals {
 		}
 		PUPDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port pull-up/pull-down\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			PUPDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -7329,7 +7329,7 @@ peripherals {
 		}
 		IDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port input data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			IDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port input data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -7397,7 +7397,7 @@ peripherals {
 		}
 		ODR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			ODR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port output data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -7465,7 +7465,7 @@ peripherals {
 		}
 		BSRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port bit set/reset\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			BR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x reset bit y (y =\n              0..15)"}
 				ec.Field : {bitoffset:31, bitwidth:1}
@@ -7597,7 +7597,7 @@ peripherals {
 		}
 		LCKR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port configuration lock\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			LCKK {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x lock bit y (y=\n              0..15)"}
 				ec.Field : {bitoffset:16, bitwidth:1}
@@ -7669,7 +7669,7 @@ peripherals {
 		}
 		AFRL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function low\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			AFSEL7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 0..7)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -7705,7 +7705,7 @@ peripherals {
 		}
 		AFRH {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function high\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			AFSEL15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 8..15)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -7741,7 +7741,7 @@ peripherals {
 		}
 		BRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"port bit reset register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			BR0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port Reset bit"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -7813,7 +7813,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose I/Os"}
 		MODER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port mode register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			MODER15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -7881,7 +7881,7 @@ peripherals {
 		}
 		OTYPER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output type register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			OT15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -7949,7 +7949,7 @@ peripherals {
 		}
 		OSPEEDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output speed\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			OSPEEDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -8017,7 +8017,7 @@ peripherals {
 		}
 		PUPDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port pull-up/pull-down\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			PUPDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x configuration bits (y =\n              0..15)"}
 				ec.Field : {bitoffset:30, bitwidth:2}
@@ -8085,7 +8085,7 @@ peripherals {
 		}
 		IDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port input data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			IDR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port input data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -8153,7 +8153,7 @@ peripherals {
 		}
 		ODR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port output data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			ODR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port output data (y =\n              0..15)"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -8221,7 +8221,7 @@ peripherals {
 		}
 		BSRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port bit set/reset\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			BR15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x reset bit y (y =\n              0..15)"}
 				ec.Field : {bitoffset:31, bitwidth:1}
@@ -8353,7 +8353,7 @@ peripherals {
 		}
 		LCKR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port configuration lock\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			LCKK {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port x lock bit y (y=\n              0..15)"}
 				ec.Field : {bitoffset:16, bitwidth:1}
@@ -8425,7 +8425,7 @@ peripherals {
 		}
 		AFRL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function low\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			AFSEL7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 0..7)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -8461,7 +8461,7 @@ peripherals {
 		}
 		AFRH {
 			(flecs.doc.Description, flecs.doc.Brief) : {"GPIO alternate function high\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			AFSEL15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alternate function selection for port x\n              bit y (y = 8..15)"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -8497,7 +8497,7 @@ peripherals {
 		}
 		BRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"port bit reset register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			BR0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Port Reset bit"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -8569,7 +8569,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Cyclic redundancy check calculation\n      unit"}
 		DR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			DR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Data register bits"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -8577,7 +8577,7 @@ peripherals {
 		}
 		IDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Independent data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			IDR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose 32-bit data register\n              bits"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -8585,7 +8585,7 @@ peripherals {
 		}
 		CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			REV_OUT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Reverse output data"}
 				ec.Field : {bitoffset:7, bitwidth:1}
@@ -8605,7 +8605,7 @@ peripherals {
 		}
 		INIT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Initial CRC value"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CRC_INIT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Programmable initial CRC\n              value"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -8613,7 +8613,7 @@ peripherals {
 		}
 		POL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"polynomial"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			POL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Programmable polynomial"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -8625,7 +8625,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"External interrupt/event\n      controller"}
 		RTSR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI rising trigger selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			RT0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Rising trigger event configuration bit\n              of Configurable Event line"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -8693,7 +8693,7 @@ peripherals {
 		}
 		FTSR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI falling trigger selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			FT0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Falling trigger event configuration bit of configurable line"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -8761,7 +8761,7 @@ peripherals {
 		}
 		SWIER1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI software interrupt event\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			SWI0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Software rising edge event trigger on line"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -8829,7 +8829,7 @@ peripherals {
 		}
 		RPR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI rising edge pending\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			RPIF0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Rising edge event pending for configurable line"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -8897,7 +8897,7 @@ peripherals {
 		}
 		FPR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI falling edge pending\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			FPIF0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Falling edge event pending for configurable line"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -8965,7 +8965,7 @@ peripherals {
 		}
 		EXTICR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI external interrupt selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			EXTI0_7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port selection"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -8985,7 +8985,7 @@ peripherals {
 		}
 		EXTICR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI external interrupt selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x64}
 			EXTI0_7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port selection"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -9005,7 +9005,7 @@ peripherals {
 		}
 		EXTICR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI external interrupt selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x68}
 			EXTI0_7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port selection"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -9025,7 +9025,7 @@ peripherals {
 		}
 		EXTICR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI external interrupt selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x6C}
 			EXTI0_7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"GPIO port selection"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -9045,7 +9045,7 @@ peripherals {
 		}
 		IMR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI CPU wakeup with interrupt mask\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x80}
 			IM0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"CPU wakeup with interrupt mask on event\n              input"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -9145,7 +9145,7 @@ peripherals {
 		}
 		EMR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"EXTI CPU wakeup with event mask\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x84}
 			EM0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"CPU wakeup with event mask on event\n              input"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -9241,7 +9241,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General purpose timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			CEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Counter enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -9273,7 +9273,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			OIS1N {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Idle state 1"}
 				ec.Field : {bitoffset:9, bitwidth:1}
@@ -9297,7 +9297,7 @@ peripherals {
 		}
 		DIER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA/Interrupt enable register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			COMDE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"COM DMA request enable"}
 				ec.Field : {bitoffset:13, bitwidth:1}
@@ -9329,7 +9329,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CC1OF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 overcapture\n              flag"}
 				ec.Field : {bitoffset:9, bitwidth:1}
@@ -9353,7 +9353,7 @@ peripherals {
 		}
 		EGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"event generation register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			BG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Break generation"}
 				ec.Field : {bitoffset:7, bitwidth:1}
@@ -9373,7 +9373,7 @@ peripherals {
 		}
 		CCMR1_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			OC1M_2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Compare 1 mode"}
 				ec.Field : {bitoffset:16, bitwidth:1}
@@ -9397,7 +9397,7 @@ peripherals {
 		}
 		CCMR1_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (input\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			IC1F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input capture 1 filter"}
 				ec.Field : {bitoffset:4, bitwidth:4}
@@ -9413,7 +9413,7 @@ peripherals {
 		}
 		CCER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			CC1NP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 output\n              Polarity"}
 				ec.Field : {bitoffset:3, bitwidth:1}
@@ -9433,7 +9433,7 @@ peripherals {
 		}
 		CNT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"counter"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			CNT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"counter value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9445,7 +9445,7 @@ peripherals {
 		}
 		PSC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			PSC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9453,7 +9453,7 @@ peripherals {
 		}
 		ARR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"auto-reload register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			ARR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Auto-reload value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9461,7 +9461,7 @@ peripherals {
 		}
 		RCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"repetition counter register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			REP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Repetition counter value"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -9469,7 +9469,7 @@ peripherals {
 		}
 		CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			CCR1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9477,7 +9477,7 @@ peripherals {
 		}
 		BDTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"break and dead-time register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			DTG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Dead-time generator setup"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -9525,7 +9525,7 @@ peripherals {
 		}
 		DCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			DBL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA burst length"}
 				ec.Field : {bitoffset:8, bitwidth:5}
@@ -9537,7 +9537,7 @@ peripherals {
 		}
 		DMAR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA address for full transfer"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			DMAB {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA register for burst\n              accesses"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9545,7 +9545,7 @@ peripherals {
 		}
 		AF1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM17 option register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			BKINE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"BRK BKIN input enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -9577,7 +9577,7 @@ peripherals {
 		}
 		TISEL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"input selection register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x68}
 			TI1SEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"selects input"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -9589,7 +9589,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General purpose timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			CEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Counter enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -9621,7 +9621,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			OIS1N {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Idle state 1"}
 				ec.Field : {bitoffset:9, bitwidth:1}
@@ -9645,7 +9645,7 @@ peripherals {
 		}
 		DIER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA/Interrupt enable register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			COMDE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"COM DMA request enable"}
 				ec.Field : {bitoffset:13, bitwidth:1}
@@ -9677,7 +9677,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CC1OF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 overcapture\n              flag"}
 				ec.Field : {bitoffset:9, bitwidth:1}
@@ -9701,7 +9701,7 @@ peripherals {
 		}
 		EGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"event generation register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			BG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Break generation"}
 				ec.Field : {bitoffset:7, bitwidth:1}
@@ -9721,7 +9721,7 @@ peripherals {
 		}
 		CCMR1_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			OC1M_2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Compare 1 mode"}
 				ec.Field : {bitoffset:16, bitwidth:1}
@@ -9745,7 +9745,7 @@ peripherals {
 		}
 		CCMR1_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (input\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			IC1F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input capture 1 filter"}
 				ec.Field : {bitoffset:4, bitwidth:4}
@@ -9761,7 +9761,7 @@ peripherals {
 		}
 		CCER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			CC1NP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 output\n              Polarity"}
 				ec.Field : {bitoffset:3, bitwidth:1}
@@ -9781,7 +9781,7 @@ peripherals {
 		}
 		CNT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"counter"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			CNT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"counter value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9793,7 +9793,7 @@ peripherals {
 		}
 		PSC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			PSC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9801,7 +9801,7 @@ peripherals {
 		}
 		ARR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"auto-reload register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			ARR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Auto-reload value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9809,7 +9809,7 @@ peripherals {
 		}
 		RCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"repetition counter register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			REP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Repetition counter value"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -9817,7 +9817,7 @@ peripherals {
 		}
 		CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			CCR1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9825,7 +9825,7 @@ peripherals {
 		}
 		BDTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"break and dead-time register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			DTG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Dead-time generator setup"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -9873,7 +9873,7 @@ peripherals {
 		}
 		DCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			DBL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA burst length"}
 				ec.Field : {bitoffset:8, bitwidth:5}
@@ -9885,7 +9885,7 @@ peripherals {
 		}
 		DMAR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA address for full transfer"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			DMAB {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA register for burst\n              accesses"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -9893,7 +9893,7 @@ peripherals {
 		}
 		AF1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM17 option register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			BKINE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"BRK BKIN input enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -9925,7 +9925,7 @@ peripherals {
 		}
 		TISEL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"input selection register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x68}
 			TI1SEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"selects input"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -9937,7 +9937,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Universal synchronous asynchronous receiver\n      transmitter"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			RXFFIE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"RXFIFO Full interrupt\n              enable"}
 				ec.Field : {bitoffset:31, bitwidth:1}
@@ -10037,7 +10037,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			ADD4_7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Address of the USART node"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -10125,7 +10125,7 @@ peripherals {
 		}
 		CR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 3"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			TXFTCFG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TXFIFO threshold\n              configuration"}
 				ec.Field : {bitoffset:29, bitwidth:3}
@@ -10225,7 +10225,7 @@ peripherals {
 		}
 		BRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Baud rate register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			BRR_4_15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"BRR_4_15"}
 				ec.Field : {bitoffset:4, bitwidth:12}
@@ -10237,7 +10237,7 @@ peripherals {
 		}
 		GTPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Guard time and prescaler\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			GT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Guard time value"}
 				ec.Field : {bitoffset:8, bitwidth:8}
@@ -10249,7 +10249,7 @@ peripherals {
 		}
 		RTOR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Receiver timeout register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			BLEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Block Length"}
 				ec.Field : {bitoffset:24, bitwidth:8}
@@ -10261,7 +10261,7 @@ peripherals {
 		}
 		RQR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Request register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			TXFRQ {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data flush\n              request"}
 				ec.Field : {bitoffset:4, bitwidth:1}
@@ -10285,7 +10285,7 @@ peripherals {
 		}
 		ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt & status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			TXFT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TXFIFO threshold flag"}
 				ec.Field : {bitoffset:27, bitwidth:1}
@@ -10401,7 +10401,7 @@ peripherals {
 		}
 		ICR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt flag clear register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			WUCF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Wakeup from Stop mode clear\n              flag"}
 				ec.Field : {bitoffset:20, bitwidth:1}
@@ -10465,7 +10465,7 @@ peripherals {
 		}
 		RDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Receive data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			RDR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Receive data value"}
 				ec.Field : {bitoffset:0, bitwidth:9}
@@ -10473,7 +10473,7 @@ peripherals {
 		}
 		TDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			TDR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data value"}
 				ec.Field : {bitoffset:0, bitwidth:9}
@@ -10481,7 +10481,7 @@ peripherals {
 		}
 		PRESC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			PRESCALER {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Clock prescaler"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -10493,7 +10493,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Universal synchronous asynchronous receiver\n      transmitter"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			RXFFIE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"RXFIFO Full interrupt\n              enable"}
 				ec.Field : {bitoffset:31, bitwidth:1}
@@ -10593,7 +10593,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			ADD4_7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Address of the USART node"}
 				ec.Field : {bitoffset:28, bitwidth:4}
@@ -10681,7 +10681,7 @@ peripherals {
 		}
 		CR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 3"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			TXFTCFG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TXFIFO threshold\n              configuration"}
 				ec.Field : {bitoffset:29, bitwidth:3}
@@ -10781,7 +10781,7 @@ peripherals {
 		}
 		BRR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Baud rate register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			BRR_4_15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"BRR_4_15"}
 				ec.Field : {bitoffset:4, bitwidth:12}
@@ -10793,7 +10793,7 @@ peripherals {
 		}
 		GTPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Guard time and prescaler\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			GT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Guard time value"}
 				ec.Field : {bitoffset:8, bitwidth:8}
@@ -10805,7 +10805,7 @@ peripherals {
 		}
 		RTOR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Receiver timeout register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			BLEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Block Length"}
 				ec.Field : {bitoffset:24, bitwidth:8}
@@ -10817,7 +10817,7 @@ peripherals {
 		}
 		RQR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Request register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			TXFRQ {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data flush\n              request"}
 				ec.Field : {bitoffset:4, bitwidth:1}
@@ -10841,7 +10841,7 @@ peripherals {
 		}
 		ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt & status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			TXFT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TXFIFO threshold flag"}
 				ec.Field : {bitoffset:27, bitwidth:1}
@@ -10957,7 +10957,7 @@ peripherals {
 		}
 		ICR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt flag clear register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			WUCF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Wakeup from Stop mode clear\n              flag"}
 				ec.Field : {bitoffset:20, bitwidth:1}
@@ -11021,7 +11021,7 @@ peripherals {
 		}
 		RDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Receive data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			RDR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Receive data value"}
 				ec.Field : {bitoffset:0, bitwidth:9}
@@ -11029,7 +11029,7 @@ peripherals {
 		}
 		TDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			TDR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data value"}
 				ec.Field : {bitoffset:0, bitwidth:9}
@@ -11037,7 +11037,7 @@ peripherals {
 		}
 		PRESC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			PRESCALER {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Clock prescaler"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -11049,7 +11049,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Serial peripheral interface/Inter-IC\n      sound"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			BIDIMODE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Bidirectional data mode\n              enable"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -11109,7 +11109,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			RXDMAEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Rx buffer DMA enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11161,7 +11161,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			RXNE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Receive buffer not empty"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11209,7 +11209,7 @@ peripherals {
 		}
 		DR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			DR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Data register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11217,7 +11217,7 @@ peripherals {
 		}
 		CRCPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"CRC polynomial register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CRCPOLY {
 				(flecs.doc.Description, flecs.doc.Brief) : {"CRC polynomial register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11225,7 +11225,7 @@ peripherals {
 		}
 		RXCRCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RX CRC register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			RxCRC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Rx CRC register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11233,7 +11233,7 @@ peripherals {
 		}
 		TXCRCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TX CRC register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			TxCRC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Tx CRC register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11241,7 +11241,7 @@ peripherals {
 		}
 		I2SCFGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			CHLEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Channel length (number of bits per audio\n              channel)"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11277,7 +11277,7 @@ peripherals {
 		}
 		I2SPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			I2SDIV {
 				(flecs.doc.Description, flecs.doc.Brief) : {"linear prescaler"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -11297,7 +11297,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Serial peripheral interface/Inter-IC\n      sound"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			BIDIMODE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Bidirectional data mode\n              enable"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -11357,7 +11357,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			RXDMAEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Rx buffer DMA enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11409,7 +11409,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			RXNE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Receive buffer not empty"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11457,7 +11457,7 @@ peripherals {
 		}
 		DR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			DR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Data register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11465,7 +11465,7 @@ peripherals {
 		}
 		CRCPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"CRC polynomial register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CRCPOLY {
 				(flecs.doc.Description, flecs.doc.Brief) : {"CRC polynomial register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11473,7 +11473,7 @@ peripherals {
 		}
 		RXCRCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RX CRC register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			RxCRC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Rx CRC register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11481,7 +11481,7 @@ peripherals {
 		}
 		TXCRCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TX CRC register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			TxCRC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Tx CRC register"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -11489,7 +11489,7 @@ peripherals {
 		}
 		I2SCFGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"configuration register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			CHLEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Channel length (number of bits per audio\n              channel)"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11525,7 +11525,7 @@ peripherals {
 		}
 		I2SPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			I2SDIV {
 				(flecs.doc.Description, flecs.doc.Brief) : {"linear prescaler"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -11545,7 +11545,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Advanced-timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			CEN {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Counter enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11585,7 +11585,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			MMS2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Master mode selection 2"}
 				ec.Field : {bitoffset:20, bitwidth:4}
@@ -11649,7 +11649,7 @@ peripherals {
 		}
 		SMCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"slave mode control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			SMS {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Slave mode selection"}
 				ec.Field : {bitoffset:0, bitwidth:3}
@@ -11693,7 +11693,7 @@ peripherals {
 		}
 		DIER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA/Interrupt enable register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			UIE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Update interrupt enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11757,7 +11757,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			UIF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Update interrupt flag"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11825,7 +11825,7 @@ peripherals {
 		}
 		EGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"event generation register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			UG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Update generation"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -11865,7 +11865,7 @@ peripherals {
 		}
 		CCMR1_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			CC1S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1\n              selection"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -11917,7 +11917,7 @@ peripherals {
 		}
 		CCMR1_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			CC1S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1\n              selection"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -11961,7 +11961,7 @@ peripherals {
 		}
 		CCMR2_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 2 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			CC3S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 3\n              selection"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -12013,7 +12013,7 @@ peripherals {
 		}
 		CCMR2_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 2 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			CC3S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 3\n              selection"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -12057,7 +12057,7 @@ peripherals {
 		}
 		CCER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			CC1E {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 output\n              enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12137,7 +12137,7 @@ peripherals {
 		}
 		CNT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"counter"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			CNT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"counter value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12149,7 +12149,7 @@ peripherals {
 		}
 		PSC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			PSC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12157,7 +12157,7 @@ peripherals {
 		}
 		ARR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"auto-reload register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			ARR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Auto-reload value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12165,7 +12165,7 @@ peripherals {
 		}
 		RCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"repetition counter register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			REP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Repetition counter value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12173,7 +12173,7 @@ peripherals {
 		}
 		CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			CCR1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12181,7 +12181,7 @@ peripherals {
 		}
 		CCR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			CCR2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 2 value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12189,7 +12189,7 @@ peripherals {
 		}
 		CCR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 3"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3C}
 			CCR3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12197,7 +12197,7 @@ peripherals {
 		}
 		CCR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 4"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x40}
 			CCR4 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12205,7 +12205,7 @@ peripherals {
 		}
 		BDTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"break and dead-time register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			DTG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Dead-time generator setup"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -12273,7 +12273,7 @@ peripherals {
 		}
 		DCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			DBL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA burst length"}
 				ec.Field : {bitoffset:8, bitwidth:5}
@@ -12285,7 +12285,7 @@ peripherals {
 		}
 		DMAR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA address for full transfer"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			DMAB {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA register for burst\n              accesses"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12293,7 +12293,7 @@ peripherals {
 		}
 		OR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"option register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			OCREF_CLR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Ocref_clr source selection"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12301,7 +12301,7 @@ peripherals {
 		}
 		CCMR3_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 2 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x54}
 			OC6M_bit3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Compare 6 mode bit\n              3"}
 				ec.Field : {bitoffset:24, bitwidth:1}
@@ -12345,7 +12345,7 @@ peripherals {
 		}
 		CCR5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 4"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x58}
 			CCR5 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12365,7 +12365,7 @@ peripherals {
 		}
 		CCR6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 4"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x5C}
 			CCR6 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -12373,7 +12373,7 @@ peripherals {
 		}
 		AF1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA address for full transfer"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			BKINE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"BRK BKIN input enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12405,7 +12405,7 @@ peripherals {
 		}
 		AF2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA address for full transfer"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x64}
 			BK2INE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"BRK2 BKIN input enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12437,7 +12437,7 @@ peripherals {
 		}
 		TISEL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM1 timer input selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x68}
 			TI1SEL3_0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"selects TI1[0] to TI1[15]\n              input"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -12461,7 +12461,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"System configuration controller"}
 		CFGR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"SYSCFG configuration register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			I2C3_FMP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"I2C3_FMP"}
 				ec.Field : {bitoffset:24, bitwidth:1}
@@ -12533,7 +12533,7 @@ peripherals {
 		}
 		CFGR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"SYSCFG configuration register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			LOCKUP_LOCK {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Cortex-M0+ LOCKUP bit enable\n              bit"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12553,7 +12553,7 @@ peripherals {
 		}
 		ITLINE0 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 0 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x80}
 			WWDG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Window watchdog interrupt pending\n              flag"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12561,7 +12561,7 @@ peripherals {
 		}
 		ITLINE2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 2 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x88}
 			TAMP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TAMP"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12573,7 +12573,7 @@ peripherals {
 		}
 		ITLINE3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 3 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8C}
 			FLASH_ITF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"FLASH_ITF"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12585,7 +12585,7 @@ peripherals {
 		}
 		ITLINE4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 4 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x90}
 			RCC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"RCC"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12593,7 +12593,7 @@ peripherals {
 		}
 		ITLINE5 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 5 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x94}
 			EXTI0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"EXTI0"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12605,7 +12605,7 @@ peripherals {
 		}
 		ITLINE6 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 6 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x98}
 			EXTI2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"EXTI2"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12617,7 +12617,7 @@ peripherals {
 		}
 		ITLINE7 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 7 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x9C}
 			EXTI4 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"EXTI4"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12669,7 +12669,7 @@ peripherals {
 		}
 		ITLINE8 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 8 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xA0}
 			USB {
 				(flecs.doc.Description, flecs.doc.Brief) : {"USB"}
 				ec.Field : {bitoffset:2, bitwidth:1}
@@ -12677,7 +12677,7 @@ peripherals {
 		}
 		ITLINE9 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 9 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xA4}
 			DMA1_CH1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA1_CH1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12685,7 +12685,7 @@ peripherals {
 		}
 		ITLINE10 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 10 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xA8}
 			DMA1_CH2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA1_CH1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12697,7 +12697,7 @@ peripherals {
 		}
 		ITLINE11 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 11 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xAC}
 			DMAMUX {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMAMUX"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12741,7 +12741,7 @@ peripherals {
 		}
 		ITLINE12 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 12 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xB0}
 			ADC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ADC"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12749,7 +12749,7 @@ peripherals {
 		}
 		ITLINE13 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 13 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xB4}
 			TIM1_CCU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM1_CCU"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12769,7 +12769,7 @@ peripherals {
 		}
 		ITLINE14 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 14 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xB8}
 			TIM1_CC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM1_CC"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12777,7 +12777,7 @@ peripherals {
 		}
 		ITLINE16 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 16 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC0}
 			TIM3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM3"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12789,7 +12789,7 @@ peripherals {
 		}
 		ITLINE17 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 17 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC4}
 			TIM6 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM6"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12797,7 +12797,7 @@ peripherals {
 		}
 		ITLINE18 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 18 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC8}
 			TIM7 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM7"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12805,7 +12805,7 @@ peripherals {
 		}
 		ITLINE19 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 19 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xCC}
 			TIM14 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM14"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12813,7 +12813,7 @@ peripherals {
 		}
 		ITLINE20 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 20 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xD0}
 			TIM15 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM15"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12821,7 +12821,7 @@ peripherals {
 		}
 		ITLINE21 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 21 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xD4}
 			TIM16 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM16"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12829,7 +12829,7 @@ peripherals {
 		}
 		ITLINE22 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 22 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xD8}
 			TIM17 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM17"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12837,7 +12837,7 @@ peripherals {
 		}
 		ITLINE23 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 23 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xDC}
 			I2C1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"I2C1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12845,7 +12845,7 @@ peripherals {
 		}
 		ITLINE24 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 24 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xE0}
 			I2C2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"I2C2"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12857,7 +12857,7 @@ peripherals {
 		}
 		ITLINE25 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 25 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xE4}
 			SPI1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"SPI1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12865,7 +12865,7 @@ peripherals {
 		}
 		ITLINE26 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 26 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xE8}
 			SPI2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"SPI2"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12877,7 +12877,7 @@ peripherals {
 		}
 		ITLINE27 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 27 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xEC}
 			USART1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"USART1"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12885,7 +12885,7 @@ peripherals {
 		}
 		ITLINE28 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 28 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xF0}
 			USART2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"USART2"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12893,7 +12893,7 @@ peripherals {
 		}
 		ITLINE29 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"interrupt line 29 status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xF4}
 			USART3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"USART3"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12917,7 +12917,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Tamper and backup registers"}
 		TAMP_CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP control register 1 "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			TAMP1E {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Tamper detection on TAMP_IN1 enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12949,7 +12949,7 @@ peripherals {
 		}
 		TAMP_CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP control register 2 "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			TAMP1NOER {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Tamper 1 no erase"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -12989,7 +12989,7 @@ peripherals {
 		}
 		TAMP_FLTCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP filter control register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0xc}
 			TAMPFREQ {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Tamper sampling frequency\nDetermines the frequency at which each of the TAMP_INx inputs are sampled."}
 				ec.Field : {bitoffset:0, bitwidth:3}
@@ -13009,7 +13009,7 @@ peripherals {
 		}
 		TAMP_IER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP interrupt enable register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2c}
 			TAMP1IE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Tamper 1 interrupt enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13041,7 +13041,7 @@ peripherals {
 		}
 		TAMP_SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP status register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			TAMP1F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TAMP1 detection flag\nThis flag is set by hardware when a tamper detection event is detected on the TAMP1 input."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13073,7 +13073,7 @@ peripherals {
 		}
 		TAMP_MISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP masked interrupt status register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			TAMP1MF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TAMP1 interrupt masked flag\nThis flag is set by hardware when the tamper 1 interrupt is raised."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13105,7 +13105,7 @@ peripherals {
 		}
 		TAMP_SCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP status clear register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3c}
 			CTAMP1F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Clear TAMP1 detection flag\nWriting 1 in this bit clears the TAMP1F bit in the TAMP_SR register."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13137,7 +13137,7 @@ peripherals {
 		}
 		TAMP_BKP0R {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP backup 0 register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x100}
 			BKP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"The application can write or read data to and from these registers.\nThey are powered-on by VBAT when VDD is switched off, so that they are not reset by System reset, and their contents remain valid when the device operates in low-power mode.\nIn the defaul"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -13145,7 +13145,7 @@ peripherals {
 		}
 		TAMP_BKP1R {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP backup 1 register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x104}
 			BKP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"The application can write or read data to and from these registers.\nThey are powered-on by VBAT when VDD is switched off, so that they are not reset by System reset, and their contents remain valid when the device operates in low-power mode.\nIn the defaul"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -13153,7 +13153,7 @@ peripherals {
 		}
 		TAMP_BKP2R {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP backup 2 register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x108}
 			BKP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"The application can write or read data to and from these registers.\nThey are powered-on by VBAT when VDD is switched off, so that they are not reset by System reset, and their contents remain valid when the device operates in low-power mode.\nIn the defaul"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -13161,7 +13161,7 @@ peripherals {
 		}
 		TAMP_BKP3R {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP backup 3 register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10c}
 			BKP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"The application can write or read data to and from these registers.\nThey are powered-on by VBAT when VDD is switched off, so that they are not reset by System reset, and their contents remain valid when the device operates in low-power mode.\nIn the defaul"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -13169,7 +13169,7 @@ peripherals {
 		}
 		TAMP_BKP4R {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TAMP backup 4 register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x110}
 			BKP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"The application can write or read data to and from these registers.\nThey are powered-on by VBAT when VDD is switched off, so that they are not reset by System reset, and their contents remain valid when the device operates in low-power mode.\nIn the defaul"}
 				ec.Field : {bitoffset:0, bitwidth:32}
@@ -13181,7 +13181,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Inter-integrated circuit"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			PE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Peripheral enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13265,7 +13265,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			PECBYTE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Packet error checking byte"}
 				ec.Field : {bitoffset:26, bitwidth:1}
@@ -13313,7 +13313,7 @@ peripherals {
 		}
 		OAR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Own address register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			OA1_0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Interface address"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13337,7 +13337,7 @@ peripherals {
 		}
 		OAR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Own address register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			OA2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Interface address"}
 				ec.Field : {bitoffset:1, bitwidth:7}
@@ -13353,7 +13353,7 @@ peripherals {
 		}
 		TIMINGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Timing register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			SCLL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"SCL low period (master\n              mode)"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13377,7 +13377,7 @@ peripherals {
 		}
 		TIMEOUTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Status register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			TIMEOUTA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Bus timeout A"}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -13401,7 +13401,7 @@ peripherals {
 		}
 		ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt and Status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			ADDCODE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Address match code (Slave\n              mode)"}
 				ec.Field : {bitoffset:17, bitwidth:7}
@@ -13473,7 +13473,7 @@ peripherals {
 		}
 		ICR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt clear register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			ALERTCF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alert flag clear"}
 				ec.Field : {bitoffset:13, bitwidth:1}
@@ -13513,7 +13513,7 @@ peripherals {
 		}
 		PECR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"PEC register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			PEC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Packet error checking\n              register"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13521,7 +13521,7 @@ peripherals {
 		}
 		RXDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Receive data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			RXDATA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"8-bit receive data"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13529,7 +13529,7 @@ peripherals {
 		}
 		TXDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			TXDATA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"8-bit transmit data"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13541,7 +13541,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Inter-integrated circuit"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			PE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Peripheral enable"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13625,7 +13625,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			PECBYTE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Packet error checking byte"}
 				ec.Field : {bitoffset:26, bitwidth:1}
@@ -13673,7 +13673,7 @@ peripherals {
 		}
 		OAR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Own address register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			OA1_0 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Interface address"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -13697,7 +13697,7 @@ peripherals {
 		}
 		OAR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Own address register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			OA2 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Interface address"}
 				ec.Field : {bitoffset:1, bitwidth:7}
@@ -13713,7 +13713,7 @@ peripherals {
 		}
 		TIMINGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Timing register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			SCLL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"SCL low period (master\n              mode)"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13737,7 +13737,7 @@ peripherals {
 		}
 		TIMEOUTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Status register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			TIMEOUTA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Bus timeout A"}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -13761,7 +13761,7 @@ peripherals {
 		}
 		ISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt and Status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			ADDCODE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Address match code (Slave\n              mode)"}
 				ec.Field : {bitoffset:17, bitwidth:7}
@@ -13833,7 +13833,7 @@ peripherals {
 		}
 		ICR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Interrupt clear register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			ALERTCF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alert flag clear"}
 				ec.Field : {bitoffset:13, bitwidth:1}
@@ -13873,7 +13873,7 @@ peripherals {
 		}
 		PECR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"PEC register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			PEC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Packet error checking\n              register"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13881,7 +13881,7 @@ peripherals {
 		}
 		RXDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Receive data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			RXDATA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"8-bit receive data"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13889,7 +13889,7 @@ peripherals {
 		}
 		TXDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Transmit data register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			TXDATA {
 				(flecs.doc.Description, flecs.doc.Brief) : {"8-bit transmit data"}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -13901,7 +13901,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"Real-time clock"}
 		RTC_TR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC time register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			SU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Second units in BCD format"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -13933,7 +13933,7 @@ peripherals {
 		}
 		RTC_DR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC date register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			DU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Date units in BCD format"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -13965,7 +13965,7 @@ peripherals {
 		}
 		RTC_SSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC sub second register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			SS {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Sub second value\nSS[15:0] is the value in the synchronous prescaler counter. The fraction of a second is given by the formula below:\nSecond fraction = (PREDIV_S - SS) / (PREDIV_S + 1)\nNote: SS can be larger than PREDIV_S only after a shift operation. In t"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -13973,7 +13973,7 @@ peripherals {
 		}
 		RTC_ICSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC initialization control and status register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0xc}
 			ALRAWF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alarm A write flag\nThis bit is set by hardware when alarm A values can be changed, after the ALRAE bit has been set to 0 in RTC_CR.\nIt is cleared by hardware in initialization mode."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -14013,7 +14013,7 @@ peripherals {
 		}
 		RTC_PRER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC prescaler register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			PREDIV_S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Synchronous prescaler factor\nThis is the synchronous division factor:\nck_spre frequency = ck_apre frequency/(PREDIV_S+1)"}
 				ec.Field : {bitoffset:0, bitwidth:15}
@@ -14025,7 +14025,7 @@ peripherals {
 		}
 		RTC_WUTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC wakeup timer register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			WUT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Wakeup auto-reload value bits\nWhen the wakeup timer is enabled (WUTE set to 1), the WUTF flag is set every (WUT[15:0]+1) ck_wut cycles. The ck_wut period is selected through WUCKSEL[2:0] bits of the RTC_CR register.\nWhen WUCKSEL[2] = 1, the wakeup timer b"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -14033,7 +14033,7 @@ peripherals {
 		}
 		RTC_CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			WUCKSEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"ck_wut wakeup clock selection\n10x: ck_spre (usually 1Hz) clock is selected\n11x: ck_spre (usually 1Hz) clock is selected and 216is added to the WUT counter value"}
 				ec.Field : {bitoffset:0, bitwidth:3}
@@ -14141,7 +14141,7 @@ peripherals {
 		}
 		RTC_WPR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"write protection register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			KEY {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Write protection key\nThis byte is written by software.\nReading this byte always returns 0x00.\nRefer to  for a description of how to unlock RTC register write protection."}
 				ec.Field : {bitoffset:0, bitwidth:8}
@@ -14149,7 +14149,7 @@ peripherals {
 		}
 		RTC_CALR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC calibration register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			CALM {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Calibration minus\nThe frequency of the calendar is reduced by masking CALM out of 220 RTCCLK pulses (32 seconds if the input frequency is 32768Hz). This decreases the frequency of the calendar with a resolution of 0.9537ppm.\nTo increase the frequency of t"}
 				ec.Field : {bitoffset:0, bitwidth:9}
@@ -14169,7 +14169,7 @@ peripherals {
 		}
 		RTC_SHIFTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC shift control register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2c}
 			SUBFS {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Subtract a fraction of a second\nThese bits are write only and is always read as zero. Writing to this bit has no effect when a shift operation is pending (when SHPF = 1, in RTC_ICSR).\nThe value which is written to SUBFS is added to the synchronous prescal"}
 				ec.Field : {bitoffset:0, bitwidth:15}
@@ -14181,7 +14181,7 @@ peripherals {
 		}
 		RTC_TSTR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC timestamp time register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x30}
 			SU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Second units in BCD format."}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -14213,7 +14213,7 @@ peripherals {
 		}
 		RTC_TSDR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC timestamp date register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			DU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Date units in BCD format"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -14237,7 +14237,7 @@ peripherals {
 		}
 		RTC_TSSSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC timestamp sub second register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			SS {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Sub second value\nSS[15:0] is the value of the synchronous prescaler counter when the timestamp event occurred."}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -14245,7 +14245,7 @@ peripherals {
 		}
 		RTC_ALRMAR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC alarm A register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x40}
 			SU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Second units in BCD format."}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -14305,7 +14305,7 @@ peripherals {
 		}
 		RTC_ALRMASSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC alarm A sub second register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x44}
 			SS {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Sub seconds value\nThis value is compared with the contents of the synchronous prescaler counter to determine if alarm A is to be activated. Only bits 0 up MASKSS-1 are compared."}
 				ec.Field : {bitoffset:0, bitwidth:15}
@@ -14317,7 +14317,7 @@ peripherals {
 		}
 		RTC_ALRMBR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC alarm B register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			SU {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Second units in BCD format"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -14377,7 +14377,7 @@ peripherals {
 		}
 		RTC_ALRMBSSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC alarm B sub second register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4c}
 			SS {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Sub seconds value\nThis value is compared with the contents of the synchronous prescaler counter to determine if alarm B is to be activated. Only bits 0 up to MASKSS-1 are compared."}
 				ec.Field : {bitoffset:0, bitwidth:15}
@@ -14389,7 +14389,7 @@ peripherals {
 		}
 		RTC_SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC status register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			ALRAF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alarm A flag\nThis flag is set by hardware when the time/date registers (RTC_TR and RTC_DR) match the alarm A register (RTC_ALRMAR)."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -14417,7 +14417,7 @@ peripherals {
 		}
 		RTC_MISR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC masked interrupt status register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x54}
 			ALRAMF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Alarm A masked flag\nThis flag is set by hardware when the alarm A interrupt occurs."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -14445,7 +14445,7 @@ peripherals {
 		}
 		RTC_SCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"RTC status clear register "}
-			ec.Register : {address:0}
+			ec.Register : {address:0x5c}
 			CALRAF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Clear alarm A flag\nWriting 1 in this bit clears the ALRAF bit in the RTC_SR register."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -14477,7 +14477,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General purpose timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			UIFREMAP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"UIF status bit remapping"}
 				ec.Field : {bitoffset:11, bitwidth:1}
@@ -14509,7 +14509,7 @@ peripherals {
 		}
 		DIER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA/Interrupt enable register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			CC1IE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 interrupt\n              enable"}
 				ec.Field : {bitoffset:1, bitwidth:1}
@@ -14521,7 +14521,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CC1OF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 overcapture\n              flag"}
 				ec.Field : {bitoffset:9, bitwidth:1}
@@ -14537,7 +14537,7 @@ peripherals {
 		}
 		EGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"event generation register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			CC1G {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/compare 1\n              generation"}
 				ec.Field : {bitoffset:1, bitwidth:1}
@@ -14549,7 +14549,7 @@ peripherals {
 		}
 		CCMR1_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			CC1S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"CC1S"}
 				ec.Field : {bitoffset:0, bitwidth:2}
@@ -14577,7 +14577,7 @@ peripherals {
 		}
 		CCMR1_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (input\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			IC1F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input capture 1 filter"}
 				ec.Field : {bitoffset:4, bitwidth:4}
@@ -14593,7 +14593,7 @@ peripherals {
 		}
 		CCER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			CC1NP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 1 output\n              Polarity"}
 				ec.Field : {bitoffset:3, bitwidth:1}
@@ -14609,7 +14609,7 @@ peripherals {
 		}
 		CNT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"counter"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			CNT {
 				(flecs.doc.Description, flecs.doc.Brief) : {"low counter value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -14621,7 +14621,7 @@ peripherals {
 		}
 		PSC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			PSC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -14629,7 +14629,7 @@ peripherals {
 		}
 		ARR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"auto-reload register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			ARR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Low Auto-reload value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -14637,7 +14637,7 @@ peripherals {
 		}
 		CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			CCR1 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Low Capture/Compare 1\n              value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -14645,7 +14645,7 @@ peripherals {
 		}
 		TISEL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM timer input selection\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x68}
 			TISEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TI1[0] to TI1[15] input\n              selection"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -14657,7 +14657,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose-timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			UIFREMAP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"UIF status bit remapping"}
 				ec.Field : {bitoffset:11, bitwidth:1}
@@ -14697,7 +14697,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			TI1S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TI1 selection"}
 				ec.Field : {bitoffset:7, bitwidth:1}
@@ -14713,7 +14713,7 @@ peripherals {
 		}
 		SMCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"slave mode control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			TS_4_3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trigger selection"}
 				ec.Field : {bitoffset:20, bitwidth:2}
@@ -14757,7 +14757,7 @@ peripherals {
 		}
 		DIER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA/Interrupt enable register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			TDE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trigger DMA request enable"}
 				ec.Field : {bitoffset:14, bitwidth:1}
@@ -14809,7 +14809,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CC4OF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 4 overcapture\n              flag"}
 				ec.Field : {bitoffset:12, bitwidth:1}
@@ -14853,7 +14853,7 @@ peripherals {
 		}
 		EGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"event generation register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			TG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trigger generation"}
 				ec.Field : {bitoffset:6, bitwidth:1}
@@ -14881,7 +14881,7 @@ peripherals {
 		}
 		CCMR1_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			OC2M_3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Compare 2 mode - bit\n              3"}
 				ec.Field : {bitoffset:24, bitwidth:1}
@@ -14933,7 +14933,7 @@ peripherals {
 		}
 		CCMR1_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (input\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			IC2F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input capture 2 filter"}
 				ec.Field : {bitoffset:12, bitwidth:4}
@@ -14961,7 +14961,7 @@ peripherals {
 		}
 		CCMR2_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 2 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			OC4M_3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Compare 4 mode - bit\n              3"}
 				ec.Field : {bitoffset:24, bitwidth:1}
@@ -15013,7 +15013,7 @@ peripherals {
 		}
 		CCMR2_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 2 (input\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			IC4F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input capture 4 filter"}
 				ec.Field : {bitoffset:12, bitwidth:4}
@@ -15041,7 +15041,7 @@ peripherals {
 		}
 		CCER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			CC4NP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 4 output\n              Polarity"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -15093,7 +15093,7 @@ peripherals {
 		}
 		CNT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"counter"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			CNT_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High counter value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15105,7 +15105,7 @@ peripherals {
 		}
 		PSC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			PSC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -15113,7 +15113,7 @@ peripherals {
 		}
 		ARR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"auto-reload register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			ARR_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Auto-reload value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15125,7 +15125,7 @@ peripherals {
 		}
 		CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			CCR1_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare 1 value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15137,7 +15137,7 @@ peripherals {
 		}
 		CCR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			CCR2_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare 2 value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15149,7 +15149,7 @@ peripherals {
 		}
 		CCR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 3"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3C}
 			CCR3_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15161,7 +15161,7 @@ peripherals {
 		}
 		CCR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 4"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x40}
 			CCR4_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15173,7 +15173,7 @@ peripherals {
 		}
 		DCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			DBL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA burst length"}
 				ec.Field : {bitoffset:8, bitwidth:5}
@@ -15185,7 +15185,7 @@ peripherals {
 		}
 		DMAR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA address for full transfer"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			DMAB {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA register for burst\n              accesses"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -15193,7 +15193,7 @@ peripherals {
 		}
 		OR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM option register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			IOCREF_CLR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"IOCREF_CLR"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -15201,7 +15201,7 @@ peripherals {
 		}
 		AF1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM alternate function option register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			ETRSEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"External trigger source\n              selection"}
 				ec.Field : {bitoffset:14, bitwidth:4}
@@ -15209,7 +15209,7 @@ peripherals {
 		}
 		TISEL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM alternate function option register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x68}
 			TI1SEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TI1SEL"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -15225,7 +15225,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"General-purpose-timers"}
 		CR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			UIFREMAP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"UIF status bit remapping"}
 				ec.Field : {bitoffset:11, bitwidth:1}
@@ -15265,7 +15265,7 @@ peripherals {
 		}
 		CR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"control register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			TI1S {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TI1 selection"}
 				ec.Field : {bitoffset:7, bitwidth:1}
@@ -15281,7 +15281,7 @@ peripherals {
 		}
 		SMCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"slave mode control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			TS_4_3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trigger selection"}
 				ec.Field : {bitoffset:20, bitwidth:2}
@@ -15325,7 +15325,7 @@ peripherals {
 		}
 		DIER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA/Interrupt enable register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			TDE {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trigger DMA request enable"}
 				ec.Field : {bitoffset:14, bitwidth:1}
@@ -15377,7 +15377,7 @@ peripherals {
 		}
 		SR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"status register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x10}
 			CC4OF {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 4 overcapture\n              flag"}
 				ec.Field : {bitoffset:12, bitwidth:1}
@@ -15421,7 +15421,7 @@ peripherals {
 		}
 		EGR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"event generation register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x14}
 			TG {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trigger generation"}
 				ec.Field : {bitoffset:6, bitwidth:1}
@@ -15449,7 +15449,7 @@ peripherals {
 		}
 		CCMR1_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			OC2M_3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Compare 2 mode - bit\n              3"}
 				ec.Field : {bitoffset:24, bitwidth:1}
@@ -15501,7 +15501,7 @@ peripherals {
 		}
 		CCMR1_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 1 (input\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x18}
 			IC2F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input capture 2 filter"}
 				ec.Field : {bitoffset:12, bitwidth:4}
@@ -15529,7 +15529,7 @@ peripherals {
 		}
 		CCMR2_Output {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 2 (output\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			OC4M_3 {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Output Compare 4 mode - bit\n              3"}
 				ec.Field : {bitoffset:24, bitwidth:1}
@@ -15581,7 +15581,7 @@ peripherals {
 		}
 		CCMR2_Input {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare mode register 2 (input\n          mode)"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x1C}
 			IC4F {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Input capture 4 filter"}
 				ec.Field : {bitoffset:12, bitwidth:4}
@@ -15609,7 +15609,7 @@ peripherals {
 		}
 		CCER {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare enable\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x20}
 			CC4NP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Capture/Compare 4 output\n              Polarity"}
 				ec.Field : {bitoffset:15, bitwidth:1}
@@ -15661,7 +15661,7 @@ peripherals {
 		}
 		CNT {
 			(flecs.doc.Description, flecs.doc.Brief) : {"counter"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x24}
 			CNT_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High counter value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15673,7 +15673,7 @@ peripherals {
 		}
 		PSC {
 			(flecs.doc.Description, flecs.doc.Brief) : {"prescaler"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x28}
 			PSC {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Prescaler value"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -15681,7 +15681,7 @@ peripherals {
 		}
 		ARR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"auto-reload register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x2C}
 			ARR_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Auto-reload value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15693,7 +15693,7 @@ peripherals {
 		}
 		CCR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x34}
 			CCR1_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare 1 value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15705,7 +15705,7 @@ peripherals {
 		}
 		CCR2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x38}
 			CCR2_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare 2 value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15717,7 +15717,7 @@ peripherals {
 		}
 		CCR3 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 3"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x3C}
 			CCR3_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15729,7 +15729,7 @@ peripherals {
 		}
 		CCR4 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"capture/compare register 4"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x40}
 			CCR4_H {
 				(flecs.doc.Description, flecs.doc.Brief) : {"High Capture/Compare value (TIM2\n              only)"}
 				ec.Field : {bitoffset:16, bitwidth:16}
@@ -15741,7 +15741,7 @@ peripherals {
 		}
 		DCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA control register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x48}
 			DBL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA burst length"}
 				ec.Field : {bitoffset:8, bitwidth:5}
@@ -15753,7 +15753,7 @@ peripherals {
 		}
 		DMAR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DMA address for full transfer"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4C}
 			DMAB {
 				(flecs.doc.Description, flecs.doc.Brief) : {"DMA register for burst\n              accesses"}
 				ec.Field : {bitoffset:0, bitwidth:16}
@@ -15761,7 +15761,7 @@ peripherals {
 		}
 		OR1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM option register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x50}
 			IOCREF_CLR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"IOCREF_CLR"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -15769,7 +15769,7 @@ peripherals {
 		}
 		AF1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM alternate function option register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x60}
 			ETRSEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"External trigger source\n              selection"}
 				ec.Field : {bitoffset:14, bitwidth:4}
@@ -15777,7 +15777,7 @@ peripherals {
 		}
 		TISEL {
 			(flecs.doc.Description, flecs.doc.Brief) : {"TIM alternate function option register\n          1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x68}
 			TI1SEL {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TI1SEL"}
 				ec.Field : {bitoffset:0, bitwidth:4}
@@ -15793,7 +15793,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"System configuration controller"}
 		CSR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"VREFBUF control and status\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			ENVR {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Voltage reference buffer mode enable\n              This bit is used to enable the voltage reference\n              buffer mode."}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -15813,7 +15813,7 @@ peripherals {
 		}
 		CCR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"VREFBUF calibration control\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			TRIM {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Trimming code These bits are\n              automatically initialized after reset with the\n              trimming value stored in the Flash memory during the\n              production test. Writing into these bits allows to\n              tune the internal r"}
 				ec.Field : {bitoffset:0, bitwidth:6}
@@ -15825,7 +15825,7 @@ peripherals {
 		(flecs.doc.Description, flecs.doc.Brief) : {"MCU debug component"}
 		IDCODE {
 			(flecs.doc.Description, flecs.doc.Brief) : {"DBGMCU_IDCODE"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x0}
 			DEV_ID {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Device identifier"}
 				ec.Field : {bitoffset:0, bitwidth:12}
@@ -15837,7 +15837,7 @@ peripherals {
 		}
 		CR {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Debug MCU configuration\n          register"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x4}
 			DBG_STOP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"Debug Stop mode"}
 				ec.Field : {bitoffset:1, bitwidth:1}
@@ -15849,7 +15849,7 @@ peripherals {
 		}
 		APB_FZ1 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Debug MCU APB1 freeze\n          register1"}
-			ec.Register : {address:0}
+			ec.Register : {address:0x8}
 			DBG_TIM2_STOP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM2 counter stopped when core is\n              halted"}
 				ec.Field : {bitoffset:0, bitwidth:1}
@@ -15877,7 +15877,7 @@ peripherals {
 		}
 		APB_FZ2 {
 			(flecs.doc.Description, flecs.doc.Brief) : {"Debug MCU APB1 freeze register\n          2"}
-			ec.Register : {address:0}
+			ec.Register : {address:0xC}
 			DBG_TIM1_STOP {
 				(flecs.doc.Description, flecs.doc.Brief) : {"TIM1 counter stopped when core is\n              halted"}
 				ec.Field : {bitoffset:11, bitwidth:1}

@@ -83,21 +83,25 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			*/
 			bool a = gui_tree(name);
 
-			EcField const * field = ecs_get(world, it.entities[i], EcField);
-			if (field) {
-				gui_table_next_column();
-				char str[32];
-				snprintf(str, sizeof(str), "%d", field->bitoffset);
-				gui_text(str);
-				gui_table_next_column();
-				snprintf(str, sizeof(str), "%d", field->bitwidth);
-				gui_text(str);
-			} else {
-				gui_table_next_column();
-				gui_text("");
-				gui_table_next_column();
-				gui_text("");
+			char str1[32] = {};
+			char str2[32] = {};
+			char str3[32] = {};
+			EcRegister const *reg = ecs_get(world, it.entities[i], EcRegister);
+			if (reg) {
+				snprintf(str1, sizeof(str1), "%d", reg->address);
 			}
+			EcField const *field = ecs_get(world, it.entities[i], EcField);
+			if (field) {
+				snprintf(str2, sizeof(str2), "%d", field->bitoffset);
+				snprintf(str3, sizeof(str3), "%d", field->bitwidth);
+			}
+
+			gui_table_next_column();
+			gui_text(str1);
+			gui_table_next_column();
+			gui_text(str2);
+			gui_table_next_column();
+			gui_text(str3);
 
 			if (a) {
 				draw_tree(world, it.entities[i], ex);
@@ -109,11 +113,12 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 
 void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 {
-	bool a = gui_table_begin("Peripherals", 3, 0);
+	bool a = gui_table_begin("Peripherals", 4, 0);
 	if (a == false) {
 		return;
 	}
 	gui_table_setup_column("Name", 128, 0);
+	gui_table_setup_column("address", 16, 12.0f);
 	gui_table_setup_column("bitoffset", 16, 12.0f);
 	gui_table_setup_column("bitwidth", 16, 18.0f);
 	gui_table_header_row();
@@ -164,6 +169,18 @@ int main(int argc, char *argv[])
 		{
 		.terms = {
 		{.id = ecs_id(EcSignal)},
+		},
+		});
+		eg_reparent_by_subname(world, names, q);
+		ecs_query_fini(q);
+	}
+
+	{
+		char const *names[] = {"PA", "PB", "PC", "PD", "PF", NULL};
+		ecs_query_t *q = ecs_query(world,
+		{
+		.terms = {
+		{.id = ecs_id(EcPin)},
 		},
 		});
 		eg_reparent_by_subname(world, names, q);

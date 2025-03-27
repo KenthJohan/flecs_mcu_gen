@@ -9,7 +9,7 @@ typedef struct {
 
 void result_indent(result_t *result);
 void result_flecs_description(result_t *result, const char *description);
-void result_flecs_register(result_t *result, uint32_t address);
+void result_flecs_register(result_t *result, const char *address);
 void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth);
 void result_flecs_entity_open(result_t *result, const char *name);
 void result_flecs_entity_close(result_t *result);
