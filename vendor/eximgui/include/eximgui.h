@@ -16,6 +16,7 @@ typedef struct {
 	SDL_GPUDevice *gpu_device;
 	void * query1;
 	void * query2;
+	void * query3;
 } eximgui_t;
 
 

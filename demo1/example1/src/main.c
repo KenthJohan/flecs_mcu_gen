@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <flecs.h>
-#include "Ec.h"
 #include <eximgui.h>
+#include "Ec.h"
+#include "eg_reparent.h"
 
 static void Sys_GuiListPins(ecs_iter_t *it)
 {
@@ -65,59 +66,26 @@ static void Sys_GuiListPeripherals(ecs_iter_t *it)
 	gui_end();
 }
 
-static bool str_cmp_sub0(char const *a, char const *b)
+void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 {
-	while (*a && *b) {
-		if (*a != *b) {
-			return false;
-		}
-		a++;
-		b++;
-	}
-	return true;
-}
-
-static int str_cmp_sub0v(char const *a, char const *bv[])
-{
-	for (int i = 0; bv[i]; i++) {
-		if (str_cmp_sub0(a, bv[i])) {
-			return i;
-		}
-	}
-	return -1;
-}
-
-static void Sys_ReorderEntitites(ecs_world_t *world, char const *names[])
-{
-	ecs_query_t *q = ecs_query(world,
-	{
-	.terms = {
-	{.id = ecs_id(EcPeripheral)},
-	},
-	});
-	ecs_iter_t it = ecs_query_iter(world, q);
-	while (ecs_query_next(&it)) {
-		const EcPeripheral *r = ecs_field(&it, EcPeripheral, 0);
+	ecs_iter_t it = ecs_children(world, parent);
+	while (ecs_children_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
-			int j = str_cmp_sub0v(ecs_get_name(world, it.entities[i]), names);
-			if (j < 0) {
+			char const *name = ecs_get_name(world, it.entities[i]);
+			if (!name) {
 				continue;
 			}
-			ecs_entity_t parent = ecs_get_parent(world, it.entities[i]);
-			// Create a child of parent
-			ecs_entity_t child = ecs_entity_init(world, &(ecs_entity_desc_t){
-			                                            .name = names[j],
-			                                            .parent = parent,
-			                                            });
-
-			ecs_add_pair(world, it.entities[i], EcsChildOf, child);
-
-			// ecs_add_entity(world, parent, it.entities[i]);
-			// ecs_remove_entity(world, parent, it.entities[i]);
-			// printf("Reorder: %jX %s\n", child, ecs_get_name(world, child));
+			/*
+			char * path = ecs_get_path_w_sep(world, 0, it.entities[i], ".", NULL);
+			ecs_os_free(path);
+			*/
+			bool a = gui_tree(name);
+			if (a) {
+				draw_tree(world, it.entities[i], ex);
+				gui_tree_pop();
+			}
 		}
 	}
-	
 }
 
 int main(int argc, char *argv[])
@@ -145,9 +113,29 @@ int main(int argc, char *argv[])
 	ecs_script_run_file(world, "config/STM32G030.flecs");
 	ecs_log_set_level(-1);
 
-	// ecs_entity_t parent = ecs_lookup(world, "STM32G030");
-	char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", NULL};
-	Sys_ReorderEntitites(world, names);
+	{
+		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", NULL};
+		ecs_query_t *q = ecs_query(world,
+		{
+		.terms = {
+		{.id = ecs_id(EcPeripheral)},
+		},
+		});
+		eg_reparent_by_subname(world, names, q);
+		ecs_query_fini(q);
+	}
+
+	{
+		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", "LPUART", "LPTIM", "I2S", "RCC", "SYS", NULL};
+		ecs_query_t *q = ecs_query(world,
+		{
+		.terms = {
+		{.id = ecs_id(EcSignal)},
+		},
+		});
+		eg_reparent_by_subname(world, names, q);
+		ecs_query_fini(q);
+	}
 
 	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
 	eximgui_init(&eximgui);
@@ -155,6 +143,7 @@ int main(int argc, char *argv[])
 	eximgui.query1 = ecs_query(world,
 	{.terms = {
 	 {.id = ecs_id(EcRegister), .inout = EcsIn}},
+	.ctx = &eximgui,
 	//.group_by_callback = group_by_relation,
 	.group_by = EcsChildOf});
 
@@ -164,22 +153,40 @@ int main(int argc, char *argv[])
 	//.group_by_callback = group_by_relation,
 	.group_by = EcsChildOf});
 
-	ecs_system(world,
+	eximgui.query3 = ecs_query(world,
+	{.terms = {
+	 {.id = ecs_id(EcPeripheral), .inout = EcsIn}},
+	//.group_by_callback = group_by_relation,
+	.group_by = EcsChildOf});
+
+	/*
+ecs_system(world,
+{.entity = ecs_entity(world, {.name = "Sys_GuiListPeripherals", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
+.callback = Sys_GuiListPeripherals,
+.ctx = &eximgui,
+.query.terms = {
+{.id = ecs_id(EcPeripheral), .inout = EcsIn},
+}});
+
+ecs_system(world,
 	{.entity = ecs_entity(world, {.name = "Sys_GuiListPins", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
 	.callback = Sys_GuiListPins,
 	.query.terms = {
 	{.id = ecs_id(EcPin), .inout = EcsIn},
 	}});
+	*/
 
-	ecs_system(world,
-	{.entity = ecs_entity(world, {.name = "Sys_GuiListPeripherals", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
-	.callback = Sys_GuiListPeripherals,
-	.query.terms = {
-	{.id = ecs_id(EcPeripheral), .inout = EcsIn},
-	}});
+	ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030");
+	// print name of parent
+	if (parent) {
+		printf("Parent: %s\n", ecs_get_name(world, parent));
+	} else {
+		printf("Parent not found\n");
+	}
 
 	while (!eximgui.done) {
 		eximgui_begin_frame(&eximgui);
+		draw_tree(world, parent, &eximgui);
 		ecs_progress(world, 0.0f);
 		eximgui_end_frame(&eximgui);
 		ecs_sleepf(0.016f);
