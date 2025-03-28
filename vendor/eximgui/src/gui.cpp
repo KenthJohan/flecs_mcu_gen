@@ -1,9 +1,9 @@
 #include "eximgui.h"
 #include "imgui.h"
 
-void gui_begin(const char *name, bool *p_open)
+bool gui_begin(const char *name, bool *p_open)
 {
-	ImGui::Begin(name, p_open);
+	return ImGui::Begin(name, p_open);
 }
 
 void gui_end()
@@ -13,14 +13,13 @@ void gui_end()
 
 void gui_push_id_u64(uint64_t id)
 {
-	ImGui::PushID((void*)id);
+	ImGui::PushID((void *)id);
 }
 
 void gui_pop_id()
 {
 	ImGui::PopID();
 }
-
 
 void gui_checkbox(const char *name, bool *v)
 {
@@ -112,4 +111,23 @@ void gui_table_next_row(int flags)
 void gui_table_next_column()
 {
 	ImGui::TableNextColumn();
+}
+
+bool gui_tab_begin(const char *name, int flags)
+{
+	return ImGui::BeginTabBar(name, flags);
+}
+
+void gui_tab_end()
+{
+	ImGui::EndTabBar();
+}
+
+bool gui_tab_item_begin(const char *name, int flags)
+{
+	return ImGui::BeginTabItem(name, nullptr, flags);
+}
+void gui_tab_item_end()
+{
+	ImGui::EndTabItem();
 }

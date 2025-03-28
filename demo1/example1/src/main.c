@@ -113,17 +113,47 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 
 void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 {
-	bool a = gui_table_begin("Peripherals", 4, 0);
-	if (a == false) {
-		return;
+	gui_begin("Window1", NULL);
+	if (gui_tab_begin("Peripherals", 0)) {
+		if (gui_tab_item_begin("Peripherals", 0)) {
+			gui_table_begin("Peripherals", 4, 0);
+			gui_table_setup_column("Name", 128, 0);
+			gui_table_setup_column("address", 16, 12.0f);
+			gui_table_setup_column("bitoffset", 16, 12.0f);
+			gui_table_setup_column("bitwidth", 16, 18.0f);
+			gui_table_header_row();
+			parent = ecs_lookup(world, "xmcu.STM32G030.peripherals");
+			draw_tree(world, parent, ex);
+			gui_table_end();
+			gui_tab_item_end();
+		}
+		if (gui_tab_item_begin("Signals", 0)) {
+			gui_table_begin("Peripherals", 4, 0);
+			gui_table_setup_column("Name", 128, 0);
+			gui_table_setup_column("address", 16, 12.0f);
+			gui_table_setup_column("bitoffset", 16, 12.0f);
+			gui_table_setup_column("bitwidth", 16, 18.0f);
+			gui_table_header_row();
+			parent = ecs_lookup(world, "xmcu.STM32G030.signals");
+			draw_tree(world, parent, ex);
+			gui_table_end();
+			gui_tab_item_end();
+		}
+		if (gui_tab_item_begin("Pins", 0)) {
+			gui_table_begin("Peripherals", 4, 0);
+			gui_table_setup_column("Name", 128, 0);
+			gui_table_setup_column("address", 16, 12.0f);
+			gui_table_setup_column("bitoffset", 16, 12.0f);
+			gui_table_setup_column("bitwidth", 16, 18.0f);
+			gui_table_header_row();
+			parent = ecs_lookup(world, "xmcu.STM32G030.pins");
+			draw_tree(world, parent, ex);
+			gui_table_end();
+			gui_tab_item_end();
+		}
+		gui_tab_end();
 	}
-	gui_table_setup_column("Name", 128, 0);
-	gui_table_setup_column("address", 16, 12.0f);
-	gui_table_setup_column("bitoffset", 16, 12.0f);
-	gui_table_setup_column("bitwidth", 16, 18.0f);
-	gui_table_header_row();
-	draw_tree(world, parent, ex);
-	gui_table_end();
+	gui_end();
 }
 
 int main(int argc, char *argv[])

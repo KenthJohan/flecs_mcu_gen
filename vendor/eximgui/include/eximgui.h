@@ -29,7 +29,7 @@ void eximgui_end_frame(eximgui_t *eximgui);
 
 
 
-void gui_begin(const char *name, bool *p_open);
+bool gui_begin(const char *name, bool *p_open);
 void gui_end();
 void gui_text(const char *text);
 bool gui_collapsing_header(const char *name);
@@ -46,6 +46,10 @@ void gui_table_setup_column(const char *name, int flags, float width);
 void gui_table_header_row();
 void gui_table_next_row(int flags);
 void gui_table_next_column();
+bool gui_tab_begin(const char *name, int flags);
+void gui_tab_end();
+bool gui_tab_item_begin(const char *name, int flags);
+void gui_tab_item_end();
 
 #ifdef __cplusplus
 }
