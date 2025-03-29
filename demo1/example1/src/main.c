@@ -66,6 +66,14 @@ static void Sys_GuiListPeripherals(ecs_iter_t *it)
 	gui_end();
 }
 
+bool ecs_has_children(ecs_world_t *world, ecs_entity_t entity)
+{
+	ecs_iter_t it = ecs_children(world, entity);
+	bool r = ecs_iter_is_true(&it);
+	ecs_iter_fini(&it);
+	return r;
+}
+
 void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 {
 	ecs_iter_t it = ecs_children(world, parent);
@@ -81,7 +89,13 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			char * path = ecs_get_path_w_sep(world, 0, it.entities[i], ".", NULL);
 			ecs_os_free(path);
 			*/
-			bool a = gui_tree(name);
+			
+			bool a = false;
+			if (ecs_has_children(world, it.entities[i])) {
+				a = gui_tree(name);
+			} else {
+				gui_text(name);
+			}
 
 			char str1[32] = {};
 			char str2[32] = {};
