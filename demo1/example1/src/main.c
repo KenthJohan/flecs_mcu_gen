@@ -74,6 +74,60 @@ bool ecs_has_children(ecs_world_t *world, ecs_entity_t entity)
 	return r;
 }
 
+static void draw_table_columns_from_members(ecs_world_t *world, ecs_entity_t parent)
+{
+	ecs_iter_t it = ecs_children(world, parent);
+	while (ecs_children_next(&it)) {
+		for (int i = 0; i < it.count; i++) {
+			ecs_entity_t e = it.entities[i];
+			EcsMember const *member = ecs_get(world, e, EcsMember);
+			if (member == NULL) {
+				ecs_warn("Not a member");
+				continue;
+			}
+			if (member->count <= 0) {
+				ecs_warn("Too little elements");
+				continue;
+			}
+			char const *name = ecs_get_name(world, e);
+			if (name == NULL) {
+				ecs_warn("No name");
+			}
+			gui_table_setup_column(name ? name : "???", 16, 12.0f);
+		}
+	}
+}
+
+static void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t target)
+{
+	char const *value = ecs_get_id(world, target, component);
+	ecs_iter_t it = ecs_children(world, component);
+	while (ecs_children_next(&it)) {
+		for (int i = 0; i < it.count; i++) {
+			ecs_entity_t e = it.entities[i];
+			EcsMember const *member = ecs_get(world, e, EcsMember);
+			if (member == NULL) {
+				ecs_warn("Not a member");
+				continue;
+			}
+			if (member->count <= 0) {
+				ecs_warn("Too little elements");
+				continue;
+			}
+			char buf[32] = {0};
+			if (value == NULL) {
+				// Do nothing
+			} else if (member->type == ecs_id(ecs_u32_t)) {
+				snprintf(buf, sizeof(buf), "u32: %u", *(uint32_t *)(value + member->offset));
+			} else if (member->type == ecs_id(ecs_i32_t)) {
+				snprintf(buf, sizeof(buf), "i32: %i", *(int32_t *)(value + member->offset));
+			}
+			gui_table_next_column();
+			gui_text(buf);
+		}
+	}
+}
+
 void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 {
 	ecs_iter_t it = ecs_children(world, parent);
@@ -91,24 +145,8 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			} else {
 				gui_tree_node(name, 8 | 256 | 512);
 			}
-			char str1[32] = {};
-			char str2[32] = {};
-			char str3[32] = {};
-			EcRegister const *reg = ecs_get(world, it.entities[i], EcRegister);
-			if (reg) {
-				snprintf(str1, sizeof(str1), "%d", reg->address);
-			}
-			EcField const *field = ecs_get(world, it.entities[i], EcField);
-			if (field) {
-				snprintf(str2, sizeof(str2), "%d", field->bitoffset);
-				snprintf(str3, sizeof(str3), "%d", field->bitwidth);
-			}
-			gui_table_next_column();
-			gui_text(str1);
-			gui_table_next_column();
-			gui_text(str2);
-			gui_table_next_column();
-			gui_text(str3);
+			draw_from_members(world, ecs_id(EcRegister), it.entities[i]);
+			draw_from_members(world, ecs_id(EcField), it.entities[i]);
 			if (a == 2) {
 				draw_tree(world, it.entities[i], ex);
 				gui_tree_pop();
@@ -124,9 +162,11 @@ void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 		if (gui_tab_item_begin("Peripherals", 0)) {
 			gui_table_begin("Peripherals", 4, 0);
 			gui_table_setup_column("Name", 128, 0);
-			gui_table_setup_column("address", 16, 12.0f);
-			gui_table_setup_column("bitoffset", 16, 12.0f);
-			gui_table_setup_column("bitwidth", 16, 18.0f);
+			// gui_table_setup_column("address", 16, 12.0f);
+			draw_table_columns_from_members(world, ecs_id(EcRegister));
+			draw_table_columns_from_members(world, ecs_id(EcField));
+			// gui_table_setup_column("bitoffset", 16, 12.0f);
+			// gui_table_setup_column("bitwidth", 16, 18.0f);
 			gui_table_header_row();
 			parent = ecs_lookup(world, "xmcu.STM32G030.peripherals");
 			draw_tree(world, parent, ex);
