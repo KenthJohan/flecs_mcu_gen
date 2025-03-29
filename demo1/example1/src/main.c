@@ -85,18 +85,12 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			}
 			gui_table_next_row(0);
 			gui_table_next_column();
-			/*
-			char * path = ecs_get_path_w_sep(world, 0, it.entities[i], ".", NULL);
-			ecs_os_free(path);
-			*/
-			
-			bool a = false;
-			if (ecs_has_children(world, it.entities[i])) {
-				a = gui_tree(name);
+			int a = ecs_has_children(world, it.entities[i]);
+			if (a) {
+				a += gui_tree_node(name, 0);
 			} else {
-				gui_text(name);
+				gui_tree_node(name, 8 | 256 | 512);
 			}
-
 			char str1[32] = {};
 			char str2[32] = {};
 			char str3[32] = {};
@@ -109,15 +103,13 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 				snprintf(str2, sizeof(str2), "%d", field->bitoffset);
 				snprintf(str3, sizeof(str3), "%d", field->bitwidth);
 			}
-
 			gui_table_next_column();
 			gui_text(str1);
 			gui_table_next_column();
 			gui_text(str2);
 			gui_table_next_column();
 			gui_text(str3);
-
-			if (a) {
+			if (a == 2) {
 				draw_tree(world, it.entities[i], ex);
 				gui_tree_pop();
 			}
@@ -197,38 +189,22 @@ int main(int argc, char *argv[])
 
 	{
 		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", NULL};
-		ecs_query_t *q = ecs_query(world,
-		{
-		.terms = {
-		{.id = ecs_id(EcPeripheral)},
-		},
-		});
-		eg_reparent_by_subname(world, names, q);
-		ecs_query_fini(q);
+		eg_reparent_by_subname1(world, names, ecs_id(EcPeripheral));
 	}
 
 	{
 		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", "LPUART", "LPTIM", "I2S", "RCC", "SYS", NULL};
-		ecs_query_t *q = ecs_query(world,
-		{
-		.terms = {
-		{.id = ecs_id(EcSignal)},
-		},
-		});
-		eg_reparent_by_subname(world, names, q);
-		ecs_query_fini(q);
+		eg_reparent_by_subname1(world, names, ecs_id(EcSignal));
+	}
+
+	{
+		char const *names[] = {"USART*", "TIM*", "I2S*", "LPTIM*", "SPI*", "LPUART*", "I2C*", NULL};
+		eg_reparent_by_subname1(world, names, ecs_id(EcSignal));
 	}
 
 	{
 		char const *names[] = {"PA", "PB", "PC", "PD", "PF", NULL};
-		ecs_query_t *q = ecs_query(world,
-		{
-		.terms = {
-		{.id = ecs_id(EcPin)},
-		},
-		});
-		eg_reparent_by_subname(world, names, q);
-		ecs_query_fini(q);
+		eg_reparent_by_subname1(world, names, ecs_id(EcPin));
 	}
 
 	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};

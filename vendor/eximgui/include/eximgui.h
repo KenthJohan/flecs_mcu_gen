@@ -33,6 +33,7 @@ bool gui_begin(const char *name, bool *p_open);
 void gui_end();
 void gui_text(const char *text);
 bool gui_collapsing_header(const char *name);
+bool gui_tree_node(const char *name, int flags);
 bool gui_tree(const char *name);
 void gui_tree_pop();
 void gui_push_id_u64(uint64_t id);
