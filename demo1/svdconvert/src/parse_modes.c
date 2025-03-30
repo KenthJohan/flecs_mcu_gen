@@ -92,7 +92,7 @@ void node_print_pins_af(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		char buf[256] = {0};
 		str_copy_gpioaf(buf, sizeof(buf), node_extract_af(node, top));
 		char const *signame = mxmlElementGetAttr(node, "Name");
-		result_flecs_pair(result, "AF", buf, "signals", signame);
+		result_flecs_pair(result, "ec.Af", buf, "signals", signame);
 	}
 }
 

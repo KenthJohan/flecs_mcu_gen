@@ -7,6 +7,7 @@ ECS_COMPONENT_DECLARE(EcField);
 ECS_COMPONENT_DECLARE(EcRegister);
 ECS_COMPONENT_DECLARE(EcSignal);
 ECS_COMPONENT_DECLARE(EcQuery);
+ECS_COMPONENT_DECLARE(EcAf);
 
 void EcImport(ecs_world_t *world)
 {
@@ -20,6 +21,7 @@ void EcImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, EcRegister);
 	ECS_COMPONENT_DEFINE(world, EcSignal);
 	ECS_COMPONENT_DEFINE(world, EcQuery);
+	ECS_COMPONENT_DEFINE(world, EcAf);
 
 	ecs_bitmask(world, {.entity = ecs_id(EcPinAttribute),
 	                   .constants = {
@@ -58,4 +60,31 @@ void EcImport(ecs_world_t *world)
 	.members = {
 	{.name = "dummy", .type = ecs_id(ecs_i32_t)},
 	}});
+
+	ecs_enum(world,
+	{.entity = ecs_id(EcAf), // Make sure to use existing id
+	.constants = {
+	{.name = "AF0", .value = EcAF0},
+	{.name = "AF1", .value = EcAF1},
+	{.name = "AF2", .value = EcAF2},
+	{.name = "AF3", .value = EcAF3},
+	{.name = "AF4", .value = EcAF4},
+	{.name = "AF5", .value = EcAF5},
+	{.name = "AF6", .value = EcAF6},
+	{.name = "AF7", .value = EcAF7},
+	{.name = "AF8", .value = EcAF8},
+	{.name = "AF9", .value = EcAF9},
+	{.name = "AF10", .value = EcAF10},
+	{.name = "AF11", .value = EcAF11},
+	{.name = "AF12", .value = EcAF12},
+	{.name = "AF13", .value = EcAF13},
+	{.name = "AF14", .value = EcAF14},
+	{.name = "AF15", .value = EcAF15}}});
+
+	ecs_iter_t it = ecs_children(world, ecs_id(EcAf));
+	while (ecs_children_next(&it)) {
+		for (int i = 0; i < it.count; i++) {
+			ecs_add_id(world, it.entities[i], EcsSymmetric);
+		}
+	}
 }

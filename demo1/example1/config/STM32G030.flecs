@@ -16139,352 +16139,352 @@ signals {
 pins {
 	PA0 {
 		ec.Pin : {}
-		(AF.AF5, signals.LPTIM1_OUT)
-		(AF.AF0, signals.SPI2_SCK)
-		(AF.AF2, signals.TIM2_CH1)
-		(AF.AF2, signals.TIM2_ETR)
-		(AF.AF1, signals.USART2_CTS)
-		(AF.AF1, signals.USART2_NSS)
+		(ec.Af.AF5, signals.LPTIM1_OUT)
+		(ec.Af.AF0, signals.SPI2_SCK)
+		(ec.Af.AF2, signals.TIM2_CH1)
+		(ec.Af.AF2, signals.TIM2_ETR)
+		(ec.Af.AF1, signals.USART2_CTS)
+		(ec.Af.AF1, signals.USART2_NSS)
 	}
 	PA1 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SMBA)
-		(AF.AF0, signals.I2S1_CK)
-		(AF.AF0, signals.SPI1_SCK)
-		(AF.AF2, signals.TIM2_CH2)
-		(AF.AF1, signals.USART2_CK)
-		(AF.AF1, signals.USART2_DE)
-		(AF.AF1, signals.USART2_RTS)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SMBA)
+		(ec.Af.AF0, signals.I2S1_CK)
+		(ec.Af.AF0, signals.SPI1_SCK)
+		(ec.Af.AF2, signals.TIM2_CH2)
+		(ec.Af.AF1, signals.USART2_CK)
+		(ec.Af.AF1, signals.USART2_DE)
+		(ec.Af.AF1, signals.USART2_RTS)
 	}
 	PA10 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SDA)
-		(AF.AF0, signals.SPI2_MOSI)
-		(AF.AF5, signals.TIM17_BK)
-		(AF.AF2, signals.TIM1_CH3)
-		(AF.AF1, signals.USART1_RX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SDA)
+		(ec.Af.AF0, signals.SPI2_MOSI)
+		(ec.Af.AF5, signals.TIM17_BK)
+		(ec.Af.AF2, signals.TIM1_CH3)
+		(ec.Af.AF1, signals.USART1_RX)
 	}
 	PA10__PA12_ {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SDA)
-		(AF.AF0, signals.SPI2_MOSI)
-		(AF.AF5, signals.TIM17_BK)
-		(AF.AF2, signals.TIM1_CH3)
-		(AF.AF1, signals.USART1_RX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SDA)
+		(ec.Af.AF0, signals.SPI2_MOSI)
+		(ec.Af.AF5, signals.TIM17_BK)
+		(ec.Af.AF2, signals.TIM1_CH3)
+		(ec.Af.AF1, signals.USART1_RX)
 	}
 	PA11__PA9_ {
 		ec.Pin : {}
-		(AF.AF6, signals.I2C2_SCL)
-		(AF.AF0, signals.I2S1_MCK)
-		(AF.AF0, signals.SPI1_MISO)
-		(AF.AF5, signals.TIM1_BK2)
-		(AF.AF2, signals.TIM1_CH4)
-		(AF.AF1, signals.USART1_CTS)
-		(AF.AF1, signals.USART1_NSS)
+		(ec.Af.AF6, signals.I2C2_SCL)
+		(ec.Af.AF0, signals.I2S1_MCK)
+		(ec.Af.AF0, signals.SPI1_MISO)
+		(ec.Af.AF5, signals.TIM1_BK2)
+		(ec.Af.AF2, signals.TIM1_CH4)
+		(ec.Af.AF1, signals.USART1_CTS)
+		(ec.Af.AF1, signals.USART1_NSS)
 	}
 	PA12__PA10_ {
 		ec.Pin : {}
-		(AF.AF6, signals.I2C2_SDA)
-		(AF.AF0, signals.I2S1_SD)
-		(AF.AF5, signals.I2S_CKIN)
-		(AF.AF0, signals.SPI1_MOSI)
-		(AF.AF2, signals.TIM1_ETR)
-		(AF.AF1, signals.USART1_CK)
-		(AF.AF1, signals.USART1_DE)
-		(AF.AF1, signals.USART1_RTS)
+		(ec.Af.AF6, signals.I2C2_SDA)
+		(ec.Af.AF0, signals.I2S1_SD)
+		(ec.Af.AF5, signals.I2S_CKIN)
+		(ec.Af.AF0, signals.SPI1_MOSI)
+		(ec.Af.AF2, signals.TIM1_ETR)
+		(ec.Af.AF1, signals.USART1_CK)
+		(ec.Af.AF1, signals.USART1_DE)
+		(ec.Af.AF1, signals.USART1_RTS)
 	}
 	PA13 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF1, signals.IR_OUT)
-		(AF.AF0, signals.SYS_SWDIO)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF1, signals.IR_OUT)
+		(ec.Af.AF0, signals.SYS_SWDIO)
 	}
 	PA14_BOOT0 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF0, signals.SYS_SWCLK)
-		(AF.AF1, signals.USART2_TX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF0, signals.SYS_SWCLK)
+		(ec.Af.AF1, signals.USART2_TX)
 	}
 	PA15 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF0, signals.I2S1_WS)
-		(AF.AF0, signals.SPI1_NSS)
-		(AF.AF2, signals.TIM2_CH1)
-		(AF.AF2, signals.TIM2_ETR)
-		(AF.AF1, signals.USART2_RX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF0, signals.I2S1_WS)
+		(ec.Af.AF0, signals.SPI1_NSS)
+		(ec.Af.AF2, signals.TIM2_CH1)
+		(ec.Af.AF2, signals.TIM2_ETR)
+		(ec.Af.AF1, signals.USART2_RX)
 	}
 	PA2 {
 		ec.Pin : {}
-		(AF.AF0, signals.I2S1_SD)
-		(AF.AF6, signals.LPUART1_TX)
-		(AF.AF0, signals.SPI1_MOSI)
-		(AF.AF2, signals.TIM2_CH3)
-		(AF.AF1, signals.USART2_TX)
+		(ec.Af.AF0, signals.I2S1_SD)
+		(ec.Af.AF6, signals.LPUART1_TX)
+		(ec.Af.AF0, signals.SPI1_MOSI)
+		(ec.Af.AF2, signals.TIM2_CH3)
+		(ec.Af.AF1, signals.USART2_TX)
 	}
 	PA3 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.LPUART1_RX)
-		(AF.AF0, signals.SPI2_MISO)
-		(AF.AF2, signals.TIM2_CH4)
-		(AF.AF1, signals.USART2_RX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.LPUART1_RX)
+		(ec.Af.AF0, signals.SPI2_MISO)
+		(ec.Af.AF2, signals.TIM2_CH4)
+		(ec.Af.AF1, signals.USART2_RX)
 	}
 	PA4 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF0, signals.I2S1_WS)
-		(AF.AF5, signals.LPTIM2_OUT)
-		(AF.AF0, signals.SPI1_NSS)
-		(AF.AF1, signals.SPI2_MOSI)
-		(AF.AF4, signals.TIM14_CH1)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF0, signals.I2S1_WS)
+		(ec.Af.AF5, signals.LPTIM2_OUT)
+		(ec.Af.AF0, signals.SPI1_NSS)
+		(ec.Af.AF1, signals.SPI2_MOSI)
+		(ec.Af.AF4, signals.TIM14_CH1)
 	}
 	PA5 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF0, signals.I2S1_CK)
-		(AF.AF5, signals.LPTIM2_ETR)
-		(AF.AF0, signals.SPI1_SCK)
-		(AF.AF2, signals.TIM2_CH1)
-		(AF.AF2, signals.TIM2_ETR)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF0, signals.I2S1_CK)
+		(ec.Af.AF5, signals.LPTIM2_ETR)
+		(ec.Af.AF0, signals.SPI1_SCK)
+		(ec.Af.AF2, signals.TIM2_CH1)
+		(ec.Af.AF2, signals.TIM2_ETR)
 	}
 	PA6 {
 		ec.Pin : {}
-		(AF.AF0, signals.I2S1_MCK)
-		(AF.AF6, signals.LPUART1_CTS)
-		(AF.AF0, signals.SPI1_MISO)
-		(AF.AF5, signals.TIM16_CH1)
-		(AF.AF2, signals.TIM1_BK)
-		(AF.AF1, signals.TIM3_CH1)
+		(ec.Af.AF0, signals.I2S1_MCK)
+		(ec.Af.AF6, signals.LPUART1_CTS)
+		(ec.Af.AF0, signals.SPI1_MISO)
+		(ec.Af.AF5, signals.TIM16_CH1)
+		(ec.Af.AF2, signals.TIM1_BK)
+		(ec.Af.AF1, signals.TIM3_CH1)
 	}
 	PA7 {
 		ec.Pin : {}
-		(AF.AF0, signals.I2S1_SD)
-		(AF.AF0, signals.SPI1_MOSI)
-		(AF.AF4, signals.TIM14_CH1)
-		(AF.AF5, signals.TIM17_CH1)
-		(AF.AF2, signals.TIM1_CH1N)
-		(AF.AF1, signals.TIM3_CH2)
+		(ec.Af.AF0, signals.I2S1_SD)
+		(ec.Af.AF0, signals.SPI1_MOSI)
+		(ec.Af.AF4, signals.TIM14_CH1)
+		(ec.Af.AF5, signals.TIM17_CH1)
+		(ec.Af.AF2, signals.TIM1_CH1N)
+		(ec.Af.AF1, signals.TIM3_CH2)
 	}
 	PA8 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF5, signals.LPTIM2_OUT)
-		(AF.AF0, signals.RCC_MCO)
-		(AF.AF1, signals.SPI2_NSS)
-		(AF.AF2, signals.TIM1_CH1)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF5, signals.LPTIM2_OUT)
+		(ec.Af.AF0, signals.RCC_MCO)
+		(ec.Af.AF1, signals.SPI2_NSS)
+		(ec.Af.AF2, signals.TIM1_CH1)
 	}
 	PA9 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SCL)
-		(AF.AF0, signals.RCC_MCO)
-		(AF.AF4, signals.SPI2_MISO)
-		(AF.AF5, signals.TIM15_BK)
-		(AF.AF2, signals.TIM1_CH2)
-		(AF.AF1, signals.USART1_TX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SCL)
+		(ec.Af.AF0, signals.RCC_MCO)
+		(ec.Af.AF4, signals.SPI2_MISO)
+		(ec.Af.AF5, signals.TIM15_BK)
+		(ec.Af.AF2, signals.TIM1_CH2)
+		(ec.Af.AF1, signals.USART1_TX)
 	}
 	PA9__PA11_ {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SCL)
-		(AF.AF0, signals.RCC_MCO)
-		(AF.AF4, signals.SPI2_MISO)
-		(AF.AF2, signals.TIM1_CH2)
-		(AF.AF1, signals.USART1_TX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SCL)
+		(ec.Af.AF0, signals.RCC_MCO)
+		(ec.Af.AF4, signals.SPI2_MISO)
+		(ec.Af.AF2, signals.TIM1_CH2)
+		(ec.Af.AF1, signals.USART1_TX)
 	}
 	PB0 {
 		ec.Pin : {}
-		(AF.AF0, signals.I2S1_WS)
-		(AF.AF5, signals.LPTIM1_OUT)
-		(AF.AF0, signals.SPI1_NSS)
-		(AF.AF2, signals.TIM1_CH2N)
-		(AF.AF1, signals.TIM3_CH3)
+		(ec.Af.AF0, signals.I2S1_WS)
+		(ec.Af.AF5, signals.LPTIM1_OUT)
+		(ec.Af.AF0, signals.SPI1_NSS)
+		(ec.Af.AF2, signals.TIM1_CH2N)
+		(ec.Af.AF1, signals.TIM3_CH3)
 	}
 	PB1 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF5, signals.LPTIM2_IN1)
-		(AF.AF6, signals.LPUART1_DE)
-		(AF.AF6, signals.LPUART1_RTS)
-		(AF.AF0, signals.TIM14_CH1)
-		(AF.AF2, signals.TIM1_CH3N)
-		(AF.AF1, signals.TIM3_CH4)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF5, signals.LPTIM2_IN1)
+		(ec.Af.AF6, signals.LPUART1_DE)
+		(ec.Af.AF6, signals.LPUART1_RTS)
+		(ec.Af.AF0, signals.TIM14_CH1)
+		(ec.Af.AF2, signals.TIM1_CH3N)
+		(ec.Af.AF1, signals.TIM3_CH4)
 	}
 	PB10 {
 		ec.Pin : {}
-		(AF.AF6, signals.I2C2_SCL)
-		(AF.AF1, signals.LPUART1_RX)
-		(AF.AF5, signals.SPI2_SCK)
-		(AF.AF2, signals.TIM2_CH3)
+		(ec.Af.AF6, signals.I2C2_SCL)
+		(ec.Af.AF1, signals.LPUART1_RX)
+		(ec.Af.AF5, signals.SPI2_SCK)
+		(ec.Af.AF2, signals.TIM2_CH3)
 	}
 	PB11 {
 		ec.Pin : {}
-		(AF.AF6, signals.I2C2_SDA)
-		(AF.AF1, signals.LPUART1_TX)
-		(AF.AF0, signals.SPI2_MOSI)
-		(AF.AF2, signals.TIM2_CH4)
+		(ec.Af.AF6, signals.I2C2_SDA)
+		(ec.Af.AF1, signals.LPUART1_TX)
+		(ec.Af.AF0, signals.SPI2_MOSI)
+		(ec.Af.AF2, signals.TIM2_CH4)
 	}
 	PB12 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF1, signals.LPUART1_DE)
-		(AF.AF1, signals.LPUART1_RTS)
-		(AF.AF0, signals.SPI2_NSS)
-		(AF.AF2, signals.TIM1_BK)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF1, signals.LPUART1_DE)
+		(ec.Af.AF1, signals.LPUART1_RTS)
+		(ec.Af.AF0, signals.SPI2_NSS)
+		(ec.Af.AF2, signals.TIM1_BK)
 	}
 	PB13 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C2_SCL)
-		(AF.AF1, signals.LPUART1_CTS)
-		(AF.AF0, signals.SPI2_SCK)
-		(AF.AF2, signals.TIM1_CH1N)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C2_SCL)
+		(ec.Af.AF1, signals.LPUART1_CTS)
+		(ec.Af.AF0, signals.SPI2_SCK)
+		(ec.Af.AF2, signals.TIM1_CH1N)
 	}
 	PB14 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C2_SDA)
-		(AF.AF0, signals.SPI2_MISO)
-		(AF.AF2, signals.TIM1_CH2N)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C2_SDA)
+		(ec.Af.AF0, signals.SPI2_MISO)
+		(ec.Af.AF2, signals.TIM1_CH2N)
 	}
 	PB15 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF0, signals.SPI2_MOSI)
-		(AF.AF2, signals.TIM1_CH3N)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF0, signals.SPI2_MOSI)
+		(ec.Af.AF2, signals.TIM1_CH3N)
 	}
 	PB2 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF5, signals.LPTIM1_OUT)
-		(AF.AF1, signals.SPI2_MISO)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF5, signals.LPTIM1_OUT)
+		(ec.Af.AF1, signals.SPI2_MISO)
 	}
 	PB3 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF0, signals.I2S1_CK)
-		(AF.AF0, signals.SPI1_SCK)
-		(AF.AF1, signals.TIM1_CH2)
-		(AF.AF2, signals.TIM2_CH2)
-		(AF.AF4, signals.USART1_CK)
-		(AF.AF4, signals.USART1_DE)
-		(AF.AF4, signals.USART1_RTS)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF0, signals.I2S1_CK)
+		(ec.Af.AF0, signals.SPI1_SCK)
+		(ec.Af.AF1, signals.TIM1_CH2)
+		(ec.Af.AF2, signals.TIM2_CH2)
+		(ec.Af.AF4, signals.USART1_CK)
+		(ec.Af.AF4, signals.USART1_DE)
+		(ec.Af.AF4, signals.USART1_RTS)
 	}
 	PB4 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF0, signals.I2S1_MCK)
-		(AF.AF0, signals.SPI1_MISO)
-		(AF.AF5, signals.TIM17_BK)
-		(AF.AF1, signals.TIM3_CH1)
-		(AF.AF4, signals.USART1_CTS)
-		(AF.AF4, signals.USART1_NSS)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF0, signals.I2S1_MCK)
+		(ec.Af.AF0, signals.SPI1_MISO)
+		(ec.Af.AF5, signals.TIM17_BK)
+		(ec.Af.AF1, signals.TIM3_CH1)
+		(ec.Af.AF4, signals.USART1_CTS)
+		(ec.Af.AF4, signals.USART1_NSS)
 	}
 	PB5 {
 		ec.Pin : {}
-		(AF.AF6, signals.I2C1_SMBA)
-		(AF.AF0, signals.I2S1_SD)
-		(AF.AF5, signals.LPTIM1_IN1)
-		(AF.AF0, signals.SPI1_MOSI)
-		(AF.AF2, signals.TIM16_BK)
-		(AF.AF1, signals.TIM3_CH2)
+		(ec.Af.AF6, signals.I2C1_SMBA)
+		(ec.Af.AF0, signals.I2S1_SD)
+		(ec.Af.AF5, signals.LPTIM1_IN1)
+		(ec.Af.AF0, signals.SPI1_MOSI)
+		(ec.Af.AF2, signals.TIM16_BK)
+		(ec.Af.AF1, signals.TIM3_CH2)
 	}
 	PB6 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SCL)
-		(AF.AF5, signals.LPTIM1_ETR)
-		(AF.AF4, signals.SPI2_MISO)
-		(AF.AF2, signals.TIM16_CH1N)
-		(AF.AF1, signals.TIM1_CH3)
-		(AF.AF0, signals.USART1_TX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SCL)
+		(ec.Af.AF5, signals.LPTIM1_ETR)
+		(ec.Af.AF4, signals.SPI2_MISO)
+		(ec.Af.AF2, signals.TIM16_CH1N)
+		(ec.Af.AF1, signals.TIM1_CH3)
+		(ec.Af.AF0, signals.USART1_TX)
 	}
 	PB7 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SDA)
-		(AF.AF5, signals.LPTIM1_IN2)
-		(AF.AF1, signals.SPI2_MOSI)
-		(AF.AF2, signals.TIM17_CH1N)
-		(AF.AF0, signals.USART1_RX)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SDA)
+		(ec.Af.AF5, signals.LPTIM1_IN2)
+		(ec.Af.AF1, signals.SPI2_MOSI)
+		(ec.Af.AF2, signals.TIM17_CH1N)
+		(ec.Af.AF0, signals.USART1_RX)
 	}
 	PB8 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SCL)
-		(AF.AF1, signals.SPI2_SCK)
-		(AF.AF2, signals.TIM16_CH1)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SCL)
+		(ec.Af.AF1, signals.SPI2_SCK)
+		(ec.Af.AF2, signals.TIM16_CH1)
 	}
 	PB9 {
 		ec.Pin : {}
-		(AF.AF7, signals.EVENTOUT)
-		(AF.AF6, signals.I2C1_SDA)
-		(AF.AF0, signals.IR_OUT)
-		(AF.AF5, signals.SPI2_NSS)
-		(AF.AF2, signals.TIM17_CH1)
+		(ec.Af.AF7, signals.EVENTOUT)
+		(ec.Af.AF6, signals.I2C1_SDA)
+		(ec.Af.AF0, signals.IR_OUT)
+		(ec.Af.AF5, signals.SPI2_NSS)
+		(ec.Af.AF2, signals.TIM17_CH1)
 	}
 	PC13 {
 		ec.Pin : {}
-		(AF.AF2, signals.TIM1_BK)
+		(ec.Af.AF2, signals.TIM1_BK)
 	}
 	PC14_OSC32_IN__PC14_ {
 		ec.Pin : {}
-		(AF.AF2, signals.TIM1_BK2)
+		(ec.Af.AF2, signals.TIM1_BK2)
 	}
 	PC15_OSC32_OUT__PC15_ {
 		ec.Pin : {}
-		(AF.AF0, signals.RCC_OSC32_EN)
-		(AF.AF1, signals.RCC_OSC_EN)
+		(ec.Af.AF0, signals.RCC_OSC32_EN)
+		(ec.Af.AF1, signals.RCC_OSC_EN)
 	}
 	PC6 {
 		ec.Pin : {}
-		(AF.AF2, signals.TIM2_CH3)
-		(AF.AF1, signals.TIM3_CH1)
+		(ec.Af.AF2, signals.TIM2_CH3)
+		(ec.Af.AF1, signals.TIM3_CH1)
 	}
 	PC7 {
 		ec.Pin : {}
-		(AF.AF2, signals.TIM2_CH4)
-		(AF.AF1, signals.TIM3_CH2)
+		(ec.Af.AF2, signals.TIM2_CH4)
+		(ec.Af.AF1, signals.TIM3_CH2)
 	}
 	PD0 {
 		ec.Pin : {}
-		(AF.AF0, signals.EVENTOUT)
-		(AF.AF1, signals.SPI2_NSS)
-		(AF.AF2, signals.TIM16_CH1)
+		(ec.Af.AF0, signals.EVENTOUT)
+		(ec.Af.AF1, signals.SPI2_NSS)
+		(ec.Af.AF2, signals.TIM16_CH1)
 	}
 	PD1 {
 		ec.Pin : {}
-		(AF.AF0, signals.EVENTOUT)
-		(AF.AF1, signals.SPI2_SCK)
-		(AF.AF2, signals.TIM17_CH1)
+		(ec.Af.AF0, signals.EVENTOUT)
+		(ec.Af.AF1, signals.SPI2_SCK)
+		(ec.Af.AF2, signals.TIM17_CH1)
 	}
 	PD2 {
 		ec.Pin : {}
-		(AF.AF2, signals.TIM1_CH1N)
-		(AF.AF1, signals.TIM3_ETR)
+		(ec.Af.AF2, signals.TIM1_CH1N)
+		(ec.Af.AF1, signals.TIM3_ETR)
 	}
 	PD3 {
 		ec.Pin : {}
-		(AF.AF1, signals.SPI2_MISO)
-		(AF.AF2, signals.TIM1_CH2N)
-		(AF.AF0, signals.USART2_CTS)
-		(AF.AF0, signals.USART2_NSS)
+		(ec.Af.AF1, signals.SPI2_MISO)
+		(ec.Af.AF2, signals.TIM1_CH2N)
+		(ec.Af.AF0, signals.USART2_CTS)
+		(ec.Af.AF0, signals.USART2_NSS)
 	}
 	PF0_OSC_IN__PF0_ {
 		ec.Pin : {}
-		(AF.AF2, signals.TIM14_CH1)
+		(ec.Af.AF2, signals.TIM14_CH1)
 	}
 	PF1_OSC_OUT__PF1_ {
 		ec.Pin : {}
-		(AF.AF0, signals.RCC_OSC_EN)
+		(ec.Af.AF0, signals.RCC_OSC_EN)
 	}
 	PF2___NRST {
 		ec.Pin : {}
-		(AF.AF0, signals.RCC_MCO)
+		(ec.Af.AF0, signals.RCC_MCO)
 	}
 	PI8 {
 		ec.Pin : {}
