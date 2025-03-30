@@ -89,12 +89,21 @@ void node_print_pins_af(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		if (node == NULL) {
 			break;
 		}
-		char buf[256] = {0};
 		char const *signame = mxmlElementGetAttr(node, "Name");
-		snprintf(buf, sizeof(buf), "signals.%s", signame);
-		result_flecs_entity_open(result, signame, buf);
+		char buf[16] = {0};
 		str_copy_gpioaf(buf, sizeof(buf), node_extract_af(node, top));
+		ecs_strbuf_t name = ECS_STRBUF_INIT;
+		ecs_strbuf_appendstr(&name, buf);
+		ecs_strbuf_appendstr(&name, "_");
+		ecs_strbuf_appendstr(&name, signame);
+		ecs_strbuf_t extend = ECS_STRBUF_INIT;
+		ecs_strbuf_appendstr(&extend, "signals.");
+		ecs_strbuf_appendstr(&extend, signame);
+		result_flecs_entity_open(result, ecs_strbuf_get(&name), ecs_strbuf_get(&extend));
 		result_flecs_entity_close(result);
+		ecs_os_free(ecs_strbuf_get(&name));
+		ecs_os_free(ecs_strbuf_get(&extend));
+
 		//result_flecs_pair(result, "ec.Af", buf, "signals", signame);
 	}
 }
