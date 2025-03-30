@@ -14,9 +14,6 @@ typedef struct {
 	float clear_color[4];
 	SDL_Window *window;
 	SDL_GPUDevice *gpu_device;
-	void * query1;
-	void * query2;
-	void * query3;
 } eximgui_t;
 
 

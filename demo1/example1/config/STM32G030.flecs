@@ -16139,6 +16139,12 @@ signals {
 pins {
 	PA0 {
 		ec.Pin : {}
+		LPTIM1_OUT : signals.LPTIM1_OUT {}
+		SPI2_SCK {}
+		TIM2_CH1 {}
+		TIM2_ETR {}
+		USART2_CTS {}
+		USART2_NSS {}
 		(ec.Af.AF5, signals.LPTIM1_OUT)
 		(ec.Af.AF0, signals.SPI2_SCK)
 		(ec.Af.AF2, signals.TIM2_CH1)
