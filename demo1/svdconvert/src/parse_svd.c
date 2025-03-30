@@ -44,7 +44,7 @@ void iterate_fields(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		field.bitOffset = mxmlFindElement(child, top, "bitOffset", NULL, NULL, MXML_DESCEND_FIRST);
 		field.bitWidth = mxmlFindElement(child, top, "bitWidth", NULL, NULL, MXML_DESCEND_FIRST);
 		if (field.name) {
-			result_flecs_entity_open(result, mxmlGetOpaque(field.name));
+			result_flecs_entity_open(result, mxmlGetOpaque(field.name), NULL);
 			if (field.description) {
 				result_flecs_description(result, mxmlGetOpaque(field.description));
 			}
@@ -72,7 +72,7 @@ void iterate_registers(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		regs.address = mxmlFindElement(child, top, "addressOffset", NULL, NULL, MXML_DESCEND_FIRST);
 
 		if (regs.name) {
-			result_flecs_entity_open(result, mxmlGetOpaque(regs.name));
+			result_flecs_entity_open(result, mxmlGetOpaque(regs.name), NULL);
 			if (regs.description) {
 				result_flecs_description(result, mxmlGetOpaque(regs.description));
 			}
@@ -113,7 +113,7 @@ void iterate_peripherals(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		}
 
 		if (peripheral.name) {
-			result_flecs_entity_open(result, mxmlGetOpaque(peripheral.name));
+			result_flecs_entity_open(result, mxmlGetOpaque(peripheral.name), NULL);
 			result_flecs_peripheral(result);
 			if (peripheral.description) {
 				result_flecs_description(result, mxmlGetOpaque(peripheral.description));
@@ -136,7 +136,7 @@ int parse_svd_init(result_t *result)
 	tree = mxmlLoadFilename(NULL, options, "config/STM32G030.svd");
 	mxml_node_t *node = tree;
 	node = mxmlFindElement(node, tree, "peripherals", NULL, NULL, MXML_DESCEND_ALL);
-	result_flecs_entity_open(result, "peripherals");
+	result_flecs_entity_open(result, "peripherals", NULL);
 	iterate_peripherals(node, tree, result);
 	result_flecs_entity_close(result);
 	return tree != NULL;

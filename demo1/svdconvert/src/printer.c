@@ -36,10 +36,14 @@ void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char 
 	fprintf(result->file, "(%s.%s, %s.%s)\n", pre0, a0, pre1, a1);
 }
 
-void result_flecs_entity_open(result_t *result, const char *name)
+void result_flecs_entity_open(result_t *result, const char *name, char const * extend)
 {
 	result_indent(result);
-	fprintf(result->file, "%s {\n", name);
+	if (extend) {
+		fprintf(result->file, "%s : %s {\n", name, extend);
+	} else {
+		fprintf(result->file, "%s {\n", name);
+	}
 	result->ident++;
 }
 
