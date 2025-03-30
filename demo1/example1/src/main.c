@@ -4,6 +4,7 @@
 #include <eximgui.h>
 #include "Ec.h"
 #include "eg_reparent.h"
+#include "gui.h"
 
 static void Sys_GuiListPins(ecs_iter_t *it)
 {
@@ -66,135 +67,38 @@ static void Sys_GuiListPeripherals(ecs_iter_t *it)
 	gui_end();
 }
 
-bool ecs_has_children(ecs_world_t *world, ecs_entity_t entity)
-{
-	ecs_iter_t it = ecs_children(world, entity);
-	bool r = ecs_iter_is_true(&it);
-	ecs_iter_fini(&it);
-	return r;
-}
 
-static void draw_table_columns_from_members(ecs_world_t *world, ecs_entity_t parent)
-{
-	ecs_iter_t it = ecs_children(world, parent);
-	while (ecs_children_next(&it)) {
-		for (int i = 0; i < it.count; i++) {
-			ecs_entity_t e = it.entities[i];
-			EcsMember const *member = ecs_get(world, e, EcsMember);
-			if (member == NULL) {
-				ecs_warn("Not a member");
-				continue;
-			}
-			if (member->count <= 0) {
-				ecs_warn("Too little elements");
-				continue;
-			}
-			char const *name = ecs_get_name(world, e);
-			if (name == NULL) {
-				ecs_warn("No name");
-			}
-			gui_table_setup_column(name ? name : "???", 16, 12.0f);
-		}
-	}
-}
 
-static void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t target)
-{
-	char const *value = ecs_get_id(world, target, component);
-	ecs_iter_t it = ecs_children(world, component);
-	while (ecs_children_next(&it)) {
-		for (int i = 0; i < it.count; i++) {
-			ecs_entity_t e = it.entities[i];
-			EcsMember const *member = ecs_get(world, e, EcsMember);
-			if (member == NULL) {
-				ecs_warn("Not a member");
-				continue;
-			}
-			if (member->count <= 0) {
-				ecs_warn("Too little elements");
-				continue;
-			}
-			char buf[32] = {0};
-			if (value == NULL) {
-				// Do nothing
-			} else if (member->type == ecs_id(ecs_u32_t)) {
-				snprintf(buf, sizeof(buf), "u32: %u", *(uint32_t *)(value + member->offset));
-			} else if (member->type == ecs_id(ecs_i32_t)) {
-				snprintf(buf, sizeof(buf), "i32: %i", *(int32_t *)(value + member->offset));
-			}
-			gui_table_next_column();
-			gui_text(buf);
-		}
-	}
-}
-
-void draw_tree(ecs_world_t *world, ecs_entity_t parent)
-{
-	ecs_iter_t it = ecs_children(world, parent);
-	while (ecs_children_next(&it)) {
-		for (int i = 0; i < it.count; i++) {
-			char const *name = ecs_get_name(world, it.entities[i]);
-			if (!name) {
-				continue;
-			}
-			gui_table_next_row(0);
-			gui_table_next_column();
-			int a = ecs_has_children(world, it.entities[i]);
-			if (a) {
-				a += gui_tree_node(name, 0);
-			} else {
-				gui_tree_node(name, 8 | 256 | 512);
-			}
-			draw_from_members(world, ecs_id(EcRegister), it.entities[i]);
-			draw_from_members(world, ecs_id(EcField), it.entities[i]);
-			if (a == 2) {
-				draw_tree(world, it.entities[i]);
-				gui_tree_pop();
-			}
-		}
-	}
-}
-
-void draw_tree0(ecs_world_t *world, ecs_entity_t parent)
+void draw_tree_window(ecs_world_t *world)
 {
 	gui_begin("Window1", NULL);
 	if (gui_tab_begin("Peripherals", 0)) {
 		if (gui_tab_item_begin("Peripherals", 0)) {
-			gui_table_begin("Peripherals", 4, 0);
-			gui_table_setup_column("Name", 128, 0);
-			// gui_table_setup_column("address", 16, 12.0f);
-			draw_table_columns_from_members(world, ecs_id(EcRegister));
-			draw_table_columns_from_members(world, ecs_id(EcField));
-			// gui_table_setup_column("bitoffset", 16, 12.0f);
-			// gui_table_setup_column("bitwidth", 16, 18.0f);
-			gui_table_header_row();
-			parent = ecs_lookup(world, "xmcu.STM32G030.peripherals");
-			draw_tree(world, parent);
-			gui_table_end();
+			ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030.peripherals");
+			ecs_entity_t components[] = {
+				ecs_id(EcRegister),
+				ecs_id(EcField),
+				0
+			};
+			gui_ntt_reflection(world, parent, components);
 			gui_tab_item_end();
 		}
 		if (gui_tab_item_begin("Signals", 0)) {
-			gui_table_begin("Peripherals", 4, 0);
-			gui_table_setup_column("Name", 128, 0);
-			gui_table_setup_column("address", 16, 12.0f);
-			gui_table_setup_column("bitoffset", 16, 12.0f);
-			gui_table_setup_column("bitwidth", 16, 18.0f);
-			gui_table_header_row();
-			parent = ecs_lookup(world, "xmcu.STM32G030.signals");
-			draw_tree(world, parent);
-			gui_table_end();
+			ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030.signals");
+			ecs_entity_t components[] = {
+				ecs_id(EcSignal),
+				0
+			};
+			gui_ntt_reflection(world, parent, components);
 			gui_tab_item_end();
 		}
 		if (gui_tab_item_begin("Pins", 0)) {
-			gui_table_begin("Peripherals", 4, 0);
-			gui_table_setup_column("Name", 128, 0);
-			gui_table_setup_column("address", 16, 12.0f);
-			gui_table_setup_column("bitoffset", 16, 12.0f);
-			gui_table_setup_column("bitwidth", 16, 18.0f);
-			gui_table_header_row();
-			parent = ecs_lookup(world, "xmcu.STM32G030.pins");
-			draw_tree(world, parent);
-			gui_table_end();
+			ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030.pins");
+			ecs_entity_t components[] = {
+				ecs_id(EcPin),
+				0
+			};
+			gui_ntt_reflection(world, parent, components);
 			gui_tab_item_end();
 		}
 		gui_tab_end();
@@ -296,7 +200,7 @@ ecs_system(world,
 
 	while (!eximgui.done) {
 		eximgui_begin_frame(&eximgui);
-		draw_tree0(world, parent);
+		draw_tree_window(world);
 		ecs_progress(world, 0.0f);
 		eximgui_end_frame(&eximgui);
 		ecs_sleepf(0.016f);
