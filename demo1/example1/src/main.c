@@ -128,7 +128,7 @@ static void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_en
 	}
 }
 
-void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
+void draw_tree(ecs_world_t *world, ecs_entity_t parent)
 {
 	ecs_iter_t it = ecs_children(world, parent);
 	while (ecs_children_next(&it)) {
@@ -148,14 +148,14 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			draw_from_members(world, ecs_id(EcRegister), it.entities[i]);
 			draw_from_members(world, ecs_id(EcField), it.entities[i]);
 			if (a == 2) {
-				draw_tree(world, it.entities[i], ex);
+				draw_tree(world, it.entities[i]);
 				gui_tree_pop();
 			}
 		}
 	}
 }
 
-void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
+void draw_tree0(ecs_world_t *world, ecs_entity_t parent)
 {
 	gui_begin("Window1", NULL);
 	if (gui_tab_begin("Peripherals", 0)) {
@@ -169,7 +169,7 @@ void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			// gui_table_setup_column("bitwidth", 16, 18.0f);
 			gui_table_header_row();
 			parent = ecs_lookup(world, "xmcu.STM32G030.peripherals");
-			draw_tree(world, parent, ex);
+			draw_tree(world, parent);
 			gui_table_end();
 			gui_tab_item_end();
 		}
@@ -181,7 +181,7 @@ void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			gui_table_setup_column("bitwidth", 16, 18.0f);
 			gui_table_header_row();
 			parent = ecs_lookup(world, "xmcu.STM32G030.signals");
-			draw_tree(world, parent, ex);
+			draw_tree(world, parent);
 			gui_table_end();
 			gui_tab_item_end();
 		}
@@ -193,7 +193,7 @@ void draw_tree0(ecs_world_t *world, ecs_entity_t parent, eximgui_t *ex)
 			gui_table_setup_column("bitwidth", 16, 18.0f);
 			gui_table_header_row();
 			parent = ecs_lookup(world, "xmcu.STM32G030.pins");
-			draw_tree(world, parent, ex);
+			draw_tree(world, parent);
 			gui_table_end();
 			gui_tab_item_end();
 		}
@@ -296,7 +296,7 @@ ecs_system(world,
 
 	while (!eximgui.done) {
 		eximgui_begin_frame(&eximgui);
-		draw_tree0(world, parent, &eximgui);
+		draw_tree0(world, parent);
 		ecs_progress(world, 0.0f);
 		eximgui_end_frame(&eximgui);
 		ecs_sleepf(0.016f);
