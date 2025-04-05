@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
 	ecs_os_api_t os_api = ecs_os_get_api();
 	ecs_os_set_api(&os_api);
 
+
+	
 	ecs_world_t *world = ecs_init();
 	ECS_IMPORT(world, FlecsUnits);
 	ECS_IMPORT(world, FlecsDoc);

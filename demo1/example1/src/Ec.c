@@ -8,6 +8,7 @@ ECS_COMPONENT_DECLARE(EcRegister);
 ECS_COMPONENT_DECLARE(EcSignal);
 ECS_COMPONENT_DECLARE(EcQuery);
 ECS_COMPONENT_DECLARE(EcAf);
+ECS_COMPONENT_DECLARE(EcAccess);
 
 void EcImport(ecs_world_t *world)
 {
@@ -22,12 +23,21 @@ void EcImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, EcSignal);
 	ECS_COMPONENT_DEFINE(world, EcQuery);
 	ECS_COMPONENT_DEFINE(world, EcAf);
+	ECS_COMPONENT_DEFINE(world, EcAccess);
 
-	ecs_bitmask(world, {.entity = ecs_id(EcPinAttribute),
-	                   .constants = {
-	                   {.name = "Input", .value = EcPinAttribute_INPUT},
-	                   {.name = "Output", .value = EcPinAttribute_OUTPUT},
-	                   {.name = "InOut", .value = EcPinAttribute_INOUT}}});
+	ecs_bitmask(world,
+	{.entity = ecs_id(EcPinAttribute),
+	.constants = {
+	{.name = "Input", .value = EcPinAttribute_INPUT},
+	{.name = "Output", .value = EcPinAttribute_OUTPUT},
+	{.name = "InOut", .value = EcPinAttribute_INOUT}}});
+
+	ecs_bitmask(world,
+		{.entity = ecs_id(EcAccess),
+		.constants = {
+		{.name = "R", .value = EcAccess_READ},
+		{.name = "W", .value = EcAccess_WRITE},
+		}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(EcPin),
@@ -47,12 +57,14 @@ void EcImport(ecs_world_t *world)
 	.members = {
 	{.name = "bitoffset", .type = ecs_id(ecs_i32_t)},
 	{.name = "bitwidth", .type = ecs_id(ecs_i32_t)},
+	{.name = "access", .type = ecs_id(EcAccess)},
 	}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(EcRegister),
 	.members = {
 	{.name = "address", .type = ecs_id(ecs_u32_t)},
+	{.name = "access", .type = ecs_id(EcAccess)},
 	}});
 
 	ecs_struct(world,

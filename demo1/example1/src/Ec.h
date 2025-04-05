@@ -7,6 +7,10 @@ typedef uint64_t EcPinAttribute;
 #define EcPinAttribute_OUTPUT 2
 #define EcPinAttribute_INOUT 4
 
+typedef uint64_t EcAccess;
+#define EcAccess_READ 0x01
+#define EcAccess_WRITE 0x02
+
 typedef struct {
 	int32_t pad;
 	EcPinAttribute attribute;
@@ -19,10 +23,12 @@ typedef struct {
 typedef struct {
 	int32_t bitoffset;
 	int32_t bitwidth;
+	EcAccess access;
 } EcField;
 
 typedef struct {
 	uint32_t address;
+	EcAccess access;
 } EcRegister;
 
 typedef struct {
@@ -57,6 +63,7 @@ extern ECS_COMPONENT_DECLARE(EcPin);
 extern ECS_COMPONENT_DECLARE(EcPeripheral);
 extern ECS_COMPONENT_DECLARE(EcField);
 extern ECS_COMPONENT_DECLARE(EcRegister);
+extern ECS_COMPONENT_DECLARE(EcRegisterAttribute);
 extern ECS_COMPONENT_DECLARE(EcSignal);
 extern ECS_COMPONENT_DECLARE(EcQuery);
 extern ECS_COMPONENT_DECLARE(EcAf);

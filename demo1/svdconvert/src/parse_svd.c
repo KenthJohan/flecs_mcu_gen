@@ -21,6 +21,7 @@ typedef struct {
 	mxml_node_t *description;
 	mxml_node_t *fields;
 	mxml_node_t *address;
+	mxml_node_t *access;
 } svd_register_t;
 
 typedef struct {
@@ -28,6 +29,7 @@ typedef struct {
 	mxml_node_t *description;
 	mxml_node_t *bitOffset;
 	mxml_node_t *bitWidth;
+	mxml_node_t *access;
 } svd_field_t;
 
 void iterate_fields(mxml_node_t *node, mxml_node_t *top, result_t *result)
@@ -43,13 +45,14 @@ void iterate_fields(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		field.description = mxmlFindElement(child, top, "description", NULL, NULL, MXML_DESCEND_FIRST);
 		field.bitOffset = mxmlFindElement(child, top, "bitOffset", NULL, NULL, MXML_DESCEND_FIRST);
 		field.bitWidth = mxmlFindElement(child, top, "bitWidth", NULL, NULL, MXML_DESCEND_FIRST);
+		field.access = mxmlFindElement(child, top, "access", NULL, NULL, MXML_DESCEND_FIRST);
 		if (field.name) {
 			result_flecs_entity_open(result, mxmlGetOpaque(field.name), NULL);
 			if (field.description) {
 				result_flecs_description(result, mxmlGetOpaque(field.description));
 			}
 			if (field.bitOffset && field.bitWidth) {
-				result_flecs_field(result, mxmlGetOpaque(field.bitOffset), mxmlGetOpaque(field.bitWidth));
+				result_flecs_field(result, mxmlGetOpaque(field.bitOffset), mxmlGetOpaque(field.bitWidth), mxmlGetOpaque(field.access));
 			}
 			result_flecs_entity_close(result);
 		}
@@ -70,13 +73,14 @@ void iterate_registers(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		regs.description = mxmlFindElement(child, top, "description", NULL, NULL, MXML_DESCEND_FIRST);
 		regs.fields = mxmlFindElement(child, top, "fields", NULL, NULL, MXML_DESCEND_FIRST);
 		regs.address = mxmlFindElement(child, top, "addressOffset", NULL, NULL, MXML_DESCEND_FIRST);
+		regs.access = mxmlFindElement(child, top, "access", NULL, NULL, MXML_DESCEND_FIRST);
 
 		if (regs.name) {
 			result_flecs_entity_open(result, mxmlGetOpaque(regs.name), NULL);
 			if (regs.description) {
 				result_flecs_description(result, mxmlGetOpaque(regs.description));
 			}
-			result_flecs_register(result, mxmlGetOpaque(regs.address));
+			result_flecs_register(result, mxmlGetOpaque(regs.address), mxmlGetOpaque(regs.access));
 			if (regs.fields) {
 				iterate_fields(regs.fields, top, result);
 			}

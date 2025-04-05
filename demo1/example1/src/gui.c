@@ -50,16 +50,22 @@ void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t 
 				ecs_warn("Too little elements");
 				continue;
 			}
-			char buf[32] = {0};
+			ecs_strbuf_t buf = ECS_STRBUF_INIT;
 			if (value == NULL) {
 				// Do nothing
 			} else if (member->type == ecs_id(ecs_u32_t)) {
-				snprintf(buf, sizeof(buf), "u32: %u", *(uint32_t *)(value + member->offset));
+				ecs_strbuf_appendint(&buf, *(ecs_u32_t *)(value + member->offset));
 			} else if (member->type == ecs_id(ecs_i32_t)) {
-				snprintf(buf, sizeof(buf), "i32: %i", *(int32_t *)(value + member->offset));
+				ecs_strbuf_appendint(&buf, *(ecs_i32_t *)(value + member->offset));
+			} else {
+				ecs_ptr_to_str_buf(world, member->type, value + member->offset, &buf);
 			}
 			gui_table_next_column();
-			gui_text(buf);
+			char const *msg = ecs_strbuf_get(&buf);
+			if (msg) {
+				gui_text(msg);
+			}
+			ecs_os_free((char*)msg);
 		}
 	}
 }
@@ -98,7 +104,8 @@ void gui_ntt_reflection(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t co
 	int columns = 1;
 	for (int j = 0; components[j]; j++) {
 		ecs_iter_t it = ecs_children(world, components[j]);
-		columns += ecs_iter_count(&it);
+		int32_t n = ecs_iter_count(&it);
+		columns += n;
 	}
 	char buf[1288] = {0};
 	char * path = ecs_get_path(world, parent);

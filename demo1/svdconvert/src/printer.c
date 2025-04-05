@@ -1,5 +1,6 @@
 #include "printer.h"
 #include "str.h"
+#include <string.h>
 
 void result_indent(result_t *result)
 {
@@ -18,16 +19,36 @@ void result_flecs_description(result_t *result, const char *description)
 	fprintf(result->file, "(flecs.doc.Description, flecs.doc.Brief) : {\"%s\"}\n", buf);
 }
 
-void result_flecs_register(result_t *result, const char *address)
+void result_flecs_register(result_t *result, const char *address, const char *access)
 {
 	result_indent(result);
-	fprintf(result->file, "ec.Register : {address:%s}\n", address);
+	char const * access0 = "0";
+	if (access) {
+		if (strcmp(access, "read-write") == 0) {
+			access0 = "R|W";
+		} else if (strcmp(access, "read-only") == 0) {
+			access0 = "R";
+		} else if (strcmp(access, "write-only") == 0) {
+			access0 = "W";
+		}
+	}
+	fprintf(result->file, "ec.Register : {address:%s, access:%s}\n", address, access0);
 }
 
-void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth)
+void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth, const char *access)
 {
 	result_indent(result);
-	fprintf(result->file, "ec.Field : {bitoffset:%s, bitwidth:%s}\n", bitoffset, bitwidth);
+	char const * access0 = "0";
+	if (access) {
+		if (strcmp(access, "read-write") == 0) {
+			access0 = "R|W";
+		} else if (strcmp(access, "read-only") == 0) {
+			access0 = "R";
+		} else if (strcmp(access, "write-only") == 0) {
+			access0 = "W";
+		}
+	}
+	fprintf(result->file, "ec.Field : {bitoffset:%s, bitwidth:%s, access:%s}\n", bitoffset, bitwidth, access0);
 }
 
 void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char const *pre1, char const *a1)
