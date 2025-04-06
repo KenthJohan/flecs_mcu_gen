@@ -123,7 +123,8 @@
 		"eximgui.h": "c",
 		"str.h": "c",
 		"eg_reparent.h": "c",
-		"gui.h": "c"
+		"gui.h": "c",
+		"thread": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

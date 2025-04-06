@@ -101,6 +101,9 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t components[
 
 void gui_ntt_reflection(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t components[])
 {
+	if (parent == 0) {
+		return;
+	}
 	int columns = 1;
 	for (int j = 0; components[j]; j++) {
 		ecs_iter_t it = ecs_children(world, components[j]);
@@ -121,3 +124,5 @@ void gui_ntt_reflection(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t co
 	draw_tree(world, parent, components);
 	gui_table_end();
 }
+
+
