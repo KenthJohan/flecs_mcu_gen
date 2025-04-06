@@ -2,3 +2,31 @@
 xmcu {}
 module xmcu
 
+window1 {
+	gui.Window : {}
+	tab1 {
+		gui.Tab : {}
+		table1 {
+			gui.NodeTreeReflection : {}
+			(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.peripherals"}
+			(gui.ColumnComponent, ec.Register) : {}
+			(gui.ColumnComponent, ec.Field) : {}
+		}
+	}
+	tab2 {
+		gui.Tab : {}
+		table1 {
+			gui.NodeTreeReflection : {}
+			(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.signals"}
+			(gui.ColumnComponent, ec.Signal) : {}
+		}
+	}
+	tab3 {
+		gui.Tab : {}
+		table1 {
+			gui.NodeTreeReflection : {}
+			(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.pins"}
+			(gui.ColumnComponent, ec.Pin) : {}
+		}
+	}
+}

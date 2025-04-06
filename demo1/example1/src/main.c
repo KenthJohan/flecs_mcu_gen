@@ -4,7 +4,8 @@
 #include <eximgui.h>
 #include "Ec.h"
 #include "eg_reparent.h"
-#include "gui.h"
+#include "bgui.h"
+#include "Gui.h"
 
 
 void draw_tree_window(ecs_world_t *world)
@@ -52,8 +53,6 @@ int main(int argc, char *argv[])
 	ecs_os_set_api_defaults();
 	ecs_os_api_t os_api = ecs_os_get_api();
 	ecs_os_set_api(&os_api);
-
-
 	
 	ecs_world_t *world = ecs_init();
 	ECS_IMPORT(world, FlecsUnits);
@@ -61,6 +60,7 @@ int main(int argc, char *argv[])
 	ECS_IMPORT(world, FlecsStats);
 
 	ECS_IMPORT(world, Ec);
+	ECS_IMPORT(world, Gui);
 
 	ecs_set(world, EcsWorld, EcsRest, {.port = 0});
 	printf("Remote: %s\n", "https://www.flecs.dev/explorer/?remote=true");
