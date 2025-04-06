@@ -1,6 +1,8 @@
 @color #FF99FF
-xmcu {}
-module xmcu
+script1 {}
+module script1
+
+
 
 window2 {
 	gui.Window : {}
@@ -24,6 +26,14 @@ window2 {
 			}
 		}
 		Pins {
+			gui.Tab : {}
+			table1 {
+				gui.NodeTreeReflection : {}
+				(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.pins"}
+				(gui.ColumnComponent, ec.Pin) : {}
+			}
+		}
+		Pins1 {
 			gui.Tab : {}
 			table1 {
 				gui.NodeTreeReflection : {}
