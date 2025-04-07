@@ -2,10 +2,20 @@
 script1 {}
 module script1
 
-
+shared {
+	input1 {
+		flecs.doc.Description : {"Input field"}
+	}
+}
 
 window2 {
 	gui.Window : {}
+	input1 {
+		gui.InputText : {storage: shared.input1}
+	}
+	input2 {
+		gui.InputText : {storage: shared.input1}
+	}
 	tabs {
 		gui.Tabs : {}
 		Peripherals {
@@ -26,14 +36,6 @@ window2 {
 			}
 		}
 		Pins {
-			gui.Tab : {}
-			table1 {
-				gui.NodeTreeReflection : {}
-				(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.pins"}
-				(gui.ColumnComponent, ec.Pin) : {}
-			}
-		}
-		Pins1 {
 			gui.Tab : {}
 			table1 {
 				gui.NodeTreeReflection : {}

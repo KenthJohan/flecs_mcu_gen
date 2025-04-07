@@ -5,6 +5,7 @@ ECS_COMPONENT_DECLARE(GuiTabs);
 ECS_COMPONENT_DECLARE(GuiTab);
 ECS_COMPONENT_DECLARE(GuiNodeTreeReflection);
 ECS_COMPONENT_DECLARE(GuiColumnComponent);
+ECS_COMPONENT_DECLARE(GuiInputText);
 
 void GuiImport(ecs_world_t *world)
 {
@@ -15,6 +16,7 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiTab);
 	ECS_COMPONENT_DEFINE(world, GuiNodeTreeReflection);
 	ECS_COMPONENT_DEFINE(world, GuiColumnComponent);
+	ECS_COMPONENT_DEFINE(world, GuiInputText);
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiWindow),
@@ -44,5 +46,11 @@ void GuiImport(ecs_world_t *world)
 	{.entity = ecs_id(GuiColumnComponent),
 	.members = {
 	{.name = "dummy", .type = ecs_id(ecs_i32_t)},
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(GuiInputText),
+	.members = {
+	{.name = "storage", .type = ecs_id(ecs_entity_t)},
 	}});
 }

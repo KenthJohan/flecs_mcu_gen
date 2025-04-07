@@ -48,6 +48,7 @@ bool gui_tab_begin(const char *name, int flags);
 void gui_tab_end();
 bool gui_tab_item_begin(const char *name, int flags);
 void gui_tab_item_end();
+bool gui_input_text(const char *label, char *buf, size_t buf_size);
 
 #ifdef __cplusplus
 }

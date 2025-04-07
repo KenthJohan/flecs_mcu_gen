@@ -29,6 +29,26 @@ static void SystemGuiWindow1(ecs_world_t * world, ecs_entity_t parent)
 					SystemGuiWindow1(world, e);
 					gui_tab_item_end();
 				}
+			} else if (ecs_has(world, e, GuiInputText)) {
+				char buf[128] = {0};
+				GuiInputText const *input = ecs_get(world, e, GuiInputText);
+				if (input == NULL) {
+					continue;
+				}
+				const EcsDocDescription *ptr = ecs_get(world, input->storage, EcsDocDescription);
+				if (ptr == NULL) {
+					continue;
+				}
+				if (input->storage == 0) {
+					continue;
+				}
+				ecs_os_strncpy(buf, ptr->value, sizeof(buf));
+				if (gui_input_text(name, buf, sizeof(buf))) {
+					ecs_set(world, input->storage, EcsDocDescription, {
+						/* Safe, value gets copied by copy hook */
+						.value = ECS_CONST_CAST(char*, buf)
+					});
+				}
 			} else if (ecs_has(world, e, GuiNodeTreeReflection)) {
 				EcsDocDescription const * treename = ecs_get_pair(world, e, EcsDocDescription, ecs_id(GuiNodeTreeReflection));
 				if (treename == NULL || treename->value == NULL) {
