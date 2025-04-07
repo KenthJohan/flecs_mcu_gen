@@ -31,6 +31,9 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 	switch (el->type) {
 	case GuiTypeTabs:
 		if (gui_tab_begin(name, 0)) {
+			char buf[128] = {0};
+			int r = ecs_os_snprintf(buf, sizeof(buf), "\nElement id: 0x%0x\n\n", gui_get_id_by_string(name));
+			gui_debug_locate(buf, buf + r);
 			SystemGuiWindow1(world, e);
 			gui_tab_end();
 		}
@@ -63,6 +66,7 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 		break;
 	case GuiTypeNodeTreeReflection:
 		if (1) {
+			gui_dummy(0, 32);
 			ecs_entity_t components[8] = {0};
 			int k = 0;
 			const ecs_type_t *type = ecs_get_type(world, e);

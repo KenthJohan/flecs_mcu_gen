@@ -137,3 +137,18 @@ bool gui_input_text(const char *label, char *buf, size_t buf_size)
 {
 	return ImGui::InputText(label, buf, buf_size, 0, NULL, NULL);
 }
+
+void gui_debug_locate(const char* line_begin, const char* line_end)
+{
+	ImGui::DebugTextUnformattedWithLocateItem(line_begin, line_end);
+}
+
+unsigned int gui_get_id_by_string(const char* str_id)
+{
+	return ImGui::GetID(str_id);
+}
+
+void gui_dummy(float x, float y)
+{
+	ImGui::Dummy(ImVec2(x, y));
+}

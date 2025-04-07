@@ -49,6 +49,9 @@ void gui_tab_end();
 bool gui_tab_item_begin(const char *name, int flags);
 void gui_tab_item_end();
 bool gui_input_text(const char *label, char *buf, size_t buf_size);
+void gui_debug_locate(const char* line_begin, const char* line_end);
+unsigned int gui_get_id_by_string(const char* str_id);
+void gui_dummy(float x, float y);
 
 #ifdef __cplusplus
 }
