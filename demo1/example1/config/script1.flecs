@@ -11,35 +11,32 @@ shared {
 window2 {
 	gui.Window : {}
 	input1 {
-		gui.InputText : {storage: shared.input1}
+		gui.Element : {InputText, shared.input1}
 	}
 	input2 {
-		gui.InputText : {storage: shared.input1}
+		gui.Element : {InputText, shared.input1}
 	}
 	tabs {
-		gui.Tabs : {}
+		gui.Element : {Tabs}
 		Peripherals {
-			gui.Tab : {}
+			gui.Element : {Tab}
 			table1 {
-				gui.NodeTreeReflection : {}
-				(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.peripherals"}
+				gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
 				(gui.ColumnComponent, ec.Register) : {}
 				(gui.ColumnComponent, ec.Field) : {}
 			}
 		}
 		Signals {
-			gui.Tab : {}
+			gui.Element : {Tab}
 			table1 {
-				gui.NodeTreeReflection : {}
-				(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.signals"}
+				gui.Element : {NodeTreeReflection, xmcu.STM32G030.signals}
 				(gui.ColumnComponent, ec.Signal) : {}
 			}
 		}
 		Pins {
-			gui.Tab : {}
+			gui.Element : {Tab}
 			table1 {
-				gui.NodeTreeReflection : {}
-				(flecs.doc.Description, gui.NodeTreeReflection) : {"xmcu.STM32G030.pins"}
+				gui.Element : {NodeTreeReflection, xmcu.STM32G030.pins}
 				(gui.ColumnComponent, ec.Pin) : {}
 			}
 		}

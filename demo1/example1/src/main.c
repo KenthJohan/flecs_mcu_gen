@@ -7,76 +7,86 @@
 #include "bgui.h"
 #include "Gui.h"
 
+static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e);
 
-
-static void SystemGuiWindow1(ecs_world_t * world, ecs_entity_t parent)
+static void SystemGuiWindow1(ecs_world_t *world, ecs_entity_t parent)
 {
 	ecs_iter_t it = ecs_children(world, parent);
 	while (ecs_children_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
-			char const *name = ecs_get_name(world, e);
-			if (!name) {
-				continue;
-			}
-			if (ecs_has(world, e, GuiTabs)) {
-				if (gui_tab_begin(name, 0)) {
-					SystemGuiWindow1(world, e);
-					gui_tab_end();
-				}
-			} else if (ecs_has(world, e, GuiTab)) {
-				if (gui_tab_item_begin(name, 0)) {
-					SystemGuiWindow1(world, e);
-					gui_tab_item_end();
-				}
-			} else if (ecs_has(world, e, GuiInputText)) {
-				char buf[128] = {0};
-				GuiInputText const *input = ecs_get(world, e, GuiInputText);
-				if (input == NULL) {
-					continue;
-				}
-				const EcsDocDescription *ptr = ecs_get(world, input->storage, EcsDocDescription);
-				if (ptr == NULL) {
-					continue;
-				}
-				if (input->storage == 0) {
-					continue;
-				}
-				ecs_os_strncpy(buf, ptr->value, sizeof(buf));
-				if (gui_input_text(name, buf, sizeof(buf))) {
-					ecs_set(world, input->storage, EcsDocDescription, {
-						/* Safe, value gets copied by copy hook */
-						.value = ECS_CONST_CAST(char*, buf)
-					});
-				}
-			} else if (ecs_has(world, e, GuiNodeTreeReflection)) {
-				EcsDocDescription const * treename = ecs_get_pair(world, e, EcsDocDescription, ecs_id(GuiNodeTreeReflection));
-				if (treename == NULL || treename->value == NULL) {
-					continue;
-				}
-				ecs_entity_t tree_entity = ecs_lookup(world, treename->value);
-				if (tree_entity == 0) {
-					continue;
-				}
-				ecs_entity_t components[8] = {0};
-				int k = 0;
-				const ecs_type_t *type = ecs_get_type(world, e);
-				for (int j = 0; j < type->count; j ++) {
-					if (ECS_HAS_ID_FLAG(type->array[j], PAIR)) {
-						ecs_entity_t rel = ecs_pair_first(world, type->array[j]);
-						if ((rel == ecs_id(GuiColumnComponent)) && (k < 8)) {
-							ecs_entity_t tgt = ecs_pair_second(world, type->array[j]);
-							components[k] = tgt;
-							k++;
-						}
-						//printf("rel: %s, tgt: %s", ecs_get_name(world, rel), ecs_get_name(world, tgt));
-					}
-				}
-				gui_ntt_reflection(world, tree_entity, components);
-			}
+			SystemGuiWindow2(world, e);
 		}
 	}
 }
+
+static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
+{
+	char const *name = ecs_get_name(world, e);
+	if (!name) {
+		return;
+	}
+	GuiElement const *el = ecs_get(world, e, GuiElement);
+
+	switch (el->type) {
+	case GuiTypeTabs:
+		if (gui_tab_begin(name, 0)) {
+			SystemGuiWindow1(world, e);
+			gui_tab_end();
+		}
+		break;
+	case GuiTypeTab:
+		if (gui_tab_item_begin(name, 0)) {
+			SystemGuiWindow1(world, e);
+			gui_tab_item_end();
+		}
+		break;
+	case GuiTypeInputText:
+		if (1) {
+			char buf[128] = {0};
+			if (el == NULL) {
+				return;
+			}
+			const EcsDocDescription *ptr = ecs_get(world, el->storage, EcsDocDescription);
+			if (ptr == NULL) {
+				return;
+			}
+			if (el->storage == 0) {
+				return;
+			}
+			ecs_os_strncpy(buf, ptr->value, sizeof(buf));
+			if (gui_input_text(name, buf, sizeof(buf))) {
+				/* Safe, value gets copied by copy hook */
+				ecs_set(world, el->storage, EcsDocDescription, {.value = ECS_CONST_CAST(char *, buf)});
+			}
+		}
+		break;
+	case GuiTypeNodeTreeReflection:
+		if (1) {
+			ecs_entity_t components[8] = {0};
+			int k = 0;
+			const ecs_type_t *type = ecs_get_type(world, e);
+			for (int j = 0; j < type->count; j++) {
+				if (ECS_HAS_ID_FLAG(type->array[j], PAIR)) {
+					ecs_entity_t rel = ecs_pair_first(world, type->array[j]);
+					if ((rel == ecs_id(GuiColumnComponent)) && (k < 8)) {
+						ecs_entity_t tgt = ecs_pair_second(world, type->array[j]);
+						components[k] = tgt;
+						k++;
+					}
+					// printf("rel: %s, tgt: %s", ecs_get_name(world, rel), ecs_get_name(world, tgt));
+				}
+			}
+			gui_ntt_reflection(world, el->storage, components);
+		}
+		break;
+
+	default:
+		break;
+	}
+}
+
+
 
 static void SystemGuiWindow(ecs_iter_t *it)
 {
@@ -112,9 +122,6 @@ int main(int argc, char *argv[])
 	ecs_set(world, EcsWorld, EcsRest, {.port = 0});
 	printf("Remote: %s\n", "https://www.flecs.dev/explorer/?remote=true");
 
-	ecs_log_set_level(0);
-	ecs_script_run_file(world, "config/script1.flecs");
-	ecs_log_set_level(-1);
 
 	ecs_log_set_level(0);
 	ecs_script_run_file(world, "config/STM32G030.flecs");
@@ -139,6 +146,10 @@ int main(int argc, char *argv[])
 		char const *names[] = {"PA", "PB", "PC", "PD", "PF", NULL};
 		eg_reparent_by_subname1(world, names, ecs_id(EcPin));
 	}
+	
+	ecs_log_set_level(0);
+	ecs_script_run_file(world, "config/script1.flecs");
+	ecs_log_set_level(-1);
 
 	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
 	eximgui_init(&eximgui);
