@@ -40,10 +40,11 @@ void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t 
 	char const *value = ecs_get_id(world, target, component);
 	ecs_iter_t it = ecs_children(world, component);
 	while (ecs_children_next(&it)) {
-		if (value == NULL) {
-			continue;
-		}
 		for (int i = 0; i < it.count; i++) {
+			jmgui_table_next_column();
+			if (value == NULL) {
+				continue;
+			}
 			ecs_entity_t e = it.entities[i];
 			EcsMember const *member = ecs_get(world, e, EcsMember);
 			if (member == NULL) {
@@ -54,7 +55,7 @@ void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t 
 				ecs_warn("Too little elements");
 				continue;
 			}
-			jmgui_table_next_column();
+
 
 			if (member->unit == GuiDebugIdUnit) {
 				uint32_t id = *(uint32_t *)(value + member->offset);
