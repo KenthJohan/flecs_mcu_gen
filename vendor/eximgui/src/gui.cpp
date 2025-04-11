@@ -138,9 +138,10 @@ bool gui_input_text(const char *label, char *buf, size_t buf_size)
 	return ImGui::InputText(label, buf, buf_size, 0, NULL, NULL);
 }
 
-void gui_debug_locate(const char* line_begin, const char* line_end)
+void gui_debug_locate(unsigned int id)
 {
-	ImGui::DebugTextUnformattedWithLocateItem(line_begin, line_end);
+	//ImGui::DebugTextUnformattedWithLocateItem(line_begin, line_end);
+	ImGui::DebugLocateItemOnHover(id);
 }
 
 unsigned int gui_get_id_by_string(const char* str_id)
@@ -148,7 +149,42 @@ unsigned int gui_get_id_by_string(const char* str_id)
 	return ImGui::GetID(str_id);
 }
 
+unsigned int gui_get_last_id()
+{
+	ImGuiContext* g = ImGui::GetCurrentContext();
+	return g->LastItemData.ID;
+}
+
+
 void gui_dummy(float x, float y)
 {
 	ImGui::Dummy(ImVec2(x, y));
+}
+
+bool gui_last_hover()
+{
+	ImGuiContext* g = ImGui::GetCurrentContext();
+	ImRect r = g->LastItemData.Rect;
+	if (ImGui::IsMouseHoveringRect(r.Min, r.Max, true)) {
+		return true;
+	}
+	return false;
+	/*
+	TextUnformatted(line_begin, line_end);
+	if (!IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup | ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
+	return;
+	ImGuiContext& g = *GImGui;
+	ImRect text_rect = g.LastItemData.Rect;
+	for (const char* p = line_begin; p <= line_end - 10; p++)
+	{
+	ImGuiID id = 0;
+	if (p[0] != '0' || (p[1] != 'x' && p[1] != 'X') || sscanf(p + 2, "%X", &id) != 1 || ImCharIsXdigitA(p[10]))
+	continue;
+	ImVec2 p0 = CalcTextSize(line_begin, p);
+	ImVec2 p1 = CalcTextSize(p, p + 10);
+	g.LastItemData.Rect = ImRect(text_rect.Min + ImVec2(p0.x, 0.0f), text_rect.Min + ImVec2(p0.x + p1.x, p1.y));
+	if (IsMouseHoveringRect(g.LastItemData.Rect.Min, g.LastItemData.Rect.Max, true))
+	DebugLocateItemOnHover(id);
+	p += 10;
+	*/
 }

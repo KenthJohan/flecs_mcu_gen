@@ -1,5 +1,6 @@
 #include "bgui.h"
 #include <eximgui.h>
+#include "Gui.h"
 
 
 bool ecs_has_children(ecs_world_t *world, ecs_entity_t entity)
@@ -39,6 +40,9 @@ void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t 
 	char const *value = ecs_get_id(world, target, component);
 	ecs_iter_t it = ecs_children(world, component);
 	while (ecs_children_next(&it)) {
+		if (value == NULL) {
+			continue;
+		}
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
 			EcsMember const *member = ecs_get(world, e, EcsMember);
@@ -50,22 +54,33 @@ void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t 
 				ecs_warn("Too little elements");
 				continue;
 			}
-			ecs_strbuf_t buf = ECS_STRBUF_INIT;
-			if (value == NULL) {
-				// Do nothing
-			} else if (member->type == ecs_id(ecs_u32_t)) {
-				ecs_strbuf_appendint(&buf, *(ecs_u32_t *)(value + member->offset));
-			} else if (member->type == ecs_id(ecs_i32_t)) {
-				ecs_strbuf_appendint(&buf, *(ecs_i32_t *)(value + member->offset));
-			} else {
-				ecs_ptr_to_str_buf(world, member->type, value + member->offset, &buf);
-			}
 			gui_table_next_column();
-			char const *msg = ecs_strbuf_get(&buf);
-			if (msg) {
-				gui_text(msg);
+
+			if (member->unit == GuiDebugIdUnit) {
+				uint32_t id = *(uint32_t *)(value + member->offset);
+				char buf[128] = {0};
+				snprintf(buf, sizeof(buf), "0x%08x", id);
+				gui_text(buf);
+				if(gui_last_hover()) {
+					gui_debug_locate(id);
+				}
+			} else if (member->type == ecs_id(ecs_u32_t)) {
+				char buf[128] = {0};
+				snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(value + member->offset));
+				gui_text(buf);
+			} else if (member->type == ecs_id(ecs_i32_t)) {
+				char buf[128] = {0};
+				snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(value + member->offset));
+				gui_text(buf);
+			} else {
+				ecs_strbuf_t buf = ECS_STRBUF_INIT;
+				ecs_ptr_to_str_buf(world, member->type, value + member->offset, &buf);
+				char const *msg = ecs_strbuf_get(&buf);
+				if (msg) {
+					gui_text(msg);
+					ecs_os_free((char*)msg);
+				}
 			}
-			ecs_os_free((char*)msg);
 		}
 	}
 }
@@ -99,30 +114,33 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t components[
 }
 
 
+int bgui_children_sum(ecs_world_t *world, ecs_entity_t components[], int count)
+{
+	int total = 0;
+	for (int j = 0; j < count; j++) {
+		if (components[j] == 0) {
+			break;
+		}
+		ecs_iter_t it = ecs_children(world, components[j]);
+		int32_t n = ecs_iter_count(&it);
+		if (n > 0) {
+			total += n;
+		}
+	}
+	return total;
+}
+
+
 void gui_ntt_reflection(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t components[])
 {
 	if (parent == 0) {
 		return;
 	}
-	int columns = 1;
-	for (int j = 0; components[j]; j++) {
-		ecs_iter_t it = ecs_children(world, components[j]);
-		int32_t n = ecs_iter_count(&it);
-		columns += n;
-	}
-	char buf[1288] = {0};
-	char * path = ecs_get_path(world, parent);
-	snprintf(buf, sizeof(buf), "path: %s, cols: %i", path, columns);
-	ecs_os_free(path);
-	gui_text(buf);
-	gui_table_begin(buf, columns, 0);
-	gui_table_setup_column("Name", 128, 0);
 	for (int j = 0; components[j]; j++) {
 		draw_table_columns_from_members(world, components[j]);
 	}
 	gui_table_header_row();
 	draw_tree(world, parent, components);
-	gui_table_end();
 }
 
 

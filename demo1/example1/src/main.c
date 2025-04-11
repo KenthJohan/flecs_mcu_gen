@@ -26,20 +26,19 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 	if (!name) {
 		return;
 	}
-	GuiElement const *el = ecs_get(world, e, GuiElement);
+	GuiElement *el = ecs_get_mut(world, e, GuiElement);
 
 	switch (el->type) {
 	case GuiTypeTabs:
 		if (gui_tab_begin(name, 0)) {
-			char buf[128] = {0};
-			int r = ecs_os_snprintf(buf, sizeof(buf), "\nElement id: 0x%0x\n\n", gui_get_id_by_string(name));
-			gui_debug_locate(buf, buf + r);
+			el->id = gui_get_id_by_string(name);
 			SystemGuiWindow1(world, e);
 			gui_tab_end();
 		}
 		break;
 	case GuiTypeTab:
 		if (gui_tab_item_begin(name, 0)) {
+			el->id = gui_get_id_by_string(name);
 			SystemGuiWindow1(world, e);
 			gui_tab_item_end();
 		}
@@ -62,6 +61,7 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 				/* Safe, value gets copied by copy hook */
 				ecs_set(world, el->storage, EcsDocDescription, {.value = ECS_CONST_CAST(char *, buf)});
 			}
+			el->id = gui_get_id_by_string(name);
 		}
 		break;
 	case GuiTypeNodeTreeReflection:
@@ -81,7 +81,18 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 					// printf("rel: %s, tgt: %s", ecs_get_name(world, rel), ecs_get_name(world, tgt));
 				}
 			}
+			int columns = bgui_children_sum(world, components, k);
+
+			char buf[1288] = {0};
+			char * path = ecs_get_path(world, e);
+			snprintf(buf, sizeof(buf), "path: %s, cols: %i", path, columns);
+			ecs_os_free(path);
+			gui_text(buf);
+			gui_table_begin(name, columns+1, 0);
+			el->id = gui_get_id_by_string(name);
+			gui_table_setup_column("Name", 128, 0);
 			gui_ntt_reflection(world, el->storage, components);
+			gui_table_end();
 		}
 		break;
 
@@ -94,8 +105,9 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 
 static void SystemGuiWindow(ecs_iter_t *it)
 {
-	GuiWindow *win = ecs_field(it, GuiWindow, 0);
+	//GuiWindow *win = ecs_field(it, GuiWindow, 0);
 	for (int i = 0; i < it->count; ++i) {
+		ecs_defer_begin(it->world);
 		ecs_entity_t e = it->entities[i];
 		char const *name = ecs_get_name(it->world, e);
 		if (!name) {
@@ -105,6 +117,7 @@ static void SystemGuiWindow(ecs_iter_t *it)
 			SystemGuiWindow1(it->world, e);
 		}
 		gui_end();
+		ecs_defer_end(it->world);
 	}
 }
 

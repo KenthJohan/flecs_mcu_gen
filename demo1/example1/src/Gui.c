@@ -4,6 +4,7 @@ ECS_COMPONENT_DECLARE(GuiWindow);
 ECS_COMPONENT_DECLARE(GuiColumnComponent);
 ECS_COMPONENT_DECLARE(GuiType);
 ECS_COMPONENT_DECLARE(GuiElement);
+ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 void GuiImport(ecs_world_t *world)
 {
@@ -13,6 +14,11 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiColumnComponent);
 	ECS_COMPONENT_DEFINE(world, GuiType);
 	ECS_COMPONENT_DEFINE(world, GuiElement);
+
+	GuiDebugIdUnit = ecs_unit_init(world, &(ecs_unit_desc_t){ 
+		.entity = ecs_entity(world, { .name = "DebugId" }),
+		.quantity = EcsData,
+		.symbol = "did" });
 
 	ecs_enum(world,
 	{.entity = ecs_id(GuiType),
@@ -30,8 +36,8 @@ void GuiImport(ecs_world_t *world)
 	.members = {
 	{.name = "type", .type = ecs_id(GuiType)},
 	{.name = "storage", .type = ecs_id(ecs_entity_t)},
-	}});
-
+	{.name = "id", .type = ecs_id(ecs_u32_t), .unit = GuiDebugIdUnit},
+}});
 	ecs_struct(world,
 	{.entity = ecs_id(GuiWindow),
 	.members = {
