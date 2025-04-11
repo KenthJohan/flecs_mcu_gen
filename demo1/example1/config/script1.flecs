@@ -49,3 +49,12 @@ window2 {
 		}
 	}
 }
+
+
+window3 {
+	gui.Window : {}
+	table1 {
+		gui.Element : {NodeTreeReflection, script1}
+		(gui.ColumnComponent, gui.Element) : {}
+	}
+}

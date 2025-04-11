@@ -27,18 +27,17 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 		return;
 	}
 	GuiElement *el = ecs_get_mut(world, e, GuiElement);
+	el->id = gui_get_id_by_string(name);
 
 	switch (el->type) {
 	case GuiTypeTabs:
 		if (gui_tab_begin(name, 0)) {
-			el->id = gui_get_id_by_string(name);
 			SystemGuiWindow1(world, e);
 			gui_tab_end();
 		}
 		break;
 	case GuiTypeTab:
 		if (gui_tab_item_begin(name, 0)) {
-			el->id = gui_get_id_by_string(name);
 			SystemGuiWindow1(world, e);
 			gui_tab_item_end();
 		}
@@ -82,7 +81,6 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 				}
 			}
 			int columns = bgui_children_sum(world, components, k);
-
 			char buf[1288] = {0};
 			char * path = ecs_get_path(world, e);
 			snprintf(buf, sizeof(buf), "path: %s, cols: %i", path, columns);
