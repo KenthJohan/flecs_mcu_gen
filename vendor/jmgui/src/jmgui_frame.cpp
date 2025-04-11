@@ -27,7 +27,7 @@ ImGuiIO *io;
 
 
 
-void eximgui_begin_frame(eximgui_t *eximgui)
+void jmgui_frame_begin(jmgui_context_t *eximgui)
 {
 	// Poll and handle events (inputs, window resize, etc.)
 	// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -94,7 +94,7 @@ void eximgui_begin_frame(eximgui_t *eximgui)
 
 }
 
-void eximgui_end_frame(eximgui_t *eximgui)
+void jmgui_frame_frame(jmgui_context_t *eximgui)
 {
 	// Rendering
 	ImGui::Render();
@@ -131,7 +131,7 @@ void eximgui_end_frame(eximgui_t *eximgui)
 	SDL_SubmitGPUCommandBuffer(command_buffer);
 }
 
-int eximgui_init(eximgui_t *eximgui)
+int jmgui_context_init(jmgui_context_t *eximgui)
 {
 	// Setup SDL
 	// [If using SDL_MAIN_USE_CALLBACKS: all code below until the main loop starts would likely be your SDL_AppInit() function]
@@ -201,7 +201,7 @@ int eximgui_init(eximgui_t *eximgui)
 	return 0;
 }
 
-int eximgui_fini(eximgui_t *eximgui)
+int jmgui_context_fini(jmgui_context_t *eximgui)
 {
 	// Cleanup
 	// [If using SDL_MAIN_USE_CALLBACKS: all code below would likely be your SDL_AppQuit() function]

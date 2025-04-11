@@ -7,11 +7,11 @@
 
 int main()
 {
-	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
-	eximgui_init(&eximgui);
+	jmgui_context_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
+	jmgui_context_init(&eximgui);
 	while (!eximgui.done) {
 		eximgui_progress(&eximgui);
 	}
-	eximgui_fini(&eximgui);
+	jmgui_context_fini(&eximgui);
 	return 0;
 }

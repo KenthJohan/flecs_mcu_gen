@@ -14,14 +14,14 @@ typedef struct {
 	float clear_color[4];
 	SDL_Window *window;
 	SDL_GPUDevice *gpu_device;
-} eximgui_t;
+} jmgui_context_t;
 
 
-int eximgui_init(eximgui_t *eximgui);
-int eximgui_fini(eximgui_t *eximgui);
-//void eximgui_progress(eximgui_t *eximgui);
-void eximgui_begin_frame(eximgui_t *eximgui);
-void eximgui_end_frame(eximgui_t *eximgui);
+int jmgui_context_init(jmgui_context_t *eximgui);
+int jmgui_context_fini(jmgui_context_t *eximgui);
+//void eximgui_progress(jmgui_context_t *eximgui);
+void jmgui_frame_begin(jmgui_context_t *eximgui);
+void jmgui_frame_frame(jmgui_context_t *eximgui);
 
 
 

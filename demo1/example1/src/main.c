@@ -166,8 +166,8 @@ int main(int argc, char *argv[])
 	ecs_script_run_file(world, "config/script1.flecs");
 	ecs_log_set_level(-1);
 
-	eximgui_t eximgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
-	eximgui_init(&eximgui);
+	jmgui_context_t jmgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
+	jmgui_context_init(&jmgui);
 
 	ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030");
 	// print name of parent
@@ -184,13 +184,13 @@ int main(int argc, char *argv[])
 	{.id = ecs_id(GuiWindow), .src.id = EcsSelf},
 	}});
 
-	while (!eximgui.done) {
-		eximgui_begin_frame(&eximgui);
+	while (!jmgui.done) {
+		jmgui_frame_begin(&jmgui);
 		ecs_progress(world, 0.0f);
-		eximgui_end_frame(&eximgui);
+		jmgui_frame_frame(&jmgui);
 		ecs_sleepf(0.016f);
 	}
-	eximgui_fini(&eximgui);
+	jmgui_context_fini(&jmgui);
 
 	return 0;
 }
