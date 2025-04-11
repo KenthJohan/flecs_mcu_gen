@@ -14,25 +14,25 @@
  * dependencies will automatically show up in this file. Include bake_config.h
  * in your main project file. Do not edit! */
 
-#ifndef EXIMGUI_BAKE_CONFIG_H
-#define EXIMGUI_BAKE_CONFIG_H
+#ifndef JMGUI_BAKE_CONFIG_H
+#define JMGUI_BAKE_CONFIG_H
 
 /* Headers of public dependencies */
 /* No dependencies */
 
 /* Convenience macro for exporting symbols */
-#ifndef eximgui_STATIC
-#if defined(eximgui_EXPORTS) && (defined(_MSC_VER) || defined(__MINGW32__))
-  #define EXIMGUI_API __declspec(dllexport)
-#elif defined(eximgui_EXPORTS)
-  #define EXIMGUI_API __attribute__((__visibility__("default")))
+#ifndef jmgui_STATIC
+#if defined(jmgui_EXPORTS) && (defined(_MSC_VER) || defined(__MINGW32__))
+  #define JMGUI_API __declspec(dllexport)
+#elif defined(jmgui_EXPORTS)
+  #define JMGUI_API __attribute__((__visibility__("default")))
 #elif defined(_MSC_VER)
-  #define EXIMGUI_API __declspec(dllimport)
+  #define JMGUI_API __declspec(dllimport)
 #else
-  #define EXIMGUI_API
+  #define JMGUI_API
 #endif
 #else
-  #define EXIMGUI_API
+  #define JMGUI_API
 #endif
 
 #endif

@@ -50,7 +50,7 @@ window2 {
 	}
 }
 
-
+/*
 window3 {
 	gui.Window : {}
 	table1 {
@@ -58,3 +58,4 @@ window3 {
 		(gui.ColumnComponent, gui.Element) : {}
 	}
 }
+*/

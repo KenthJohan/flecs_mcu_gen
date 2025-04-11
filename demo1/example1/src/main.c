@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <flecs.h>
-#include <eximgui.h>
+#include <jmgui.h>
 #include "Ec.h"
 #include "eg_reparent.h"
 #include "bgui.h"
