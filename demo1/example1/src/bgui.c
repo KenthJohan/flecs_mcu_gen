@@ -30,7 +30,7 @@ void draw_table_columns_from_members(ecs_world_t *world, ecs_entity_t parent)
 			if (name == NULL) {
 				ecs_warn("No name");
 			}
-			gui_table_setup_column(name ? name : "???", 16, 12.0f);
+			jmgui_table_setup_column(name ? name : "???", 16, 12.0f);
 		}
 	}
 }
@@ -54,30 +54,30 @@ void draw_from_members(ecs_world_t *world, ecs_entity_t component, ecs_entity_t 
 				ecs_warn("Too little elements");
 				continue;
 			}
-			gui_table_next_column();
+			jmgui_table_next_column();
 
 			if (member->unit == GuiDebugIdUnit) {
 				uint32_t id = *(uint32_t *)(value + member->offset);
 				char buf[128] = {0};
 				snprintf(buf, sizeof(buf), "0x%08x", id);
-				gui_text(buf);
-				if(gui_last_hover()) {
-					gui_debug_locate(id);
+				jmgui_text(buf);
+				if(jmgui_last_hover()) {
+					jmgui_debug_locate(id);
 				}
 			} else if (member->type == ecs_id(ecs_u32_t)) {
 				char buf[128] = {0};
 				snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(value + member->offset));
-				gui_text(buf);
+				jmgui_text(buf);
 			} else if (member->type == ecs_id(ecs_i32_t)) {
 				char buf[128] = {0};
 				snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(value + member->offset));
-				gui_text(buf);
+				jmgui_text(buf);
 			} else {
 				ecs_strbuf_t buf = ECS_STRBUF_INIT;
 				ecs_ptr_to_str_buf(world, member->type, value + member->offset, &buf);
 				char const *msg = ecs_strbuf_get(&buf);
 				if (msg) {
-					gui_text(msg);
+					jmgui_text(msg);
 					ecs_os_free((char*)msg);
 				}
 			}
@@ -94,20 +94,20 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t components[
 			if (!name) {
 				continue;
 			}
-			gui_table_next_row(0);
-			gui_table_next_column();
+			jmgui_table_next_row(0);
+			jmgui_table_next_column();
 			int a = ecs_has_children(world, it.entities[i]);
 			if (a) {
-				a += gui_tree_node(name, 0);
+				a += jmgui_tree_node(name, 0);
 			} else {
-				gui_tree_node(name, 8 | 256 | 512);
+				jmgui_tree_node(name, 8 | 256 | 512);
 			}
 			for (int j = 0; components[j]; j++) {
 				draw_from_members(world, components[j], it.entities[i]);
 			}
 			if (a == 2) {
 				draw_tree(world, it.entities[i], components);
-				gui_tree_pop();
+				jmgui_tree_pop();
 			}
 		}
 	}
@@ -131,7 +131,7 @@ int bgui_children_sum(ecs_world_t *world, ecs_entity_t components[], int count)
 }
 
 
-void gui_ntt_reflection(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t components[])
+void bgui_ntt_reflection(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t components[])
 {
 	if (parent == 0) {
 		return;
@@ -139,7 +139,7 @@ void gui_ntt_reflection(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t co
 	for (int j = 0; components[j]; j++) {
 		draw_table_columns_from_members(world, components[j]);
 	}
-	gui_table_header_row();
+	jmgui_table_header_row();
 	draw_tree(world, parent, components);
 }
 

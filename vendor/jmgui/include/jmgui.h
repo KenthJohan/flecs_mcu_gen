@@ -26,34 +26,34 @@ void eximgui_end_frame(eximgui_t *eximgui);
 
 
 
-bool gui_begin(const char *name, bool *p_open);
-void gui_end();
-void gui_text(const char *text);
-bool gui_collapsing_header(const char *name);
-bool gui_tree_node(const char *name, int flags);
-bool gui_tree(const char *name);
-void gui_tree_pop();
-void gui_push_id_u64(uint64_t id);
-void gui_pop_id();
-bool gui_button(const char *label);
-bool gui_button_small(const char *label);
-void gui_sameline();
-bool gui_table_begin(const char *name, int columns, int flags);
-void gui_table_end();
-void gui_table_setup_column(const char *name, int flags, float width);
-void gui_table_header_row();
-void gui_table_next_row(int flags);
-void gui_table_next_column();
-bool gui_tab_begin(const char *name, int flags);
-void gui_tab_end();
-bool gui_tab_item_begin(const char *name, int flags);
-void gui_tab_item_end();
-bool gui_input_text(const char *label, char *buf, size_t buf_size);
-void gui_debug_locate(unsigned int id);
-unsigned int gui_get_id_by_string(const char* str_id);
-unsigned int gui_get_last_id();
-void gui_dummy(float x, float y);
-bool gui_last_hover();
+bool jmgui_begin(const char *name, bool *p_open);
+void jmgui_end();
+void jmgui_text(const char *text);
+bool jmgui_collapsing_header(const char *name);
+bool jmgui_tree_node(const char *name, int flags);
+bool jmgui_tree(const char *name);
+void jmgui_tree_pop();
+void jmgui_push_id_u64(uint64_t id);
+void jmgui_pop_id();
+bool jmgui_button(const char *label);
+bool jmgui_button_small(const char *label);
+void jmgui_sameline();
+bool jmgui_table_begin(const char *name, int columns, int flags);
+void jmgui_table_end();
+void jmgui_table_setup_column(const char *name, int flags, float width);
+void jmgui_table_header_row();
+void jmgui_table_next_row(int flags);
+void jmgui_table_next_column();
+bool jmgui_tab_begin(const char *name, int flags);
+void jmgui_tab_end();
+bool jmgui_tab_item_begin(const char *name, int flags);
+void jmgui_tab_item_end();
+bool jmgui_input_text(const char *label, char *buf, size_t buf_size);
+void jmgui_debug_locate(unsigned int id);
+unsigned int jmgui_get_id_by_string(const char* str_id);
+unsigned int jmgui_get_last_id();
+void jmgui_dummy(float x, float y);
+bool jmgui_last_hover();
 
 #ifdef __cplusplus
 }

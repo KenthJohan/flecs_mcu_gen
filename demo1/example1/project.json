@@ -17,7 +17,7 @@
 		],
 		"lib": [
 			"flecs",
-			"eximgui",
+			"jmgui",
 			"imgui",
 			"stdc++",
 			"SDL3",

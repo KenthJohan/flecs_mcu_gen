@@ -27,19 +27,19 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 		return;
 	}
 	GuiElement *el = ecs_get_mut(world, e, GuiElement);
-	el->id = gui_get_id_by_string(name);
+	el->id = jmgui_get_id_by_string(name);
 
 	switch (el->type) {
 	case GuiTypeTabs:
-		if (gui_tab_begin(name, 0)) {
+		if (jmgui_tab_begin(name, 0)) {
 			SystemGuiWindow1(world, e);
-			gui_tab_end();
+			jmgui_tab_end();
 		}
 		break;
 	case GuiTypeTab:
-		if (gui_tab_item_begin(name, 0)) {
+		if (jmgui_tab_item_begin(name, 0)) {
 			SystemGuiWindow1(world, e);
-			gui_tab_item_end();
+			jmgui_tab_item_end();
 		}
 		break;
 	case GuiTypeInputText:
@@ -56,16 +56,16 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 				return;
 			}
 			ecs_os_strncpy(buf, ptr->value, sizeof(buf));
-			if (gui_input_text(name, buf, sizeof(buf))) {
+			if (jmgui_input_text(name, buf, sizeof(buf))) {
 				/* Safe, value gets copied by copy hook */
 				ecs_set(world, el->storage, EcsDocDescription, {.value = ECS_CONST_CAST(char *, buf)});
 			}
-			el->id = gui_get_id_by_string(name);
+			el->id = jmgui_get_id_by_string(name);
 		}
 		break;
 	case GuiTypeNodeTreeReflection:
 		if (1) {
-			gui_dummy(0, 32);
+			jmgui_dummy(0, 32);
 			ecs_entity_t components[8] = {0};
 			int k = 0;
 			const ecs_type_t *type = ecs_get_type(world, e);
@@ -85,12 +85,12 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 			char * path = ecs_get_path(world, e);
 			snprintf(buf, sizeof(buf), "path: %s, cols: %i", path, columns);
 			ecs_os_free(path);
-			gui_text(buf);
-			gui_table_begin(name, columns+1, 0);
-			el->id = gui_get_id_by_string(name);
-			gui_table_setup_column("Name", 128, 0);
-			gui_ntt_reflection(world, el->storage, components);
-			gui_table_end();
+			jmgui_text(buf);
+			jmgui_table_begin(name, columns+1, 0);
+			el->id = jmgui_get_id_by_string(name);
+			jmgui_table_setup_column("Name", 128, 0);
+			bgui_ntt_reflection(world, el->storage, components);
+			jmgui_table_end();
 		}
 		break;
 
@@ -111,10 +111,10 @@ static void SystemGuiWindow(ecs_iter_t *it)
 		if (!name) {
 			continue;
 		}
-		if (gui_begin(name, NULL)) {
+		if (jmgui_begin(name, NULL)) {
 			SystemGuiWindow1(it->world, e);
 		}
-		gui_end();
+		jmgui_end();
 		ecs_defer_end(it->world);
 	}
 }
