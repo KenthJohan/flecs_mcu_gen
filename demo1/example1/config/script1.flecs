@@ -26,10 +26,10 @@ window2 {
 					gui.ColumnComponent : {ec.Peripheral.dummy}
 				}
 				offset {
-					gui.ColumnComponent : {ec.Area.offset}
+					gui.ColumnComponent : {ec.Area.offset, unit:ec.Area.unit}
 				}
 				width {
-					gui.ColumnComponent : {ec.Area.width}
+					gui.ColumnComponent : {ec.Area.width, unit:ec.Area.unit}
 				}
 				access {
 					gui.ColumnComponent : {ec.Area.access}

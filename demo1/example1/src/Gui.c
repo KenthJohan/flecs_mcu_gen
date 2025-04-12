@@ -47,7 +47,8 @@ void GuiImport(ecs_world_t *world)
 	ecs_struct(world,
 	{.entity = ecs_id(GuiColumnComponent),
 	.members = {
-	{.name = "dummy", .type = ecs_id(ecs_i32_t)},
+	{.name = "member", .type = ecs_id(ecs_entity_t)},
+	{.name = "unit", .type = ecs_id(ecs_entity_t)},
 	}});
 
 }

@@ -65,6 +65,24 @@ void bgui_generic_value_get(ecs_world_t *world, ecs_entity_t storage, ecs_entity
 	v->value = value;
 }
 
+EcsUnit const * bgui_get_row_unit(ecs_world_t *world, ecs_entity_t storage, ecs_entity_t member)
+{
+	if (storage == 0) {
+		return NULL;
+	}
+	if (member == 0) {
+		return NULL;
+	}
+	bgui_generic_value_t v = {0};
+	bgui_generic_value_get(world, storage, member, &v);
+	if (v.value == 0) {
+		return NULL;
+	}
+	ecs_entity_t unit = *(ecs_entity_t *)(v.value);
+	EcsUnit const *u = ecs_get(world, unit, EcsUnit);
+	return u;
+}
+
 void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t target)
 {
 	GuiColumnComponent const *col = ecs_get(world, column, GuiColumnComponent);
@@ -81,24 +99,25 @@ void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t t
 		return;
 	}
 
-	// bgui_generic_value_t u;
-	// bgui_generic_value_get(world, target, col->unit, &u);
+	EcsUnit const *rowunit = bgui_get_row_unit(world, target, col->unit);
 
-	if (v.unit == GuiDebugIdUnit) {
-		uint32_t id = *(uint32_t *)(v.value);
-		char buf[128] = {0};
-		snprintf(buf, sizeof(buf), "0x%08x", id);
-		jmgui_text(buf);
-		if (jmgui_last_hover()) {
-			jmgui_debug_locate(id);
+	if (v.type == ecs_id(ecs_u32_t)) {
+		if (v.unit == GuiDebugIdUnit) {
+			uint32_t id = *(uint32_t *)(v.value);
+			char buf[128] = {0};
+			snprintf(buf, sizeof(buf), "0x%08x", id);
+			jmgui_text(buf);
+			if (jmgui_last_hover()) {
+				jmgui_debug_locate(id);
+			}
+		} else {
+			char buf[128] = {0};
+			snprintf(buf, sizeof(buf), "%u %s", *(uint32_t *)(v.value), rowunit ? rowunit->symbol : "");
+			jmgui_text(buf);
 		}
-	} else if (v.type == ecs_id(ecs_u32_t)) {
-		char buf[128] = {0};
-		snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(v.value));
-		jmgui_text(buf);
 	} else if (v.type == ecs_id(ecs_i32_t)) {
 		char buf[128] = {0};
-		snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(v.value));
+		snprintf(buf, sizeof(buf), "%i %s", *(ecs_i32_t *)(v.value), rowunit ? rowunit->symbol : "");
 		jmgui_text(buf);
 	} else {
 		ecs_strbuf_t buf = ECS_STRBUF_INIT;
