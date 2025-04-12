@@ -4,6 +4,7 @@ ECS_COMPONENT_DECLARE(GuiWindow);
 ECS_COMPONENT_DECLARE(GuiColumnComponent);
 ECS_COMPONENT_DECLARE(GuiType);
 ECS_COMPONENT_DECLARE(GuiElement);
+ECS_COMPONENT_DECLARE(GuiColor3);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 void GuiImport(ecs_world_t *world)
@@ -14,8 +15,9 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiColumnComponent);
 	ECS_COMPONENT_DEFINE(world, GuiType);
 	ECS_COMPONENT_DEFINE(world, GuiElement);
-	ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
-	ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
+	ECS_COMPONENT_DEFINE(world, GuiColor3);
+	//ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
+	//ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
 
 	GuiDebugIdUnit = ecs_unit_init(world, &(ecs_unit_desc_t){ 
 		.entity = ecs_entity(world, { .name = "DebugId" }),
@@ -52,5 +54,14 @@ void GuiImport(ecs_world_t *world)
 	{.name = "member", .type = ecs_id(ecs_entity_t)},
 	{.name = "unit", .type = ecs_id(ecs_entity_t)},
 	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(GuiColor3),
+	.members = {
+	{.name = "r", .type = ecs_id(ecs_f32_t)},
+	{.name = "g", .type = ecs_id(ecs_f32_t)},
+	{.name = "b", .type = ecs_id(ecs_f32_t)},
+	}});
+	
 
 }

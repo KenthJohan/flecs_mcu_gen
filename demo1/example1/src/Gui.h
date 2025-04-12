@@ -11,7 +11,6 @@ typedef struct {
 	ecs_entity_t unit;
 } GuiColumnComponent;
 
-
 typedef enum {
 	GuiTypeUnknown,
 	GuiTypeWindow,
@@ -28,12 +27,17 @@ typedef struct {
 	uint32_t id;
 } GuiElement;
 
+typedef struct {
+	float r;
+	float g;
+	float b;
+} GuiColor3;
 
 extern ECS_COMPONENT_DECLARE(GuiWindow);
 extern ECS_COMPONENT_DECLARE(GuiColumnComponent);
 extern ECS_COMPONENT_DECLARE(GuiType);
 extern ECS_COMPONENT_DECLARE(GuiElement);
+extern ECS_COMPONENT_DECLARE(GuiColor3);
 extern ECS_TAG_DECLARE(GuiDebugIdUnit);
-
 
 void GuiImport(ecs_world_t *world);

@@ -1,7 +1,12 @@
 #include "ecs0_reparent.h"
 #include <ctype.h>
 
-static bool str_cmp_sub0(char const *a, char const *b, char ** a_endptr)
+/*
+Hej1, Hej => true, a_endptr[0] = 1
+Heja, Hej => true, a_endptr[0] = a
+Heja, wej => false
+*/
+static bool str_cmp_sub0(char const *a, char const *b, char **a_endptr)
 {
 	while (*a && *b) {
 		if (isdigit(*a) && (*b) == '*') {
@@ -25,7 +30,7 @@ static bool str_cmp_sub0(char const *a, char const *b, char ** a_endptr)
 	return true;
 }
 
-static int str_cmp_sub0v(char const *a, char const *bv[], char ** a_endptr)
+static int str_cmp_sub0v(char const *a, char const *bv[], char **a_endptr)
 {
 	for (int i = 0; bv[i]; i++) {
 		if (str_cmp_sub0(a, bv[i], a_endptr)) {
@@ -35,41 +40,44 @@ static int str_cmp_sub0v(char const *a, char const *bv[], char ** a_endptr)
 	return -1;
 }
 
-void ecs0_reparent_by_subname(ecs_world_t *world, char const *names[], ecs_query_t *q)
+void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_query_t *q)
 {
 	ecs_defer_begin(world);
 	ecs_iter_t it = ecs_query_iter(world, q);
 	while (ecs_query_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			char const *name = ecs_get_name(world, it.entities[i]);
-			if (!name) {
+			if (name == NULL) {
 				continue;
 			}
-			char * endptr;
-			int j = str_cmp_sub0v(name, names, &endptr);
+			// Check if name matches any of the filters
+			// If it does, we need to reparent the entity
+			char *name_endptr = NULL;
+			int j = str_cmp_sub0v(name, filters, &name_endptr);
 			if (j < 0) {
 				continue;
 			}
+			// Setup a name for a new child parent
 			char namebuf[64] = {0};
-			if ((endptr - name) >= (intptr_t)sizeof(namebuf)) {
+			int size = name_endptr - name;
+			if (size < 0) {
+				ecs_err("name too short: %s", name);
+				continue;
+			} else if (size >= (intptr_t)sizeof(namebuf)) {
 				ecs_err("name too long: %s", name);
 				continue;
 			}
-			memcpy(namebuf, name, endptr - name);
-			namebuf[endptr - name] = 0;
-
-			ecs_entity_t parent = ecs_get_parent(world, it.entities[i]);
-			// Create a child of parent
-			ecs_entity_t child = ecs_entity_init(world, &(ecs_entity_desc_t){
-			                                            .name = namebuf,
-			                                            .parent = parent,
-			                                            });
-
-			ecs_add_pair(world, it.entities[i], EcsChildOf, child);
-
-			// ecs_add_entity(world, parent, it.entities[i]);
-			// ecs_remove_entity(world, parent, it.entities[i]);
-			// printf("Reorder: %jX %s\n", child, ecs_get_name(world, child));
+			memcpy(namebuf, name, size);
+			namebuf[size] = 0;
+			// Change the child parant to grandparent
+			// Creata a new parent entity and insert between grandparent and child
+			ecs_entity_t grandparent = ecs_get_parent(world, it.entities[i]);
+			ecs_entity_t parent = ecs_entity_init(world,
+			&(ecs_entity_desc_t){
+			.name = namebuf,
+			.parent = grandparent,
+			});
+			ecs_add_pair(world, it.entities[i], EcsChildOf, parent);
 		}
 	}
 	ecs_defer_end(world);
@@ -77,12 +85,11 @@ void ecs0_reparent_by_subname(ecs_world_t *world, char const *names[], ecs_query
 
 void ecs0_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component)
 {
-	ecs_query_t *q = ecs_query(world,
-	{
+	ecs_query_t *q = ecs_query_init(world,
+	&(ecs_query_desc_t){
 	.terms = {
 	{.id = component},
-	},
-	});
+	}});
 	ecs0_reparent_by_subname(world, names, q);
 	ecs_query_fini(q);
 }

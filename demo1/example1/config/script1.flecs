@@ -6,6 +6,11 @@ shared {
 	input1 {
 		flecs.doc.Description : {"Input field"}
 	}
+	colors {
+		red {
+			gui.Color3 : {1, 0, 0}
+		}
+	}
 }
 
 window2 {
@@ -67,6 +72,22 @@ window2.tabs.Gui {
 	gui.Element : {Tab}
 	table1 {
 		gui.Element : {NodeTreeReflection, script1}
+		type {
+			gui.ColumnComponent : {gui.Element.type}
+		}
+		storage {
+			gui.ColumnComponent : {gui.Element.storage}
+		}
+		id {
+			gui.ColumnComponent : {gui.Element.id}
+		}
+	}
+}
+
+window2.tabs.Shared {
+	gui.Element : {Tab}
+	table1 {
+		gui.Element : {NodeTreeReflection, shared}
 		type {
 			gui.ColumnComponent : {gui.Element.type}
 		}
