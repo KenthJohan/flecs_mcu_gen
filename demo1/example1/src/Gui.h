@@ -8,6 +8,7 @@ typedef struct {
 
 typedef struct {
 	ecs_entity_t member;
+	ecs_entity_t unit;
 } GuiColumnComponent;
 
 

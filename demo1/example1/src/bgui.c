@@ -2,7 +2,6 @@
 #include <jmgui.h>
 #include "Gui.h"
 
-
 bool ecs_has_children(ecs_world_t *world, ecs_entity_t entity)
 {
 	ecs_iter_t it = ecs_children(world, entity);
@@ -35,65 +34,82 @@ void draw_table_columns_from_members(ecs_world_t *world, ecs_entity_t parent)
 	}
 }
 
+typedef struct {
+	void const *value;
+	ecs_entity_t unit;
+	ecs_entity_t type;
+} bgui_generic_value_t;
 
-void draw_generic_member(ecs_world_t * world, ecs_entity_t column, ecs_entity_t target)
+void bgui_generic_value_get(ecs_world_t *world, ecs_entity_t storage, ecs_entity_t member, bgui_generic_value_t *v)
+{
+	ecs_entity_t component = ecs_get_parent(world, member);
+	if (component == 0) {
+		return;
+	}
+	char const *value = ecs_get_id(world, storage, component);
+	if (value == NULL) {
+		return;
+	}
+	EcsMember const *m = ecs_get(world, member, EcsMember);
+	v->unit = m->unit;
+	v->type = m->type;
+	if (m == NULL) {
+		ecs_warn("Not a member");
+		return;
+	}
+	if (m->count <= 0) {
+		ecs_warn("Too little elements");
+		return;
+	}
+	value += m->offset;
+	v->value = value;
+}
+
+void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t target)
 {
 	GuiColumnComponent const *col = ecs_get(world, column, GuiColumnComponent);
 	if (col == NULL) {
 		ecs_warn("No column");
 		return;
 	}
-	ecs_entity_t member = col->member;
-	if (member == 0) {
-		ecs_warn("No member");
+	bgui_generic_value_t v = {0};
+	bgui_generic_value_get(world, target, col->member, &v);
+	if (v.value == NULL) {
+		//char *str = ecs_type_str(world, ecs_get_type(world, target));
+		//ecs_warn("No value: %s [%s]", ecs_get_name(world, col->member), str);
+		//ecs_os_free(str);
 		return;
 	}
-	ecs_entity_t member_parent = ecs_get_parent(world, member);
-	if (member_parent == 0) {
-		return;
-	}
-	char const *value = ecs_get_id(world, target, member_parent);
-	if (value == NULL) {
-		return;
-	}
-	EcsMember const *m = ecs_get(world, member, EcsMember);
-	if (m == NULL) {
-		ecs_warn("Not a member");
-		return;
-	}
-	value += m->offset;
-	if (m->count <= 0) {
-		ecs_warn("Too little elements");
-		return;
-	}
-	if (m->unit == GuiDebugIdUnit) {
-		uint32_t id = *(uint32_t *)(value);
+
+	// bgui_generic_value_t u;
+	// bgui_generic_value_get(world, target, col->unit, &u);
+
+	if (v.unit == GuiDebugIdUnit) {
+		uint32_t id = *(uint32_t *)(v.value);
 		char buf[128] = {0};
 		snprintf(buf, sizeof(buf), "0x%08x", id);
 		jmgui_text(buf);
-		if(jmgui_last_hover()) {
+		if (jmgui_last_hover()) {
 			jmgui_debug_locate(id);
 		}
-	} else if (m->type == ecs_id(ecs_u32_t)) {
+	} else if (v.type == ecs_id(ecs_u32_t)) {
 		char buf[128] = {0};
-		snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(value));
+		snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(v.value));
 		jmgui_text(buf);
-	} else if (m->type == ecs_id(ecs_i32_t)) {
+	} else if (v.type == ecs_id(ecs_i32_t)) {
 		char buf[128] = {0};
-		snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(value));
+		snprintf(buf, sizeof(buf), "%u", *(ecs_u32_t *)(v.value));
 		jmgui_text(buf);
 	} else {
 		ecs_strbuf_t buf = ECS_STRBUF_INIT;
-		ecs_ptr_to_str_buf(world, m->type, value, &buf);
+		ecs_ptr_to_str_buf(world, v.type, v.value, &buf);
 		char const *msg = ecs_strbuf_get(&buf);
 		if (msg) {
 			jmgui_text(msg);
-			ecs_os_free((char*)msg);
+			ecs_os_free((char *)msg);
 		}
 	}
 }
-
-
 
 void draw_tree(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t columns[])
 {
@@ -124,7 +140,6 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t columns[])
 	}
 }
 
-
 int bgui_children_sum(ecs_world_t *world, ecs_entity_t components[], int count)
 {
 	int total = 0;
@@ -141,7 +156,6 @@ int bgui_children_sum(ecs_world_t *world, ecs_entity_t components[], int count)
 	return total;
 }
 
-
 void bgui_ntt_reflection(ecs_world_t *world, ecs_entity_t storage, ecs_entity_t columns[])
 {
 	if (storage == 0) {
@@ -157,5 +171,3 @@ void bgui_ntt_reflection(ecs_world_t *world, ecs_entity_t storage, ecs_entity_t 
 	jmgui_table_header_row();
 	draw_tree(world, storage, columns);
 }
-
-
