@@ -7,7 +7,8 @@
 		"use": [
 			"flecs",
 			"imgui",
-			"eximgui"
+			"eximgui",
+			"Ec"
 		]
 	},
 	"lang.c": {
@@ -17,6 +18,7 @@
 		],
 		"lib": [
 			"flecs",
+			"Ec",
 			"jmgui",
 			"imgui",
 			"stdc++",

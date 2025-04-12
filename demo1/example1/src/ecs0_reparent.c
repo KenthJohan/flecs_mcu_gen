@@ -1,5 +1,4 @@
-#include "eg_reparent.h"
-#include "Ec.h"
+#include "ecs0_reparent.h"
 #include <ctype.h>
 
 static bool str_cmp_sub0(char const *a, char const *b, char ** a_endptr)
@@ -36,7 +35,7 @@ static int str_cmp_sub0v(char const *a, char const *bv[], char ** a_endptr)
 	return -1;
 }
 
-void eg_reparent_by_subname(ecs_world_t *world, char const *names[], ecs_query_t *q)
+void ecs0_reparent_by_subname(ecs_world_t *world, char const *names[], ecs_query_t *q)
 {
 	ecs_defer_begin(world);
 	ecs_iter_t it = ecs_query_iter(world, q);
@@ -76,7 +75,7 @@ void eg_reparent_by_subname(ecs_world_t *world, char const *names[], ecs_query_t
 	ecs_defer_end(world);
 }
 
-void eg_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component)
+void ecs0_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component)
 {
 	ecs_query_t *q = ecs_query(world,
 	{
@@ -84,6 +83,6 @@ void eg_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity
 	{.id = component},
 	},
 	});
-	eg_reparent_by_subname(world, names, q);
+	ecs0_reparent_by_subname(world, names, q);
 	ecs_query_fini(q);
 }
