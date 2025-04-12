@@ -9,6 +9,7 @@ ECS_COMPONENT_DECLARE(EcSignal);
 ECS_COMPONENT_DECLARE(EcQuery);
 ECS_COMPONENT_DECLARE(EcAf);
 ECS_COMPONENT_DECLARE(EcAccess);
+ECS_COMPONENT_DECLARE(EcArea);
 
 void EcImport(ecs_world_t *world)
 {
@@ -24,6 +25,7 @@ void EcImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, EcQuery);
 	ECS_COMPONENT_DEFINE(world, EcAf);
 	ECS_COMPONENT_DEFINE(world, EcAccess);
+	ECS_COMPONENT_DEFINE(world, EcArea);
 
 	ecs_bitmask(world,
 	{.entity = ecs_id(EcPinAttribute),
@@ -33,11 +35,20 @@ void EcImport(ecs_world_t *world)
 	{.name = "InOut", .value = EcPinAttribute_INOUT}}});
 
 	ecs_bitmask(world,
-		{.entity = ecs_id(EcAccess),
-		.constants = {
-		{.name = "R", .value = EcAccess_READ},
-		{.name = "W", .value = EcAccess_WRITE},
-		}});
+	{.entity = ecs_id(EcAccess),
+	.constants = {
+	{.name = "R", .value = EcAccess_READ},
+	{.name = "W", .value = EcAccess_WRITE},
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(EcArea),
+	.members = {
+	{.name = "offset", .type = ecs_id(ecs_i32_t)},
+	{.name = "width", .type = ecs_id(ecs_i32_t)},
+	{.name = "access", .type = ecs_id(EcAccess)},
+	{.name = "unit", .type = ecs_id(ecs_entity_t)},
+	}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(EcPin),

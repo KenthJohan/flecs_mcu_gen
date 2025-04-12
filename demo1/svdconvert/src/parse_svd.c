@@ -22,6 +22,7 @@ typedef struct {
 	mxml_node_t *fields;
 	mxml_node_t *address;
 	mxml_node_t *access;
+	mxml_node_t *size;
 } svd_register_t;
 
 typedef struct {
@@ -74,13 +75,14 @@ void iterate_registers(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		regs.fields = mxmlFindElement(child, top, "fields", NULL, NULL, MXML_DESCEND_FIRST);
 		regs.address = mxmlFindElement(child, top, "addressOffset", NULL, NULL, MXML_DESCEND_FIRST);
 		regs.access = mxmlFindElement(child, top, "access", NULL, NULL, MXML_DESCEND_FIRST);
+		regs.size = mxmlFindElement(child, top, "size", NULL, NULL, MXML_DESCEND_FIRST);
 
 		if (regs.name) {
 			result_flecs_entity_open(result, mxmlGetOpaque(regs.name), NULL);
 			if (regs.description) {
 				result_flecs_description(result, mxmlGetOpaque(regs.description));
 			}
-			result_flecs_register(result, mxmlGetOpaque(regs.address), mxmlGetOpaque(regs.access));
+			result_flecs_register(result, mxmlGetOpaque(regs.address), mxmlGetOpaque(regs.access), mxmlGetOpaque(regs.size));
 			if (regs.fields) {
 				iterate_fields(regs.fields, top, result);
 			}

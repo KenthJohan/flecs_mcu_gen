@@ -19,9 +19,8 @@ void result_flecs_description(result_t *result, const char *description)
 	fprintf(result->file, "(flecs.doc.Description, flecs.doc.Brief) : {\"%s\"}\n", buf);
 }
 
-void result_flecs_register(result_t *result, const char *address, const char *access)
+void result_flecs_register(result_t *result, const char *address, const char *access, const char *size)
 {
-	result_indent(result);
 	char const * access0 = "0";
 	if (access) {
 		if (strcmp(access, "read-write") == 0) {
@@ -32,12 +31,14 @@ void result_flecs_register(result_t *result, const char *address, const char *ac
 			access0 = "W";
 		}
 	}
+	result_indent(result);
 	fprintf(result->file, "ec.Register : {address:%s, access:%s}\n", address, access0);
+	result_indent(result);
+	fprintf(result->file, "ec.Area : {offset:%s, width:%s, access:%s, unit:flecs.units.Data.Bytes}\n", address, size, access0);
 }
 
 void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth, const char *access)
 {
-	result_indent(result);
 	char const * access0 = "0";
 	if (access) {
 		if (strcmp(access, "read-write") == 0) {
@@ -48,7 +49,10 @@ void result_flecs_field(result_t *result, char const *bitoffset, char const *bit
 			access0 = "W";
 		}
 	}
+	result_indent(result);
 	fprintf(result->file, "ec.Field : {bitoffset:%s, bitwidth:%s, access:%s}\n", bitoffset, bitwidth, access0);
+	result_indent(result);
+	fprintf(result->file, "ec.Area : {offset:%s, width:%s, access:%s, unit:flecs.units.Data.Bits}\n", bitoffset, bitwidth, access0);
 }
 
 void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char const *pre1, char const *a1)

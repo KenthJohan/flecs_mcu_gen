@@ -39,6 +39,14 @@ typedef struct {
 	ecs_query_t *q;
 } EcQuery;
 
+typedef struct {
+	// Can be any unit:
+	int32_t offset;
+	int32_t width;
+	EcAccess access;
+	ecs_entity_t unit; // Unit of measure, e.g. bytes, bits
+} EcArea;
+
 typedef enum {
 	EcAF0,
 	EcAF1,

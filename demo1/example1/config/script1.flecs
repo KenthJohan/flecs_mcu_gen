@@ -22,8 +22,8 @@ window2 {
 			gui.Element : {Tab}
 			table1 {
 				gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
-				(gui.ColumnComponent, ec.Register) : {}
-				(gui.ColumnComponent, ec.Field) : {}
+				(gui.ColumnComponent, ec.Area) : {}
+				//(gui.ColumnComponent, ec.Field) : {}
 			}
 		}
 		Signals {
