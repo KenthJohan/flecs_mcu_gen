@@ -125,7 +125,8 @@
 		"eg_reparent.h": "c",
 		"gui.h": "c",
 		"thread": "c",
-		"source_location": "c"
+		"source_location": "c",
+		"ecs0.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

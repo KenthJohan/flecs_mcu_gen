@@ -6,6 +6,7 @@
 #include "eg_reparent.h"
 #include "bgui.h"
 #include "Gui.h"
+#include "ecs0.h"
 
 static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e);
 
@@ -87,7 +88,7 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 	case GuiTypeNodeTreeReflection:
 		if (1) {
 			ecs_entity_t columns[8] = {0};
-			int k = get_columns(world, e, columns, 8-1);
+			int k = ecs0_get_entities_from_parent(world, e, ecs_id(GuiColumnComponent), columns, 8-1);
 
 			/*
 			char buf[1288] = {0};

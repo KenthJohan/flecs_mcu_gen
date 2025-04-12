@@ -14,6 +14,8 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiColumnComponent);
 	ECS_COMPONENT_DEFINE(world, GuiType);
 	ECS_COMPONENT_DEFINE(world, GuiElement);
+	ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
+	ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
 
 	GuiDebugIdUnit = ecs_unit_init(world, &(ecs_unit_desc_t){ 
 		.entity = ecs_entity(world, { .name = "DebugId" }),

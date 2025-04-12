@@ -18,41 +18,63 @@ window2 {
 	}
 	tabs {
 		gui.Element : {Tabs}
-		Peripherals {
-			gui.Element : {Tab}
-			table1 {
-				gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
-				offset {
-					gui.ColumnComponent : {ec.Area.offset, unit:ec.Area.unit}
-				}
-				width {
-					gui.ColumnComponent : {ec.Area.width, unit:ec.Area.unit}
-				}
-				access {
-					gui.ColumnComponent : {ec.Area.access}
-				}
-			}
+	}
+}
+
+
+
+window2.tabs.Peripherals {
+	gui.Element : {Tab}
+	table1 {
+		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
+		offset {
+			gui.ColumnComponent : {ec.Area.offset, unit:ec.Area.unit}
 		}
-		Signals {
-			gui.Element : {Tab}
-			table1 {
-				gui.Element : {NodeTreeReflection, xmcu.STM32G030.signals}
-				(gui.ColumnComponent, ec.Signal) : {}
-			}
+		width {
+			gui.ColumnComponent : {ec.Area.width, unit:ec.Area.unit}
 		}
-		Pins {
-			gui.Element : {Tab}
-			table1 {
-				gui.Element : {NodeTreeReflection, xmcu.STM32G030.pins}
-				(gui.ColumnComponent, ec.Pin) : {}
-			}
+		access {
+			gui.ColumnComponent : {ec.Area.access}
 		}
-		Gui {
-			gui.Element : {Tab}
-			table1 {
-				gui.Element : {NodeTreeReflection, script1}
-				(gui.ColumnComponent, gui.Element) : {}
-			}
+	}
+}
+
+window2.tabs.Signals {
+	gui.Element : {Tab}
+	table1 {
+		gui.Element : {NodeTreeReflection, xmcu.STM32G030.signals}
+		dummy {
+			gui.ColumnComponent : {ec.Signal.dummy}
+		}
+	}
+}
+
+
+window2.tabs.Pins {
+	gui.Element : {Tab}
+	table1 {
+		gui.Element : {NodeTreeReflection, xmcu.STM32G030.pins}
+		pad {
+			gui.ColumnComponent : {ec.Pin.pad}
+		}
+		attribute {
+			gui.ColumnComponent : {ec.Pin.attribute}
+		}
+	}
+}
+
+window2.tabs.Gui {
+	gui.Element : {Tab}
+	table1 {
+		gui.Element : {NodeTreeReflection, script1}
+		type {
+			gui.ColumnComponent : {gui.Element.type}
+		}
+		storage {
+			gui.ColumnComponent : {gui.Element.storage}
+		}
+		id {
+			gui.ColumnComponent : {gui.Element.id}
 		}
 	}
 }
