@@ -112,13 +112,23 @@ void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t t
 			}
 		} else {
 			char buf[128] = {0};
-			snprintf(buf, sizeof(buf), "%u %s", *(uint32_t *)(v.value), rowunit ? rowunit->symbol : "");
+			snprintf(buf, sizeof(buf), "%u", *(uint32_t *)(v.value));
 			jmgui_text(buf);
+			if (rowunit) {
+				snprintf(buf, sizeof(buf), "%s", rowunit->symbol);
+				jmgui_sameline(0, -1);
+				jmgui_text_colored(0.5, 0.5, 0.5, "%s", buf);
+			}
 		}
 	} else if (v.type == ecs_id(ecs_i32_t)) {
 		char buf[128] = {0};
-		snprintf(buf, sizeof(buf), "%i %s", *(ecs_i32_t *)(v.value), rowunit ? rowunit->symbol : "");
+		snprintf(buf, sizeof(buf), "%i", *(ecs_i32_t *)(v.value));
 		jmgui_text(buf);
+		if (rowunit) {
+			snprintf(buf, sizeof(buf), "%s", rowunit->symbol);
+			jmgui_sameline(0, -1);
+			jmgui_text_colored(0.5, 0.5, 0.5, "%s", buf);
+		}
 	} else {
 		ecs_strbuf_t buf = ECS_STRBUF_INIT;
 		ecs_ptr_to_str_buf(world, v.type, v.value, &buf);

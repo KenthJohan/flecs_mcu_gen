@@ -47,6 +47,20 @@ void jmgui_text(const char *text)
 	ImGui::Text("%s", text);
 }
 
+void jmgui_text_colored_va(float r, float g, float b, const char* fmt, va_list args)
+{
+	const ImVec4 col = ImVec4(r, g, b, 1.0f);
+	ImGui::TextColoredV(col, fmt, args);
+}
+
+void jmgui_text_colored(float r, float g, float b, const char* fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    jmgui_text_colored_va(r, g, b, fmt, args);
+    va_end(args);
+}
+
 bool jmgui_collapsing_header(const char *name)
 {
 	return ImGui::CollapsingHeader(name);
@@ -159,6 +173,11 @@ unsigned int jmgui_get_last_id()
 void jmgui_dummy(float x, float y)
 {
 	ImGui::Dummy(ImVec2(x, y));
+}
+
+void jmgui_same_line(float offset_from_start_x, float spacing)
+{
+	ImGui::SameLine();
 }
 
 bool jmgui_last_hover()

@@ -22,9 +22,6 @@ window2 {
 			gui.Element : {Tab}
 			table1 {
 				gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
-				p {
-					gui.ColumnComponent : {ec.Peripheral.dummy}
-				}
 				offset {
 					gui.ColumnComponent : {ec.Area.offset, unit:ec.Area.unit}
 				}

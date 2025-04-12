@@ -54,6 +54,8 @@ unsigned int jmgui_get_id_by_string(const char* str_id);
 unsigned int jmgui_get_last_id();
 void jmgui_dummy(float x, float y);
 bool jmgui_last_hover();
+void jmgui_same_line(float offset_from_start_x, float spacing);
+void jmgui_text_colored(float r, float g, float b, const char* fmt, ...);
 
 #ifdef __cplusplus
 }
