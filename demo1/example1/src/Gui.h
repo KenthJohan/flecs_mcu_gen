@@ -7,7 +7,7 @@ typedef struct {
 } GuiWindow;
 
 typedef struct {
-	int32_t dummy;
+	ecs_entity_t member;
 } GuiColumnComponent;
 
 

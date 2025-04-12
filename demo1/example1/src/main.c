@@ -20,6 +20,27 @@ static void SystemGuiWindow1(ecs_world_t *world, ecs_entity_t parent)
 	}
 }
 
+
+static int get_columns(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t columns[], int n)
+{
+	ecs_iter_t it = ecs_children(world, parent);
+	int k = 0;
+	while (ecs_children_next(&it)) {
+		for (int i = 0; i < it.count; i++) {
+			ecs_entity_t e = it.entities[i];
+			GuiColumnComponent const *col = ecs_get(world, e, GuiColumnComponent);
+			if (col == NULL) {
+				continue;
+			}
+			if (k < n) {
+				columns[k] = e;
+				k++;
+			}
+		}
+	}
+	return k;
+}
+
 static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 {
 	char const *name = ecs_get_name(world, e);
@@ -65,31 +86,21 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 		break;
 	case GuiTypeNodeTreeReflection:
 		if (1) {
-			jmgui_dummy(0, 32);
-			ecs_entity_t components[8] = {0};
-			int k = 0;
-			const ecs_type_t *type = ecs_get_type(world, e);
-			for (int j = 0; j < type->count; j++) {
-				if (ECS_HAS_ID_FLAG(type->array[j], PAIR)) {
-					ecs_entity_t rel = ecs_pair_first(world, type->array[j]);
-					if ((rel == ecs_id(GuiColumnComponent)) && (k < 8)) {
-						ecs_entity_t tgt = ecs_pair_second(world, type->array[j]);
-						components[k] = tgt;
-						k++;
-					}
-					// printf("rel: %s, tgt: %s", ecs_get_name(world, rel), ecs_get_name(world, tgt));
-				}
-			}
-			int columns = bgui_children_sum(world, components, k);
+			ecs_entity_t columns[8] = {0};
+			int k = get_columns(world, e, columns, 8-1);
+
+			/*
 			char buf[1288] = {0};
 			char * path = ecs_get_path(world, e);
 			snprintf(buf, sizeof(buf), "path: %s, cols: %i", path, columns);
 			ecs_os_free(path);
 			jmgui_text(buf);
-			jmgui_table_begin(name, columns+1, 0);
+			*/
+
+			jmgui_table_begin(name, k+1, 0);
 			el->id = jmgui_get_id_by_string(name);
 			jmgui_table_setup_column("Name", 128, 0);
-			bgui_ntt_reflection(world, el->storage, components);
+			bgui_ntt_reflection(world, el->storage, columns);
 			jmgui_table_end();
 		}
 		break;
