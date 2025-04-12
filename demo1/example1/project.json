@@ -7,7 +7,7 @@
 		"use": [
 			"flecs",
 			"imgui",
-			"eximgui",
+			"jmgui",
 			"Ec"
 		]
 	},

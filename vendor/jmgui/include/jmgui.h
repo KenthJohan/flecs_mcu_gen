@@ -30,7 +30,7 @@ bool jmgui_begin(const char *name, bool *p_open);
 void jmgui_end();
 void jmgui_text(const char *text);
 bool jmgui_collapsing_header(const char *name);
-bool jmgui_tree_node(const char *name, int flags);
+bool jmgui_tree_node(const char *name, int flags, float r, float g, float b);
 bool jmgui_tree(const char *name);
 void jmgui_tree_pop();
 void jmgui_push_id_u64(uint64_t id);

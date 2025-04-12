@@ -81,9 +81,13 @@ void jmgui_sameline()
 	ImGui::SameLine();
 }
 
-bool jmgui_tree_node(const char *name, int flags)
+bool jmgui_tree_node(const char *name, int flags, float r, float g, float b)
 {
-	return ImGui::TreeNodeEx(name, flags);
+	const ImVec4 col = ImVec4(r, g, b, 1.0f);
+	ImGui::PushStyleColor(ImGuiCol_Text, col);
+	bool result = ImGui::TreeNodeEx(name, flags);
+	ImGui::PopStyleColor(1);
+	return result;
 }
 
 /*

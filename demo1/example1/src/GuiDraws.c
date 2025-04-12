@@ -97,7 +97,7 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 			jmgui_table_begin(name, k+1, 0);
 			el->id = jmgui_get_id_by_string(name);
 			jmgui_table_setup_column("Name", 128, 0);
-			bgui_ntt_reflection(world, el->storage, columns);
+			bgui_ntt_reflection(world, e, el->storage, columns);
 			jmgui_table_end();
 		}
 		break;

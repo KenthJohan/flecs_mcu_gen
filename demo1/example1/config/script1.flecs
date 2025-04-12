@@ -6,9 +6,11 @@ shared {
 	input1 {
 		flecs.doc.Description : {"Input field"}
 	}
-	colors {
-		red {
+	styles {
+		s1 {
 			gui.Color3 : {1, 0, 0}
+			(gui.Color3, ec.Field) : {0.5, 1, 0}
+			(gui.Color3, ec.Register) : {1, 0.5, 0}
 		}
 	}
 }
@@ -30,7 +32,7 @@ window2 {
 
 window2.tabs.Peripherals {
 	gui.Element : {Tab}
-	table1 {
+	table1 : shared.styles.s1 {
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
 		offset {
 			gui.ColumnComponent : {ec.Area.offset, unit:ec.Area.unit}

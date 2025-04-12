@@ -140,9 +140,33 @@ void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t t
 	}
 }
 
-void draw_tree(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t columns[])
+
+GuiColor3 const * get_color(ecs_world_t *world, ecs_entity_t table, ecs_entity_t row)
 {
-	ecs_iter_t it = ecs_children(world, parent);
+	ecs_query_t *q = ecs_query_init(world, &(ecs_query_desc_t){
+		.terms = {
+			{ .id = ecs_pair(ecs_id(GuiColor3), EcsWildcard), .inout = EcsInOutFilter }
+		}
+	});
+	ecs_iter_t it = ecs_query_iter(world, q);
+	while (ecs_query_next(&it)) {
+		ecs_id_t id = ecs_field_id(&it, 0);
+		ecs_entity_t second = ecs_pair_second(world, id);
+		if (ecs_has_id(world, row, second)) {
+			GuiColor3 const *color = ecs_get_pair(world, table, GuiColor3, second);
+			if (color) {
+				return color;
+			}
+		}
+	}
+	ecs_query_fini(q);
+	return NULL;
+}
+
+
+void draw_tree(ecs_world_t *world, ecs_entity_t table, ecs_entity_t storage, ecs_entity_t columns[])
+{
+	ecs_iter_t it = ecs_children(world, storage);
 	while (ecs_children_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			char const *name = ecs_get_name(world, it.entities[i]);
@@ -152,17 +176,24 @@ void draw_tree(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t columns[])
 			jmgui_table_next_row(0);
 			jmgui_table_next_column();
 			int a = ecs_has_children(world, it.entities[i]);
+			GuiColor3 const *color = get_color(world, table, it.entities[i]);
+			float c[3] = {1.0f, 1.0f, 1.0f};
+			if (color) {
+				c[0] = color->r;
+				c[1] = color->g;
+				c[2] = color->b;
+			}
 			if (a) {
-				a += jmgui_tree_node(name, 0);
+				a += jmgui_tree_node(name, 0, c[0], c[1], c[2]);
 			} else {
-				jmgui_tree_node(name, 8 | 256 | 512);
+				jmgui_tree_node(name, 8 | 256 | 512, c[0], c[1], c[2]);
 			}
 			for (int j = 0; columns[j]; j++) {
 				jmgui_table_next_column();
 				draw_generic_member(world, columns[j], it.entities[i]);
 			}
 			if (a == 2) {
-				draw_tree(world, it.entities[i], columns);
+				draw_tree(world, table, it.entities[i], columns);
 				jmgui_tree_pop();
 			}
 		}
@@ -185,7 +216,7 @@ int bgui_children_sum(ecs_world_t *world, ecs_entity_t components[], int count)
 	return total;
 }
 
-void bgui_ntt_reflection(ecs_world_t *world, ecs_entity_t storage, ecs_entity_t columns[])
+void bgui_ntt_reflection(ecs_world_t *world, ecs_entity_t table, ecs_entity_t storage, ecs_entity_t columns[])
 {
 	if (storage == 0) {
 		return;
@@ -198,5 +229,7 @@ void bgui_ntt_reflection(ecs_world_t *world, ecs_entity_t storage, ecs_entity_t 
 		jmgui_table_setup_column(name ? name : "???", 16, 12.0f);
 	}
 	jmgui_table_header_row();
-	draw_tree(world, storage, columns);
+	draw_tree(world, table, storage, columns);
 }
+
+
