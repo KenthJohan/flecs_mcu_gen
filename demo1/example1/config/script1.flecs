@@ -34,13 +34,17 @@ window2.tabs.Peripherals {
 	gui.Element : {Tab}
 	table1 : shared.styles.s1 {
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
-		(flecs.doc.Description, gui.Query) : {"(flecs.core.Identifier, flecs.core.Name)"}
-		bitoffset {
-			(gui.ColumnComponent, ec.Field) : {ec.Field.bitoffset}
-			(gui.ColumnComponent, ec.Register) : {ec.Field.bitoffset}
+		//(flecs.doc.Description, gui.Query) : {"*, ?ec.Field.bitoffset || *"}
+		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Field, ?ec.Register"}
+		//(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), !{ec.Field || ec.Register}"}
+		//(gui.String, gui.Query) : {"!{ec.Field}, hej"}
+		name {
+			//(gui.ColumnComponent, flecs.core.Identifier) : {column:0, field:0, member:flecs.core.Identifier.value}
 		}
-		a {}
-		b {}
+		offset {
+			(gui.ColumnComponent, ec.Field) : {column:0, field:1, member:ec.Field.bitoffset}
+			(gui.ColumnComponent, ec.Register) : {column:0, field:1, member:ec.Register.address}
+		}
 		
 		/*
 		offset {
@@ -55,6 +59,7 @@ window2.tabs.Peripherals {
 		*/
 	}
 }
+
 
 /*
 window2.tabs.Signals {

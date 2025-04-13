@@ -7,6 +7,8 @@ typedef struct {
 } GuiWindow;
 
 typedef struct {
+	int32_t column;
+	int32_t field;
 	ecs_entity_t member;
 	ecs_entity_t unit;
 } GuiColumnComponent;
@@ -37,6 +39,16 @@ typedef struct {
 	float b;
 } GuiColor3;
 
+
+typedef struct {
+    char *value; // Pointer to external memory
+} GuiString;
+
+// Resource management hooks. The convenience macros hide details of
+// the callback signature, while allowing hooks to be called on multiple 
+// entities.
+
+extern ECS_COMPONENT_DECLARE(GuiString);
 extern ECS_COMPONENT_DECLARE(GuiWindow);
 extern ECS_COMPONENT_DECLARE(GuiColumnComponent);
 extern ECS_COMPONENT_DECLARE(GuiType);

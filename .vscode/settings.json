@@ -130,7 +130,8 @@
 		"jmgui.h": "c",
 		"bgui.h": "c",
 		"ctype.h": "c",
-		"bgui_qtable.h": "c"
+		"bgui_qtable.h": "c",
+		"deprecated.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""
