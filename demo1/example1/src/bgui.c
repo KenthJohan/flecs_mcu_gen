@@ -83,7 +83,7 @@ EcsUnit const * bgui_get_row_unit(ecs_world_t *world, ecs_entity_t storage, ecs_
 	return u;
 }
 
-void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t target)
+void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t row)
 {
 	GuiColumnComponent const *col = ecs_get(world, column, GuiColumnComponent);
 	if (col == NULL) {
@@ -91,7 +91,7 @@ void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t t
 		return;
 	}
 	bgui_generic_value_t v = {0};
-	bgui_generic_value_get(world, target, col->member, &v);
+	bgui_generic_value_get(world, row, col->member, &v);
 	if (v.value == NULL) {
 		//char *str = ecs_type_str(world, ecs_get_type(world, target));
 		//ecs_warn("No value: %s [%s]", ecs_get_name(world, col->member), str);
@@ -99,7 +99,7 @@ void draw_generic_member(ecs_world_t *world, ecs_entity_t column, ecs_entity_t t
 		return;
 	}
 
-	EcsUnit const *rowunit = bgui_get_row_unit(world, target, col->unit);
+	EcsUnit const *rowunit = bgui_get_row_unit(world, row, col->unit);
 
 	if (v.type == ecs_id(ecs_u32_t)) {
 		if (v.unit == GuiDebugIdUnit) {

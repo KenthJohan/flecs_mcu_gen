@@ -3,6 +3,7 @@
 #include "bgui.h"
 #include <jmgui.h>
 #include "ecs0.h"
+#include "bgui_qtable.h"
 
 static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e);
 
@@ -83,6 +84,9 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 		break;
 	case GuiTypeNodeTreeReflection:
 		if (1) {
+			bgui_qtable_draw(world, e, el->storage);
+		}
+		if (0) {
 			ecs_entity_t columns[8] = {0};
 			int k = ecs0_get_entities_from_parent(world, e, ecs_id(GuiColumnComponent), columns, 8-1);
 
@@ -111,7 +115,7 @@ static void SystemGuiWindow(ecs_iter_t *it)
 {
 	//GuiWindow *win = ecs_field(it, GuiWindow, 0);
 	for (int i = 0; i < it->count; ++i) {
-		ecs_defer_begin(it->world);
+		//ecs_defer_begin(it->world);
 		ecs_entity_t e = it->entities[i];
 		char const *name = ecs_get_name(it->world, e);
 		if (!name) {
@@ -121,7 +125,7 @@ static void SystemGuiWindow(ecs_iter_t *it)
 			SystemGuiWindow1(it->world, e);
 		}
 		jmgui_end();
-		ecs_defer_end(it->world);
+		//ecs_defer_end(it->world);
 	}
 }
 
@@ -133,6 +137,7 @@ void GuiDrawsImport(ecs_world_t *world)
 	ecs_system(world,
 		{.entity = ecs_entity(world, {.name = "SystemGuiWindow", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
 		.callback = SystemGuiWindow,
+		//.immediate = true,
 		.query.terms = {
 		{.id = ecs_id(GuiWindow), .src.id = EcsSelf},
 		}});

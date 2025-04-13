@@ -34,18 +34,29 @@ window2.tabs.Peripherals {
 	gui.Element : {Tab}
 	table1 : shared.styles.s1 {
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
+		(flecs.doc.Description, gui.Query) : {"(flecs.core.Identifier, flecs.core.Name)"}
+		bitoffset {
+			(gui.ColumnComponent, ec.Field) : {ec.Field.bitoffset}
+			(gui.ColumnComponent, ec.Register) : {ec.Field.bitoffset}
+		}
+		a {}
+		b {}
+		
+		/*
 		offset {
-			gui.ColumnComponent : {ec.Area.offset, unit:ec.Area.unit}
+			gui.ColumnComponent : {ec.Register.address}
 		}
 		width {
-			gui.ColumnComponent : {ec.Area.width, unit:ec.Area.unit}
+			gui.ColumnComponent : {ec.Area.width}
 		}
 		access {
 			gui.ColumnComponent : {ec.Area.access}
 		}
+		*/
 	}
 }
 
+/*
 window2.tabs.Signals {
 	gui.Element : {Tab}
 	table1 {
@@ -90,17 +101,16 @@ window2.tabs.Shared {
 	gui.Element : {Tab}
 	table1 {
 		gui.Element : {NodeTreeReflection, shared}
-		type {
-			gui.ColumnComponent : {gui.Element.type}
+		Description {
+			gui.ColumnComponent : {flecs.doc.Description.value}
 		}
 		storage {
-			gui.ColumnComponent : {gui.Element.storage}
-		}
-		id {
-			gui.ColumnComponent : {gui.Element.id}
+			gui.ColumnComponent : {gui.Color3.r}
 		}
 	}
 }
+*/
+
 
 /*
 window3 {

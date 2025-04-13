@@ -129,7 +129,8 @@
 		"ecs0.h": "c",
 		"jmgui.h": "c",
 		"bgui.h": "c",
-		"ctype.h": "c"
+		"ctype.h": "c",
+		"bgui_qtable.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

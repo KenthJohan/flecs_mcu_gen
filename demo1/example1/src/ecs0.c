@@ -24,10 +24,17 @@ int ecs0_get_entities_from_parent(ecs_world_t *world, ecs_entity_t parent, ecs_i
 		.terms = {
 			{ ecs_childof(parent), .inout = EcsInOutFilter },
 			{ component, .inout = EcsInOutFilter },
-			
 		}
 	});
 	int k = ecs0_get_entities_by_query(world, q, entities, count);
 	ecs_query_fini(q);
 	return k;
+}
+
+bool ecs0_has_children(ecs_world_t *world, ecs_entity_t entity)
+{
+	ecs_iter_t it = ecs_children(world, entity);
+	bool r = ecs_iter_is_true(&it);
+	ecs_iter_fini(&it);
+	return r;
 }

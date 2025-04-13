@@ -141,7 +141,7 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	}
 
 	// Create SDL window graphics context
-	eximgui->window = SDL_CreateWindow("Dear ImGui SDL3+SDL_GPU example", 1280, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY);
+	eximgui->window = SDL_CreateWindow("Dear ImGui SDL3+SDL_GPU example", 1400, 1000, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY);
 	if (eximgui->window == nullptr) {
 		printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
 		return -1;

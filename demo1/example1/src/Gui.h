@@ -28,6 +28,10 @@ typedef struct {
 } GuiElement;
 
 typedef struct {
+	ecs_query_t *query;
+} GuiQuery;
+
+typedef struct {
 	float r;
 	float g;
 	float b;
@@ -38,6 +42,7 @@ extern ECS_COMPONENT_DECLARE(GuiColumnComponent);
 extern ECS_COMPONENT_DECLARE(GuiType);
 extern ECS_COMPONENT_DECLARE(GuiElement);
 extern ECS_COMPONENT_DECLARE(GuiColor3);
+extern ECS_COMPONENT_DECLARE(GuiQuery);
 extern ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 void GuiImport(ecs_world_t *world);
