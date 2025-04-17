@@ -37,6 +37,10 @@ cols {
 	}
 	any {
 	}
+	signal {
+	}
+	pin {
+	}
 }
 
 
@@ -55,8 +59,8 @@ window2.tabs.Signals {
 	gui.Element : {Tab}
 	table1 {
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.signals}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"}
-		gui.Table : {columns_count:3, columns:[cols.name, cols.group, cols.any], f2c:[0, 1, 2, 2, 2]}
+		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Signal"}
+		gui.Table : {columns_count:2, columns:[cols.name, cols.any], f2c:[0, 1]}
 	}
 }
 
@@ -65,8 +69,8 @@ window2.tabs.Pins {
 	gui.Element : {Tab}
 	table1 {
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.pins}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"}
-		gui.Table : {columns_count:3, columns:[cols.name, cols.group, cols.any], f2c:[0, 1, 2, 2, 2]}
+		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Pin, ?ec.Signal"}
+		gui.Table : {columns_count:3, columns:[cols.name, cols.pin, cols.signal], f2c:[0, 1, 2]}
 	}
 }
 
@@ -74,8 +78,8 @@ window2.tabs.Gui {
 	gui.Element : {Tab}
 	table1 {
 		gui.Element : {NodeTreeReflection, script1}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"}
-		gui.Table : {columns_count:3, columns:[cols.name, cols.group, cols.any], f2c:[0, 1, 2, 2, 2]}
+		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?gui.Element"}
+		gui.Table : {columns_count:3, columns:[cols.name, cols.any], f2c:[0, 1]}
 	}
 }
 
@@ -83,8 +87,8 @@ window2.tabs.Shared {
 	gui.Element : {Tab}
 	table1 {
 		gui.Element : {NodeTreeReflection, shared}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"}
-		gui.Table : {columns_count:3, columns:[cols.name, cols.group, cols.any], f2c:[0, 1, 2, 2, 2]}
+		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?gui.Color3"}
+		gui.Table : {columns_count:2, columns:[cols.name, cols.any], f2c:[0, 1]}
 	}
 }
 

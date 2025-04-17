@@ -51,33 +51,34 @@ for (int i = 0; i < it->field_count; i++) {
 
 
 
-static void print_values(ecs_iter_t *it, GuiTable const *guitable)
+static void print_values(ecs_iter_t *it, GuiTable const *guitable, int archrow)
 {
 	// Get field to column mapping
-	ecs_id_t c2f[16] = {0};
+	int8_t c2f[16] = {0};
 	for (int i = 0; i < it->field_count; i++) {
 		if (ecs_field_is_set(it, i)) {
 			int8_t colidx = guitable->f2c[i];
-			ecs_id_t id = ecs_field_id(it, i);
-			c2f[colidx] = id;
+			c2f[colidx] = i;
 		}
 	}
 	// Start from column 1, because column 0 is reserved for the name
 	for (int i = 1; i < guitable->columns_count; i++) {
-		ecs_id_t id = c2f[i];
-		void *data = NULL;
+		int8_t f = c2f[i];
+		ecs_id_t id = ecs_field_id(it, f);
+		char *data = NULL;
 		if (id == 0) {
 			data = NULL;
 		} else if (ECS_HAS_ID_FLAG(id, PAIR)) {
 			data = NULL;
 			ecs_entity_t rel = ecs_pair_first(it->world, id);
 			ecs_entity_t tgt = ecs_pair_second(it->world, id);
-			printf("rel: %s, tgt: %s", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
+			//printf("rel: %s, tgt: %s", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
 		} else {
 			data = ecs_table_get_id(it->world, it->table, id, it->offset);
 		}
 		char const *msg = NULL;
 		if (data) {
+			data += archrow * ecs_field_size(it, f);
 			ecs_strbuf_t buf = ECS_STRBUF_INIT;
 			ecs_ptr_to_str_buf(it->world, id, data, &buf);
 			msg = ecs_strbuf_get(&buf);
@@ -113,7 +114,7 @@ void jmgui_qtable_recursive(ecs_world_t *world, ecs_query_t *q, ecs_entity_t sto
 			} else {
 				jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
 			}
-			print_values(&it, guitable);
+			print_values(&it, guitable, i);
 			if (a == 2) {
 				jmgui_qtable_recursive(world, q, e, guitable);
 				jmgui_tree_pop();
@@ -137,6 +138,7 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t table, ecs_entity_t stora
 		return;
 	}
 	if (guitable->columns_count > 16) {
+		ecs_err("GuiTable has more than 16 columns");
 		return;
 	}
 	jmgui_table_begin(name, guitable->columns_count, 0);
