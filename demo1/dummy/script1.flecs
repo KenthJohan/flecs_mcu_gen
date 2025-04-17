@@ -1,0 +1,3 @@
+a {
+	flecs.doc.Description : {"\{braces}"}
+}

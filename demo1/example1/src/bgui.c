@@ -2,6 +2,7 @@
 #include <jmgui.h>
 #include "Gui.h"
 
+/*
 bool ecs_has_children(ecs_world_t *world, ecs_entity_t entity)
 {
 	ecs_iter_t it = ecs_children(world, entity);
@@ -233,3 +234,4 @@ void bgui_ntt_reflection(ecs_world_t *world, ecs_entity_t table, ecs_entity_t st
 }
 
 
+*/

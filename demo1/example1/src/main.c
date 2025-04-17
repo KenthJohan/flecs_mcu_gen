@@ -31,22 +31,22 @@ int main(int argc, char *argv[])
 
 	{
 		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcPeripheral));
+		ecs0_reparent_by_subname1(world, names, ecs_id(EcPeripheral), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	{
 		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", "LPUART", "LPTIM", "I2S", "RCC", "SYS", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcSignal));
+		ecs0_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	{
 		char const *names[] = {"USART*", "TIM*", "I2S*", "LPTIM*", "SPI*", "LPUART*", "I2C*", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcSignal));
+		ecs0_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	{
 		char const *names[] = {"PA", "PB", "PC", "PD", "PF", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcPin));
+		ecs0_reparent_by_subname1(world, names, ecs_id(EcPin), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	ecs_log_set_level(0);
@@ -63,6 +63,25 @@ int main(int argc, char *argv[])
 	} else {
 		printf("Parent not found\n");
 	}
+
+	
+	/*
+	{
+		ecs_query_t *q = ecs_query_init(world,
+		&(ecs_query_desc_t){
+		.expr = "(flecs.core.Identifier, flecs.core.Name), ?{ec.Group || ec.Peripheral || ec.Field || ec.Register}",
+		.group_by = EcsChildOf
+		});
+		ecs_iter_t it = ecs_query_iter(world, q);
+		ecs_iter_set_group(&it, ecs_lookup(world, "xmcu.STM32G030.peripherals"));
+		while (ecs_query_next(&it)) {
+			for (int i = 0; i < it.count; i++) {
+				printf("name: %s\n", ecs_get_name(world, it.entities[i]));
+			}
+		}
+	}
+	*/
+	
 
 	while (!jmgui.done) {
 		jmgui_frame_begin(&jmgui);

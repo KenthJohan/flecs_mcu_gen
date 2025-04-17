@@ -1,12 +1,12 @@
 #include "Gui.h"
 
 ECS_COMPONENT_DECLARE(GuiWindow);
-ECS_COMPONENT_DECLARE(GuiColumnComponent);
 ECS_COMPONENT_DECLARE(GuiType);
 ECS_COMPONENT_DECLARE(GuiElement);
 ECS_COMPONENT_DECLARE(GuiColor3);
 ECS_COMPONENT_DECLARE(GuiQuery);
 ECS_COMPONENT_DECLARE(GuiString);
+ECS_COMPONENT_DECLARE(GuiTable);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
@@ -29,10 +29,12 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 		if (d[i].value == NULL) {
 			continue;
 		}
-		ecs_log(-1, "Create query: %s", d[i].value);
+		ecs_log(-1, "%s: Create query: %s", ecs_get_name(it->world, e), d[i].value);
 		ecs_query_t *q = ecs_query_init(it->real_world,
 		&(ecs_query_desc_t){
 		//.cache_kind = EcsQueryCacheAll,
+		//.entity = ecs_entity_init(it->real_world, &(ecs_entity_desc_t){.name = "GuiQuery"}),
+		.entity = e,
 		.expr = d[i].value,
 		.group_by = EcsChildOf});
 		if (q == NULL) {
@@ -79,11 +81,11 @@ void GuiImport(ecs_world_t *world)
 	ecs_set_name_prefix(world, "Gui");
 	ECS_COMPONENT_DEFINE(world, GuiString);
 	ECS_COMPONENT_DEFINE(world, GuiWindow);
-	ECS_COMPONENT_DEFINE(world, GuiColumnComponent);
 	ECS_COMPONENT_DEFINE(world, GuiType);
 	ECS_COMPONENT_DEFINE(world, GuiElement);
 	ECS_COMPONENT_DEFINE(world, GuiColor3);
 	ECS_COMPONENT_DEFINE(world, GuiQuery);
+	ECS_COMPONENT_DEFINE(world, GuiTable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
 
@@ -103,6 +105,14 @@ void GuiImport(ecs_world_t *world)
 	.quantity = EcsData,
 	.symbol = "did"});
 
+	ecs_struct(world,
+	{.entity = ecs_id(GuiTable),
+	.members = {
+	{.name = "columns_count", .type = ecs_id(ecs_i32_t)},
+	{.name = "columns", .type = ecs_id(ecs_entity_t), .count = 16},
+	{.name = "f2c", .type = ecs_id(ecs_entity_t), .count = 16},
+	}});
+
 	ecs_enum(world,
 	{.entity = ecs_id(GuiType),
 	.constants = {
@@ -110,6 +120,8 @@ void GuiImport(ecs_world_t *world)
 	{.name = "Window", .value = GuiTypeWindow},
 	{.name = "Tabs", .value = GuiTypeTabs},
 	{.name = "Tab", .value = GuiTypeTab},
+	{.name = "TreeNode", .value = GuiTypeTreeNode},
+	{.name = "Text", .value = GuiTypeText},
 	{.name = "NodeTreeReflection", .value = GuiTypeNodeTreeReflection},
 	{.name = "ColumnComponent", .value = GuiTypeColumnComponent},
 	{.name = "InputText", .value = GuiTypeInputText}}});
@@ -138,15 +150,6 @@ void GuiImport(ecs_world_t *world)
 	{.entity = ecs_id(GuiWindow),
 	.members = {
 	{.name = "dummy", .type = ecs_id(ecs_i32_t)},
-	}});
-
-	ecs_struct(world,
-	{.entity = ecs_id(GuiColumnComponent),
-	.members = {
-	{.name = "column", .type = ecs_id(ecs_i32_t)},
-	{.name = "field", .type = ecs_id(ecs_i32_t)},
-	{.name = "member", .type = ecs_id(ecs_entity_t)},
-	{.name = "unit", .type = ecs_id(ecs_entity_t)},
 	}});
 
 	ecs_struct(world,

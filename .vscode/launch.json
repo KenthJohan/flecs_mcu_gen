@@ -96,5 +96,28 @@
 				"externalConsole": false,
 			}
 		},
+		{
+			"name": "Launch script_brace_bug",
+			"type": "cppdbg",
+			"request": "launch",
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/demo1/script_brace_bug",
+			"environment": [
+				{
+					"name": "LD_LIBRARY_PATH",
+					"value": "${workspaceFolder}/bin/x64-Linux-debug:${env:HOME}/bake/x64-Linux/debug/lib/:/usr/local/lib/"
+				},
+			],
+			"program": "${workspaceFolder}/demo1/script_brace_bug/bin/x64-Linux-debug/script_brace_bug",
+			"args": [],
+			"osx": {
+				"MIMode": "lldb",
+				"targetArchitecture": "arm64",
+				"externalConsole": false,
+			},
+			"linux": {
+				"externalConsole": false,
+			}
+		},
 	]
 }

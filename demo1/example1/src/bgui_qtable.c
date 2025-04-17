@@ -11,7 +11,6 @@ if (str) {
 }
 */
 
-
 /*
 // Position, Velocity || Speed, Mass
 ecs_query_t *q = ecs_query(world, {
@@ -39,100 +38,92 @@ while (ecs_query_next(&it)) {
     // iterate as usual
   }
 }
-*/
 
-void bgui_qtable_terms(ecs_query_t *q)
-{
-	for (int i = 0; i < q->term_count; i++) {
-		ecs_term_t *term = &q->terms[i];
-		ecs_id_t id = term->id;
-		// Print name of id
-		char const * a = ecs_id_str(q->world, id);
-		printf("id: %i, %0lX %s, %i\n", i, id, a, term->oper);
-		ecs_os_free((char *)a);
-		//void *value = ecs_table_get_id(q->world, it->table, id, it->offset);
-	}
+for (int i = 0; i < it->field_count; i++) {
+    ecs_id_t id = ecs_field_id(it, i);
+    char *id_str = ecs_id_str(it->world, id);
+    printf("%d: %s, %i\n", i, id_str, ecs_field_is_set(it, i));
+    ecs_os_free(id_str);
 }
 
-static void print_values(ecs_iter_t * it)
-{
-	for (int i = 0; i < it->field_count; i++) {
-		if (ecs_field_is_set(it, i) == false) {
-			continue;
-		}
-		ecs_id_t id = ecs_field_id(it, i);
-		void * data = NULL;
-		if (ECS_HAS_ID_FLAG(id, PAIR)) {
 
+*/
+
+
+
+static void print_values(ecs_iter_t *it, GuiTable const *guitable)
+{
+	// Get field to column mapping
+	ecs_id_t c2f[16] = {0};
+	for (int i = 0; i < it->field_count; i++) {
+		if (ecs_field_is_set(it, i)) {
+			int8_t colidx = guitable->f2c[i];
+			ecs_id_t id = ecs_field_id(it, i);
+			c2f[colidx] = id;
+		}
+	}
+	// Start from column 1, because column 0 is reserved for the name
+	for (int i = 1; i < guitable->columns_count; i++) {
+		ecs_id_t id = c2f[i];
+		void *data = NULL;
+		if (id == 0) {
+			data = NULL;
+		} else if (ECS_HAS_ID_FLAG(id, PAIR)) {
+			data = NULL;
+			ecs_entity_t rel = ecs_pair_first(it->world, id);
+			ecs_entity_t tgt = ecs_pair_second(it->world, id);
+			printf("rel: %s, tgt: %s", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
 		} else {
 			data = ecs_table_get_id(it->world, it->table, id, it->offset);
 		}
+		char const *msg = NULL;
 		if (data) {
 			ecs_strbuf_t buf = ECS_STRBUF_INIT;
 			ecs_ptr_to_str_buf(it->world, id, data, &buf);
-			char const *msg = ecs_strbuf_get(&buf);
-			if (msg) {
-				printf("msg: %s\n", msg);
-				jmgui_table_next_column();
-				jmgui_text(msg);
-				ecs_os_free((char *)msg);
-			}
+			msg = ecs_strbuf_get(&buf);
+		}
+		if (msg) {
+			// printf("msg: %s\n", msg);
+			jmgui_table_next_column();
+			jmgui_text(msg);
+			ecs_os_free((char *)msg);
+		} else {
+			jmgui_table_next_column();
+			jmgui_text("NULL");
 		}
 	}
 }
 
-void jmgui_qtable_recursive(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
+void jmgui_qtable_recursive(ecs_world_t *world, ecs_query_t *q, ecs_entity_t storage, GuiTable const *guitable)
 {
-	//ecs_query_count_t n = ecs_query_count(q);
-	//ecs_log(-1, "query: %p", q);
 	ecs_iter_t it = ecs_query_iter(world, q);
-	ecs_iter_set_group(&it, parent);
+	ecs_iter_set_group(&it, storage);
 	while (ecs_query_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
 			char const *name = ecs_get_name(world, e);
 			if (!name) {
-			    continue;
+				continue;
 			}
 			jmgui_table_next_row(0);
 			jmgui_table_next_column();
 			int a = ecs0_has_children(world, e);
 			if (a) {
-			    a += jmgui_tree_node(name, 0, 1, 1, 1);
+				a += jmgui_tree_node(name, 0, 1, 1, 1);
 			} else {
-			    jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
+				jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
 			}
-			print_values(&it);
+			print_values(&it, guitable);
 			if (a == 2) {
-			    jmgui_qtable_recursive(world, q, e);
-			    jmgui_tree_pop();
+				jmgui_qtable_recursive(world, q, e, guitable);
+				jmgui_tree_pop();
 			}
 		}
 	}
-	// ecs_iter_fini(&it);
 }
-
-/*
-            jmgui_table_begin(name, k+1, 0);
-            el->id = jmgui_get_id_by_string(name);
-            jmgui_table_setup_column("Name", 128, 0);
-            bgui_ntt_reflection(world, e, el->storage, columns);
-            jmgui_table_end();
-*/
 
 void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t table, ecs_entity_t storage)
 {
-	/*
-	EcsDocDescription const *ptr = ecs_get_pair(world, table, EcsDocDescription, ecs_id(GuiQuery));
-	if (ptr == NULL) {
-	    return;
-	}
-	ecs_query_t *q = ecs_query_init(world,
-	&(ecs_query_desc_t){
-	.expr = ptr->value,
-	.group_by = EcsChildOf,
-	});
-	*/
 	GuiQuery const *q = ecs_get(world, table, GuiQuery);
 	if (q == NULL) {
 		return;
@@ -141,13 +132,24 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t table, ecs_entity_t stora
 		return;
 	}
 	char const *name = ecs_get_name(world, table);
-	ecs_entity_t columns[8] = {0};
-	int c = ecs0_get_entities_from_parent(world, table, ecs_id(GuiColumnComponent), columns, 8-1);
-	jmgui_table_begin(name, c, 0);
-	//bgui_qtable_terms(q->query);
-	jmgui_table_setup_column("Name", 128, 0);
+	GuiTable const *guitable = ecs_get(world, table, GuiTable);
+	if (guitable == NULL) {
+		return;
+	}
+	if (guitable->columns_count > 16) {
+		return;
+	}
+	jmgui_table_begin(name, guitable->columns_count, 0);
+	for (int i = 0; guitable->columns[i]; i++) {
+		ecs_entity_t e = guitable->columns[i];
+		char const *colname = ecs_get_name(world, e);
+		if (colname) {
+			jmgui_table_setup_column(colname, 128, 0);
+		} else {
+			jmgui_table_setup_column("?", 128, 0);
+		}
+	}
 	jmgui_table_header_row();
-	jmgui_qtable_recursive(world, q->query, storage);
+	jmgui_qtable_recursive(world, q->query, storage, guitable);
 	jmgui_table_end();
-	//ecs_query_fini(q->query);
 }

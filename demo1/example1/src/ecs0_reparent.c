@@ -40,7 +40,7 @@ static int str_cmp_sub0v(char const *a, char const *bv[], char **a_endptr)
 	return -1;
 }
 
-void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_query_t *q)
+void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_query_t *q, const ecs_id_t *add)
 {
 	ecs_defer_begin(world);
 	ecs_iter_t it = ecs_query_iter(world, q);
@@ -76,6 +76,7 @@ void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_que
 			&(ecs_entity_desc_t){
 			.name = namebuf,
 			.parent = grandparent,
+			.add = add,
 			});
 			ecs_add_pair(world, it.entities[i], EcsChildOf, parent);
 		}
@@ -83,13 +84,13 @@ void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_que
 	ecs_defer_end(world);
 }
 
-void ecs0_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component)
+void ecs0_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component, const ecs_id_t *add)
 {
 	ecs_query_t *q = ecs_query_init(world,
 	&(ecs_query_desc_t){
 	.terms = {
 	{.id = component},
 	}});
-	ecs0_reparent_by_subname(world, names, q);
+	ecs0_reparent_by_subname(world, names, q, add);
 	ecs_query_fini(q);
 }

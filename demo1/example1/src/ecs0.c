@@ -23,7 +23,7 @@ int ecs0_get_entities_from_parent(ecs_world_t *world, ecs_entity_t parent, ecs_i
 	ecs_query_t *q = ecs_query(world, {
 		.terms = {
 			{ ecs_childof(parent), .inout = EcsInOutFilter },
-			{ ecs_pair(component, EcsWildcard), .inout = EcsInOutFilter },
+			{ component, .inout = EcsInOutFilter },
 		}
 	});
 	int k = ecs0_get_entities_by_query(world, q, entities, count);

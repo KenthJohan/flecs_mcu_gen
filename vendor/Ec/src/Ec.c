@@ -10,6 +10,7 @@ ECS_COMPONENT_DECLARE(EcQuery);
 ECS_COMPONENT_DECLARE(EcAf);
 ECS_COMPONENT_DECLARE(EcAccess);
 ECS_COMPONENT_DECLARE(EcArea);
+ECS_COMPONENT_DECLARE(EcGroup);
 
 void EcImport(ecs_world_t *world)
 {
@@ -26,6 +27,8 @@ void EcImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, EcAf);
 	ECS_COMPONENT_DEFINE(world, EcAccess);
 	ECS_COMPONENT_DEFINE(world, EcArea);
+	ECS_COMPONENT_DEFINE(world, EcGroup);
+
 
 	ecs_bitmask(world,
 	{.entity = ecs_id(EcPinAttribute),
@@ -60,7 +63,7 @@ void EcImport(ecs_world_t *world)
 	ecs_struct(world,
 	{.entity = ecs_id(EcPeripheral),
 	.members = {
-	{.name = "dummy", .type = ecs_id(ecs_i32_t)},
+	{.name = "peripheral_dummy", .type = ecs_id(ecs_i32_t)},
 	}});
 
 	ecs_struct(world,
@@ -81,7 +84,13 @@ void EcImport(ecs_world_t *world)
 	ecs_struct(world,
 	{.entity = ecs_id(EcSignal),
 	.members = {
-	{.name = "dummy", .type = ecs_id(ecs_i32_t)},
+	{.name = "signal_dummy", .type = ecs_id(ecs_i32_t)},
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(EcGroup),
+	.members = {
+	{.name = "group_dummy", .type = ecs_id(ecs_i32_t)},
 	}});
 
 	ecs_enum(world,

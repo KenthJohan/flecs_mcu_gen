@@ -19,25 +19,6 @@ static void SystemGuiWindow1(ecs_world_t *world, ecs_entity_t parent)
 }
 
 
-static int get_columns(ecs_world_t *world, ecs_entity_t parent, ecs_entity_t columns[], int n)
-{
-	ecs_iter_t it = ecs_children(world, parent);
-	int k = 0;
-	while (ecs_children_next(&it)) {
-		for (int i = 0; i < it.count; i++) {
-			ecs_entity_t e = it.entities[i];
-			GuiColumnComponent const *col = ecs_get(world, e, GuiColumnComponent);
-			if (col == NULL) {
-				continue;
-			}
-			if (k < n) {
-				columns[k] = e;
-				k++;
-			}
-		}
-	}
-	return k;
-}
 
 static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 {
@@ -85,24 +66,6 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 	case GuiTypeNodeTreeReflection:
 		if (1) {
 			bgui_qtable_draw(world, e, el->storage);
-		}
-		if (0) {
-			ecs_entity_t columns[8] = {0};
-			int k = ecs0_get_entities_from_parent(world, e, ecs_id(GuiColumnComponent), columns, 8-1);
-
-			/*
-			char buf[1288] = {0};
-			char * path = ecs_get_path(world, e);
-			snprintf(buf, sizeof(buf), "path: %s, cols: %i", path, columns);
-			ecs_os_free(path);
-			jmgui_text(buf);
-			*/
-
-			jmgui_table_begin(name, k+1, 0);
-			el->id = jmgui_get_id_by_string(name);
-			jmgui_table_setup_column("Name", 128, 0);
-			bgui_ntt_reflection(world, e, el->storage, columns);
-			jmgui_table_end();
 		}
 		break;
 

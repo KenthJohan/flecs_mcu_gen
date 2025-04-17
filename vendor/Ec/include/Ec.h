@@ -47,6 +47,10 @@ typedef struct {
 	ecs_entity_t unit; // Unit of measure, e.g. bytes, bits
 } EcArea;
 
+typedef struct {
+	int32_t dummy;
+} EcGroup;
+
 typedef enum {
 	EcAF0,
 	EcAF1,
@@ -75,5 +79,7 @@ extern ECS_COMPONENT_DECLARE(EcRegisterAttribute);
 extern ECS_COMPONENT_DECLARE(EcSignal);
 extern ECS_COMPONENT_DECLARE(EcQuery);
 extern ECS_COMPONENT_DECLARE(EcAf);
+extern ECS_COMPONENT_DECLARE(EcArea);
+extern ECS_COMPONENT_DECLARE(EcGroup);
 
 void EcImport(ecs_world_t *world);
