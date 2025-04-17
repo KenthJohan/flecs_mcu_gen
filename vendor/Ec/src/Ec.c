@@ -29,6 +29,8 @@ void EcImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, EcArea);
 	ECS_COMPONENT_DEFINE(world, EcGroup);
 
+	ecs_add_pair(world, ecs_id(EcSignal), EcsOnInstantiate, EcsInherit);
+
 
 	ecs_bitmask(world,
 	{.entity = ecs_id(EcPinAttribute),

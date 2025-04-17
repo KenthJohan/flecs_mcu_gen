@@ -53,6 +53,15 @@ for (int i = 0; i < it->field_count; i++) {
 
 static void print_values(ecs_iter_t *it, GuiTable const *guitable, int archrow)
 {
+	printf("%s\n", ecs_get_name(it->world, it->entities[archrow]));
+	
+	for (int i = 0; i < it->field_count; i++) {
+		ecs_id_t id = ecs_field_id(it, i);
+		char *id_str = ecs_id_str(it->world, id);
+		printf("%d: %s, %i\n", i, id_str, ecs_field_is_set(it, i));
+		ecs_os_free(id_str);
+	}
+	
 	// Get field to column mapping
 	int8_t c2f[16] = {0};
 	for (int i = 0; i < it->field_count; i++) {
@@ -72,13 +81,13 @@ static void print_values(ecs_iter_t *it, GuiTable const *guitable, int archrow)
 			data = NULL;
 			ecs_entity_t rel = ecs_pair_first(it->world, id);
 			ecs_entity_t tgt = ecs_pair_second(it->world, id);
-			//printf("rel: %s, tgt: %s", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
+			//printf("rel: %s, tgt: %s\n\n", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
 		} else {
 			data = ecs_table_get_id(it->world, it->table, id, it->offset);
 		}
 		char const *msg = NULL;
 		if (data) {
-			data += archrow * ecs_field_size(it, f);
+			data += ecs_field_is_self(it, f) * archrow * ecs_field_size(it, f);
 			ecs_strbuf_t buf = ECS_STRBUF_INIT;
 			ecs_ptr_to_str_buf(it->world, id, data, &buf);
 			msg = ecs_strbuf_get(&buf);

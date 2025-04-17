@@ -8,13 +8,22 @@ Heja, wej => false
 */
 static bool str_cmp_sub0(char const *a, char const *b, char **a_endptr)
 {
+	if (strcmp(a, "TIM1_BK") == 0) {
+		printf("strcmp(a, \"TIM17\") == 0\n");
+	}
 	while (*a && *b) {
 		if (isdigit(*a) && (*b) == '*') {
-			// Do nothing
+			while (*a && isdigit(*a)) {
+				a++;
+			}
+			break;
 		} else if (isalpha(*a) && (*b) == '#') {
-			// Do nothing
+			while (*a && isalpha(*a)) {
+				a++;
+			}
+			break;
 		} else if (*a == *b) {
-			// Do nothing
+			b++;
 		} else {
 			if (a_endptr) {
 				*a_endptr = (char *)a;
@@ -22,7 +31,6 @@ static bool str_cmp_sub0(char const *a, char const *b, char **a_endptr)
 			return false;
 		}
 		a++;
-		b++;
 	}
 	if (a_endptr) {
 		*a_endptr = (char *)a;
@@ -86,6 +94,7 @@ void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_que
 
 void ecs0_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component, const ecs_id_t *add)
 {
+	//str_cmp_sub0("TIM17", "TIM*", NULL);
 	ecs_query_t *q = ecs_query_init(world,
 	&(ecs_query_desc_t){
 	.terms = {
