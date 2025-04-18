@@ -52,16 +52,17 @@ for (int i = 0; i < it->field_count; i++) {
 
 
 
-static void print_values(ecs_iter_t *it, GuiTable const *guitable, int archrow)
+static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int archrow)
 {
+	/*
 	printf("%s\n", ecs_get_name(it->world, it->entities[archrow]));
-	
 	for (int i = 0; i < it->field_count; i++) {
 		ecs_id_t id = ecs_field_id(it, i);
 		char *id_str = ecs_id_str(it->world, id);
 		printf("%d: %s, %i\n", i, id_str, ecs_field_is_set(it, i));
 		ecs_os_free(id_str);
 	}
+	*/
 
 	// Get field to column mapping
 	int8_t c2f[16] = {0};
@@ -74,63 +75,28 @@ static void print_values(ecs_iter_t *it, GuiTable const *guitable, int archrow)
 	// Start from column 1, because column 0 is reserved for the name
 	for (int i = 1; i < guitable->columns_count; i++) {
 		int8_t f = c2f[i];
-		ecs_id_t id = 0;
-		char *data = NULL;
-		if (ecs_field_is_self(it, f)) {
-			id = ecs_field_id(it, f);
-		} else {
-			id = ecs_field_src(it, f);
-		}
-
-		
-		/*
-		char *data = NULL;
-		if (id == 0) {
-			data = NULL;
-		} else if (ECS_HAS_ID_FLAG(id, PAIR)) {
-			data = NULL;
-			ecs_entity_t rel = ecs_pair_first(it->world, id);
-			ecs_entity_t tgt = ecs_pair_second(it->world, id);
-			//printf("rel: %s, tgt: %s\n\n", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
-		} else {
-			data = ecs_table_get_id(it->world, it->table, id, it->offset);
-			if (data == NULL) {
-				EcSignal * sig = ecs_field(it, EcSignal, f);
-				printf("data is NULL\n");
-				ecs_id_t id = ecs_field_id(it, i);
-				char *id_str = ecs_id_str(it->world, id);
-				printf("%d: %s, %i\n", i, id_str, ecs_field_is_set(it, i));
-				ecs_os_free(id_str);
-			}
-		}
-		*/
-		if (id == 0) {
-			data = NULL;
-		} else if (ECS_HAS_ID_FLAG(id, PAIR)) {
+		ecs_id_t id = ecs_field_id(it, f);
+		int size = ecs_field_size(it, f);
+		char *data = ecs_field_w_size(it, size, f);
+		if (ECS_HAS_ID_FLAG(id, PAIR)) {
 			data = NULL;
 			ecs_entity_t rel = ecs_pair_first(it->world, id);
 			ecs_entity_t tgt = ecs_pair_second(it->world, id);
 			printf("rel: %s, tgt: %s\n\n", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
-		} else {
-			int size = ecs_field_size(it, f);
-			data = ecs_field_w_size(it, size, f);
 		}
-
-
 		char const *msg = NULL;
 		if (data) {
-			data += ecs_field_is_self(it, f) * archrow * ecs_field_size(it, f);
+			data += ecs_field_is_self(it, f) * archrow * size;
 			ecs_strbuf_t buf = ECS_STRBUF_INIT;
 			ecs_ptr_to_str_buf(it->world, id, data, &buf);
 			msg = ecs_strbuf_get(&buf);
 		}
+		jmgui_table_next_column();
 		if (msg) {
 			// printf("msg: %s\n", msg);
-			jmgui_table_next_column();
 			jmgui_text(msg);
 			ecs_os_free((char *)msg);
 		} else {
-			jmgui_table_next_column();
 			jmgui_text("NULL");
 		}
 	}
@@ -155,7 +121,7 @@ void jmgui_qtable_recursive(ecs_world_t *world, ecs_query_t *q, ecs_entity_t sto
 			} else {
 				jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
 			}
-			print_values(&it, guitable, i);
+			jmgui_qtable_draw_row(&it, guitable, i);
 			if (a == 2) {
 				jmgui_qtable_recursive(world, q, e, guitable);
 				jmgui_tree_pop();

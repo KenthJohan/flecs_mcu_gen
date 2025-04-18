@@ -19839,7 +19839,7 @@ peripherals {
 }
 signals {
 	LPTIM1_OUT {
-		ec.Signal : {0}
+		ec.Signal : {1}
 	}
 	SPI2_SCK {
 		ec.Signal : {0}
