@@ -34,9 +34,8 @@ typedef struct {
 	float b;
 } GuiColor3;
 
-
 typedef struct {
-    char *value; // Pointer to external memory
+	char *value; // Pointer to external memory
 } GuiString;
 
 typedef struct {
@@ -45,8 +44,12 @@ typedef struct {
 	ecs_entity_t f2c[16];
 } GuiTable;
 
+typedef struct {
+	ecs_entity_t chain[4];
+} GuiColumn;
+
 // Resource management hooks. The convenience macros hide details of
-// the callback signature, while allowing hooks to be called on multiple 
+// the callback signature, while allowing hooks to be called on multiple
 // entities.
 
 extern ECS_COMPONENT_DECLARE(GuiString);
@@ -56,6 +59,7 @@ extern ECS_COMPONENT_DECLARE(GuiElement);
 extern ECS_COMPONENT_DECLARE(GuiColor3);
 extern ECS_COMPONENT_DECLARE(GuiQuery);
 extern ECS_COMPONENT_DECLARE(GuiTable);
+extern ECS_COMPONENT_DECLARE(GuiColumn);
 extern ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 void GuiImport(ecs_world_t *world);

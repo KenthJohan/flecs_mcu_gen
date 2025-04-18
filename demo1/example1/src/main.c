@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 		printf("Parent not found\n");
 	}
 
-	
+
 	/*
 	{
 		ecs_query_t *q = ecs_query_init(world,

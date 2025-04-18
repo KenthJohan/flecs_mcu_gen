@@ -7,6 +7,7 @@ ECS_COMPONENT_DECLARE(GuiColor3);
 ECS_COMPONENT_DECLARE(GuiQuery);
 ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
+ECS_COMPONENT_DECLARE(GuiColumn);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
@@ -86,6 +87,8 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiColor3);
 	ECS_COMPONENT_DEFINE(world, GuiQuery);
 	ECS_COMPONENT_DEFINE(world, GuiTable);
+	ECS_COMPONENT_DEFINE(world, GuiColumn);
+
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
 
@@ -104,6 +107,12 @@ void GuiImport(ecs_world_t *world)
 	.entity = ecs_entity(world, {.name = "DebugId"}),
 	.quantity = EcsData,
 	.symbol = "did"});
+
+	ecs_struct(world,
+	{.entity = ecs_id(GuiColumn),
+	.members = {
+	{.name = "chain", .type = ecs_id(ecs_entity_t), .count = 4},
+	}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
