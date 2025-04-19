@@ -51,6 +51,11 @@ typedef struct {
 	int32_t dummy;
 } EcGroup;
 
+typedef struct {
+	EcGroup g1;
+	EcGroup g2;
+} EcTest;
+
 typedef enum {
 	EcAF0,
 	EcAF1,

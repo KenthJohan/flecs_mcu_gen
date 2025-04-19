@@ -11,6 +11,7 @@ ECS_COMPONENT_DECLARE(EcAf);
 ECS_COMPONENT_DECLARE(EcAccess);
 ECS_COMPONENT_DECLARE(EcArea);
 ECS_COMPONENT_DECLARE(EcGroup);
+ECS_COMPONENT_DECLARE(EcTest);
 
 void EcImport(ecs_world_t *world)
 {
@@ -28,6 +29,7 @@ void EcImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, EcAccess);
 	ECS_COMPONENT_DEFINE(world, EcArea);
 	ECS_COMPONENT_DEFINE(world, EcGroup);
+	ECS_COMPONENT_DEFINE(world, EcTest);
 
 	ecs_add_pair(world, ecs_id(EcSignal), EcsOnInstantiate, EcsInherit);
 
@@ -93,6 +95,13 @@ void EcImport(ecs_world_t *world)
 	{.entity = ecs_id(EcGroup),
 	.members = {
 	{.name = "group_dummy", .type = ecs_id(ecs_i32_t)},
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(EcTest),
+	.members = {
+	{.name = "g1", .type = ecs_id(EcGroup)},
+	{.name = "g2", .type = ecs_id(EcGroup)},
 	}});
 
 	ecs_enum(world,

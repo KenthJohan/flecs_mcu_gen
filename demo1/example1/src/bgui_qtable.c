@@ -55,7 +55,7 @@ for (int i = 0; i < it->field_count; i++) {
 
 
 
-static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int archrow)
+static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int archrow, int8_t c2f[16])
 {
 	/*
 	printf("%s\n", ecs_get_name(it->world, it->entities[archrow]));
@@ -66,15 +66,6 @@ static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int 
 		ecs_os_free(id_str);
 	}
 	*/
-
-	// Get field to column mapping
-	int8_t c2f[16] = {0};
-	for (int i = 0; i < it->field_count; i++) {
-		if (ecs_field_is_set(it, i)) {
-			int8_t colidx = guitable->f2c[i];
-			c2f[colidx] = i;
-		}
-	}
 	// Start from column 1, because column 0 is reserved for the name
 	for (int i = 1; i < guitable->columns_count; i++) {
 		int8_t f = c2f[i];
@@ -85,13 +76,13 @@ static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int 
 			data = NULL;
 			ecs_entity_t rel = ecs_pair_first(it->world, id);
 			ecs_entity_t tgt = ecs_pair_second(it->world, id);
-			printf("rel: %s, tgt: %s\n\n", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
+			//printf("rel: %s, tgt: %s\n\n", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
 		}
 		char const *msg = NULL;
 		if (data) {
 			data += ecs_field_is_self(it, f) * archrow * size;
 			GuiColumn const *col = ecs_get_pair(it->world, guitable->columns[i], GuiColumn, id);
-			if (col) {
+			if (0) {
 				EcsMember const *m = ecs_get(it->world, col->chain[0], EcsMember);
 				EcsPrimitive const *t = ecs_get(it->world, m->type, EcsPrimitive);
 				ecs_strbuf_t buf = ECS_STRBUF_INIT;
@@ -119,6 +110,26 @@ void jmgui_qtable_recursive(ecs_world_t *world, ecs_query_t *q, ecs_entity_t sto
 	ecs_iter_t it = ecs_query_iter(world, q);
 	ecs_iter_set_group(&it, storage);
 	while (ecs_query_next(&it)) {
+
+		// Get column to field mapping
+		int8_t c2f[16] = {0};
+		for (int i = 1; i < guitable->columns_count; i++) {
+			GuiFields const *fields = ecs_get(world, guitable->columns[i], GuiFields);
+			if (fields == NULL) {
+				continue;
+			}
+			for (int j = 0; j < 16; j++) {
+				int8_t f = fields->indices[j];
+				if (f == -1) {
+					break;
+				}
+				if (ecs_field_is_set(&it, f)) {
+					c2f[i] = f;
+					break;
+				}
+			}
+		}
+
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
 			char const *name = ecs_get_name(world, e);
@@ -133,7 +144,7 @@ void jmgui_qtable_recursive(ecs_world_t *world, ecs_query_t *q, ecs_entity_t sto
 			} else {
 				jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
 			}
-			jmgui_qtable_draw_row(&it, guitable, i);
+			jmgui_qtable_draw_row(&it, guitable, i, c2f);
 			if (a == 2) {
 				jmgui_qtable_recursive(world, q, e, guitable);
 				jmgui_tree_pop();

@@ -8,6 +8,7 @@ ECS_COMPONENT_DECLARE(GuiQuery);
 ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
 ECS_COMPONENT_DECLARE(GuiColumn);
+ECS_COMPONENT_DECLARE(GuiFields);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
@@ -88,6 +89,7 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiQuery);
 	ECS_COMPONENT_DEFINE(world, GuiTable);
 	ECS_COMPONENT_DEFINE(world, GuiColumn);
+	ECS_COMPONENT_DEFINE(world, GuiFields);
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
@@ -118,8 +120,13 @@ void GuiImport(ecs_world_t *world)
 	{.entity = ecs_id(GuiTable),
 	.members = {
 	{.name = "columns_count", .type = ecs_id(ecs_i32_t)},
-	{.name = "columns", .type = ecs_id(ecs_entity_t), .count = 16},
-	{.name = "f2c", .type = ecs_id(ecs_entity_t), .count = 16},
+	{.name = "columns", .type = ecs_id(ecs_entity_t), .count = 16}
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(GuiFields),
+	.members = {
+	{.name = "indices", .type = ecs_id(ecs_i8_t), .count = 16}
 	}});
 
 	ecs_enum(world,

@@ -41,12 +41,15 @@ typedef struct {
 typedef struct {
 	int32_t columns_count;
 	ecs_entity_t columns[16];
-	ecs_entity_t f2c[16];
 } GuiTable;
 
 typedef struct {
 	ecs_entity_t chain[4];
 } GuiColumn;
+
+typedef struct {
+	int8_t indices[16];
+} GuiFields;
 
 // Resource management hooks. The convenience macros hide details of
 // the callback signature, while allowing hooks to be called on multiple
@@ -60,6 +63,7 @@ extern ECS_COMPONENT_DECLARE(GuiColor3);
 extern ECS_COMPONENT_DECLARE(GuiQuery);
 extern ECS_COMPONENT_DECLARE(GuiTable);
 extern ECS_COMPONENT_DECLARE(GuiColumn);
+extern ECS_COMPONENT_DECLARE(GuiFields);
 extern ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 void GuiImport(ecs_world_t *world);
