@@ -44,7 +44,9 @@ typedef struct {
 } GuiTable;
 
 typedef struct {
-	ecs_entity_t chain[4];
+	ecs_entity_t member;
+	int32_t offset;
+	ecs_primitive_kind_t kind;
 } GuiColumn;
 
 typedef struct {

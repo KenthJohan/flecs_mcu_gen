@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 	ECS_IMPORT(world, FlecsUnits);
 	ECS_IMPORT(world, FlecsDoc);
 	ECS_IMPORT(world, FlecsStats);
+	ECS_IMPORT(world, FlecsScriptMath);
 
 	ECS_IMPORT(world, Ec);
 	ECS_IMPORT(world, Gui);

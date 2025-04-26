@@ -82,17 +82,17 @@ static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int 
 		if (data) {
 			data += ecs_field_is_self(it, f) * archrow * size;
 			GuiColumn const *col = ecs_get_pair(it->world, guitable->columns[i], GuiColumn, id);
-			if (0) {
-				EcsMember const *m = ecs_get(it->world, col->chain[0], EcsMember);
-				EcsPrimitive const *t = ecs_get(it->world, m->type, EcsPrimitive);
+			if (col) {
 				ecs_strbuf_t buf = ECS_STRBUF_INIT;
-				ecs0_flecs_expr_ser_primitive(it->world, t->kind, data + m->offset, &buf, false);
+				ecs0_flecs_expr_ser_primitive(it->world, col->kind, data + col->offset, &buf, false);
 				msg = ecs_strbuf_get(&buf);
 			} else {
 				ecs_strbuf_t buf = ECS_STRBUF_INIT;
 				ecs_ptr_to_str_buf(it->world, id, data, &buf);
-				msg = ecs_strbuf_get(&buf);
+				msg = ecs_strbuf_get(&buf);	
 			}
+
+			
 		}
 		jmgui_table_next_column();
 		if (msg) {

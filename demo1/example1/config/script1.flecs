@@ -30,31 +30,32 @@ window2 {
 
 
 
-cols {
-	name {
-	}
-	group {
-		gui.Fields : {indices:[1, 2, 3, 4, -1]}
-		(gui.Column, ec.Group) : {chain:[ec.Group.group_dummy]}
-	}
-	any {
-		gui.Fields : {indices:[3, 4, -1]}
-		(gui.Column, ec.Register) : {chain:[ec.Register.access]}
-		(gui.Column, ec.Field) : {chain:[ec.Field.access]}
-	}
-	signal {
-		(gui.Column, ec.Signal) : {chain:[ec.Signal.signal_dummy]}
-	}
-	pin {
-	}
-	access {
-	}
-}
+
 
 
 window2.tabs.Peripherals {
 	gui.Element : {Tab}
 	table1 : shared.styles.s1 {
+		cols {
+			name {
+			}
+			group {
+				gui.Fields : {indices:[1, -1]}
+				//(gui.Column, ec.Group) : {offset:0}
+			}
+			any {
+				gui.Fields : {indices:[3, 4, -1]}
+				(gui.Column, ec.Register) : {member:ec.Register.address}
+				(gui.Column, ec.Field) : {member:ec.Field.bitoffset}
+			}
+			signal {
+				//(gui.Column, ec.Signal) : {offset:0}
+			}
+			pin {
+			}
+			access {
+			}
+		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
 		(flecs.doc.Description, gui.Query) : {
 			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
@@ -113,3 +114,5 @@ window3 {
 	}
 }
 */
+
+

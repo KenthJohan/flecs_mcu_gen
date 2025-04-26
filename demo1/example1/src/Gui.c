@@ -49,6 +49,34 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 	}
 }
 
+static void SystemGuiColumn(ecs_iter_t *it)
+{
+	GuiColumn *c = ecs_field(it, GuiColumn, 0);
+	for (int i = 0; i < it->count; ++i, ++c) {
+		ecs_entity_t e = it->entities[i];
+		ecs_entity_t p = c->member;
+		int32_t o = 0;
+		EcsMember const *m = ecs_get(it->world, p, EcsMember);
+		if (m == NULL) {
+			continue;
+		}
+		EcsPrimitive const *prim = ecs_get(it->world, m->type, EcsPrimitive);
+		if (prim == NULL) {
+			continue;
+		}
+		c->kind = prim->kind;
+		while (p) {
+			m = ecs_get(it->world, p, EcsMember);
+			if (m == NULL) {
+				break;
+			}
+			o += m->offset;
+			p = ecs_get_parent(it->world, p);
+		}
+		c->offset = o;
+	}
+}
+
 // The constructor should initialize the component value.
 ECS_CTOR(GuiString, ptr, {
 	// ecs_trace("Ctor");
@@ -110,10 +138,13 @@ void GuiImport(ecs_world_t *world)
 	.quantity = EcsData,
 	.symbol = "did"});
 
+	ecs_entity_t primitive_component = ecs_lookup(world, "flecs.meta.PrimitiveKind");
 	ecs_struct(world,
 	{.entity = ecs_id(GuiColumn),
 	.members = {
-	{.name = "chain", .type = ecs_id(ecs_entity_t), .count = 4},
+	{.name = "member", .type = ecs_id(ecs_entity_t)},
+	{.name = "offset", .type = ecs_id(ecs_i32_t)},
+	{.name = "kind", .type = primitive_component},
 	}});
 
 	ecs_struct(world,
@@ -183,5 +214,12 @@ void GuiImport(ecs_world_t *world)
 	.query.terms = {
 	{.id = ecs_pair(ecs_id(EcsDocDescription), ecs_id(GuiQuery))},
 	{.id = ecs_id(GuiQuery), .oper = EcsNot},
+	}});
+
+	ecs_system(world,
+	{.entity = ecs_entity(world, {.name = "SystemGuiColumn", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
+	.callback = SystemGuiColumn,
+	.query.terms = {
+	{.id = ecs_pair(ecs_id(GuiColumn), EcsWildcard)},
 	}});
 }

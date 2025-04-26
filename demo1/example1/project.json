@@ -14,7 +14,8 @@
 	"lang.c": {
 		"c-standard": "gnu99",
 		"defines": [
-			"_FORTIFY_SOURCE=2"
+			"_FORTIFY_SOURCE=2",
+			"FLECS_SCRIPT_MATH"
 		],
 		"lib": [
 			"flecs",
