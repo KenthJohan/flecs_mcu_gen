@@ -40,13 +40,13 @@ window2.tabs.Peripherals {
 			name {
 			}
 			group {
-				gui.Fields : {indices:[1, -1]}
+				gui.Fields : {indices:[1, 2, -1]}
 				//(gui.Column, ec.Group) : {offset:0}
 			}
 			any {
 				gui.Fields : {indices:[3, 4, -1]}
-				(gui.Column, ec.Register) : {member:ec.Register.address}
-				(gui.Column, ec.Field) : {member:ec.Field.bitoffset}
+				(gui.Column, ec.Register) : {members:[ec.Register.address, 0]}
+				(gui.Column, ec.Field) : {members:[ec.Field.bitoffset, 0]}
 			}
 			signal {
 				//(gui.Column, ec.Signal) : {offset:0}
@@ -54,6 +54,9 @@ window2.tabs.Peripherals {
 			pin {
 			}
 			access {
+				gui.Fields : {indices:[4, 3, -1]}
+				(gui.Column, ec.Field) : {members:[ec.Field.access, 0]}
+				(gui.Column, ec.Register) : {members:[ec.Register.access, 0]}
 			}
 		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}

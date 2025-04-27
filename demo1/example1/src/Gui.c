@@ -9,6 +9,7 @@ ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
 ECS_COMPONENT_DECLARE(GuiColumn);
 ECS_COMPONENT_DECLARE(GuiFields);
+ECS_COMPONENT_DECLARE(GuiTest);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
@@ -53,27 +54,36 @@ static void SystemGuiColumn(ecs_iter_t *it)
 {
 	GuiColumn *c = ecs_field(it, GuiColumn, 0);
 	for (int i = 0; i < it->count; ++i, ++c) {
-		ecs_entity_t e = it->entities[i];
-		ecs_entity_t p = c->member;
 		int32_t o = 0;
-		EcsMember const *m = ecs_get(it->world, p, EcsMember);
-		if (m == NULL) {
-			continue;
+		ecs_entity_t e = it->entities[i];
+		/*
+		EcsMember const *m = ecs_get(it->world, c->member, EcsMember);
+		if (m) {
+			c->type = m->type;
+			ecs_entity_t p = c->member;;
+			do {
+				o += m->offset;
+				p = ecs_get_parent(it->world, p);
+				if (p == 0) {
+					break;
+				}
+				m = ecs_get(it->world, p, EcsMember);
+			} while(p);
+		} else {
+
 		}
-		EcsPrimitive const *prim = ecs_get(it->world, m->type, EcsPrimitive);
-		if (prim == NULL) {
-			continue;
-		}
-		c->kind = prim->kind;
-		while (p) {
-			m = ecs_get(it->world, p, EcsMember);
-			if (m == NULL) {
-				break;
-			}
-			o += m->offset;
-			p = ecs_get_parent(it->world, p);
+
+
+		EcsType const *t = ecs_get(it->world, p, EcsType);
+		c->kind = t ? t->kind : EcsPrimitiveType;
+		if (c->kind == EcsPrimitiveType) {
+			EcsMember const *m = ecs_get(it->world, p, EcsMember);
+			EcsPrimitive const *prim = ecs_get(it->world, m->type, EcsPrimitive);
+			c->primitive = prim ? prim->kind : 0;
+
 		}
 		c->offset = o;
+		*/
 	}
 }
 
@@ -118,6 +128,7 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiTable);
 	ECS_COMPONENT_DEFINE(world, GuiColumn);
 	ECS_COMPONENT_DEFINE(world, GuiFields);
+	ECS_COMPONENT_DEFINE(world, GuiTest);
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
@@ -138,27 +149,28 @@ void GuiImport(ecs_world_t *world)
 	.quantity = EcsData,
 	.symbol = "did"});
 
-	ecs_entity_t primitive_component = ecs_lookup(world, "flecs.meta.PrimitiveKind");
+	ecs_entity_t component_kind = ecs_lookup(world, "flecs.meta.TypeKind");
+	ecs_entity_t component_primitive = ecs_lookup(world, "flecs.meta.PrimitiveKind");
 	ecs_struct(world,
 	{.entity = ecs_id(GuiColumn),
 	.members = {
-	{.name = "member", .type = ecs_id(ecs_entity_t)},
+	{.name = "members", .type = ecs_id(ecs_entity_t), .count = 4},
+	{.name = "type", .type = ecs_id(ecs_entity_t)},
 	{.name = "offset", .type = ecs_id(ecs_i32_t)},
-	{.name = "kind", .type = primitive_component},
+	{.name = "kind", .type = component_kind},
+	{.name = "primitive", .type = component_primitive},
 	}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
 	.members = {
 	{.name = "columns_count", .type = ecs_id(ecs_i32_t)},
-	{.name = "columns", .type = ecs_id(ecs_entity_t), .count = 16}
-	}});
+	{.name = "columns", .type = ecs_id(ecs_entity_t), .count = 16}}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiFields),
 	.members = {
-	{.name = "indices", .type = ecs_id(ecs_i8_t), .count = 16}
-	}});
+	{.name = "indices", .type = ecs_id(ecs_i8_t), .count = 16}}});
 
 	ecs_enum(world,
 	{.entity = ecs_id(GuiType),
@@ -205,6 +217,13 @@ void GuiImport(ecs_world_t *world)
 	{.name = "r", .type = ecs_id(ecs_f32_t)},
 	{.name = "g", .type = ecs_id(ecs_f32_t)},
 	{.name = "b", .type = ecs_id(ecs_f32_t)},
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(GuiTest),
+	.members = {
+	{.name = "column", .type = ecs_id(GuiColumn)},
+	{.name = "color", .type = ecs_id(GuiColor3)},
 	}});
 
 	ecs_system(world,

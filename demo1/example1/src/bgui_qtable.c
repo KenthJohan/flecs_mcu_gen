@@ -50,20 +50,70 @@ for (int i = 0; i < it->field_count; i++) {
 
 */
 
+static void ser_component(ecs_world_t *world, ecs_entity_t type, void *data, ecs_strbuf_t *str)
+{
+	ecs_type_kind_t k = EcsPrimitiveType;
+	ecs_primitive_kind_t p = 0;
+	ecs_entity_t t = 0;
+	EcsMember const *m = ecs_get(world, type, EcsMember);
+	if (m) {
+		EcsPrimitive const *prim = ecs_get(world, m->type, EcsPrimitive);
+		if (prim) {
+			k = EcsPrimitiveType;
+			p = prim->kind;
+		} else {
+			t = m->type;
+		}
+	}
 
+	if (t) {
+		EcsType const *info = ecs_get(world, t, EcsType);
+		if (info) {
+			k = info->kind;
+		}
+	}
 
+	switch (k) {
+	case EcsPrimitiveType:
+		ecs0_flecs_expr_ser_primitive(world, p, data, str, false);
+		break;
+	case EcsBitmaskType:
+		ecs0_expr_ser_bitmask(world, t, data, str);
+		break;
+	case EcsEnumType:
+		break;
+	case EcsStructType:
+		break;
+	default:
+		break;
+	}
+}
 
-
+static int32_t sum_offset(ecs_world_t *world, ecs_entity_t const members[], ecs_entity_t *last)
+{
+	int32_t o = 0;
+	int i = 0;
+	while (members[i]) {
+		EcsMember const *m = ecs_get(world, members[i], EcsMember);
+		if (m == NULL) {
+			break;
+		}
+		o += m->offset;
+		(*last) = members[i];
+		i++;
+	}
+	return o;
+}
 
 static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int archrow, int8_t c2f[16])
 {
 	/*
 	printf("%s\n", ecs_get_name(it->world, it->entities[archrow]));
 	for (int i = 0; i < it->field_count; i++) {
-		ecs_id_t id = ecs_field_id(it, i);
-		char *id_str = ecs_id_str(it->world, id);
-		printf("%d: %s, %i\n", i, id_str, ecs_field_is_set(it, i));
-		ecs_os_free(id_str);
+	    ecs_id_t id = ecs_field_id(it, i);
+	    char *id_str = ecs_id_str(it->world, id);
+	    printf("%d: %s, %i\n", i, id_str, ecs_field_is_set(it, i));
+	    ecs_os_free(id_str);
 	}
 	*/
 	// Start from column 1, because column 0 is reserved for the name
@@ -76,23 +126,23 @@ static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int 
 			data = NULL;
 			ecs_entity_t rel = ecs_pair_first(it->world, id);
 			ecs_entity_t tgt = ecs_pair_second(it->world, id);
-			//printf("rel: %s, tgt: %s\n\n", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
+			// printf("rel: %s, tgt: %s\n\n", ecs_get_name(it->world, rel), ecs_get_name(it->world, tgt));
 		}
 		char const *msg = NULL;
 		if (data) {
 			data += ecs_field_is_self(it, f) * archrow * size;
 			GuiColumn const *col = ecs_get_pair(it->world, guitable->columns[i], GuiColumn, id);
 			if (col) {
+				ecs_entity_t entlast = 0;
+				data += sum_offset(it->world, col->members, &entlast);
 				ecs_strbuf_t buf = ECS_STRBUF_INIT;
-				ecs0_flecs_expr_ser_primitive(it->world, col->kind, data + col->offset, &buf, false);
+				ser_component(it->world, entlast, data, &buf);
 				msg = ecs_strbuf_get(&buf);
 			} else {
 				ecs_strbuf_t buf = ECS_STRBUF_INIT;
 				ecs_ptr_to_str_buf(it->world, id, data, &buf);
-				msg = ecs_strbuf_get(&buf);	
+				msg = ecs_strbuf_get(&buf);
 			}
-
-			
 		}
 		jmgui_table_next_column();
 		if (msg) {
