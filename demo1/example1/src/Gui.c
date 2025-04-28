@@ -19,7 +19,7 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 	while (ecs_query_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
-			ecs_log(-1, "name: %s", ecs_get_name(world, e));
+			ecs_trace("name: %s", ecs_get_name(world, e));
 		}
 	}
 }
@@ -32,7 +32,8 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 		if (d[i].value == NULL) {
 			continue;
 		}
-		ecs_log(-1, "%s: Create query: %s", ecs_get_name(it->world, e), d[i].value);
+		char const *name = ecs_get_name(it->world, e);
+		ecs_trace("%s: Create query: %s", name, d[i].value);
 		ecs_query_t *q = ecs_query_init(it->real_world,
 		&(ecs_query_desc_t){
 		//.cache_kind = EcsQueryCacheAll,

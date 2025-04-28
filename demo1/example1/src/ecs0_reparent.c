@@ -1,5 +1,6 @@
 #include "ecs0_reparent.h"
 #include <ctype.h>
+#include <stdio.h>
 
 /*
 Hej1, Hej => true, a_endptr[0] = 1

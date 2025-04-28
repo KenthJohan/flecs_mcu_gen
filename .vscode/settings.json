@@ -11,7 +11,9 @@
 		"typeinfo": "c",
 		"bitset": "c",
 		"format": "c",
-		"complex": "c"
+		"complex": "c",
+		"ec.h": "c",
+		"ecs0.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

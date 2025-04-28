@@ -1,5 +1,6 @@
 #include "bgui_qtable.h"
 #include "ecs0.h"
+#include "ecs0_ser.h"
 #include "jmgui.h"
 #include "Gui.h"
 #include "Ec.h"
@@ -89,21 +90,7 @@ static void ser_component(ecs_world_t *world, ecs_entity_t type, void *data, ecs
 	}
 }
 
-static int32_t sum_offset(ecs_world_t *world, ecs_entity_t const members[], ecs_entity_t *last)
-{
-	int32_t o = 0;
-	int i = 0;
-	while (members[i]) {
-		EcsMember const *m = ecs_get(world, members[i], EcsMember);
-		if (m == NULL) {
-			break;
-		}
-		o += m->offset;
-		(*last) = members[i];
-		i++;
-	}
-	return o;
-}
+
 
 static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int archrow, int8_t c2f[16])
 {
@@ -134,7 +121,7 @@ static void jmgui_qtable_draw_row(ecs_iter_t *it, GuiTable const *guitable, int 
 			GuiColumn const *col = ecs_get_pair(it->world, guitable->columns[i], GuiColumn, id);
 			if (col) {
 				ecs_entity_t entlast = 0;
-				data += sum_offset(it->world, col->members, &entlast);
+				data += ecs0_sum_offset(it->world, col->members, &entlast);
 				ecs_strbuf_t buf = ECS_STRBUF_INIT;
 				ser_component(it->world, entlast, data, &buf);
 				msg = ecs_strbuf_get(&buf);

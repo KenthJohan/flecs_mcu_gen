@@ -7,12 +7,4 @@ int ecs0_get_entities_from_parent(ecs_world_t *world, ecs_entity_t parent, ecs_i
 
 bool ecs0_has_children(ecs_world_t *world, ecs_entity_t entity);
 
-int ecs0_flecs_expr_ser_primitive(
-const ecs_world_t *world,
-ecs_primitive_kind_t kind,
-const void *base,
-ecs_strbuf_t *str,
-bool is_expr);
-
-
-int ecs0_expr_ser_bitmask(const ecs_world_t *world, ecs_entity_t type, const void *ptr, ecs_strbuf_t *str);
+int32_t ecs0_sum_offset(ecs_world_t *world, ecs_entity_t const members[], ecs_entity_t *last);
