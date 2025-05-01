@@ -68,13 +68,21 @@ window2.tabs.Peripherals {
 }
 
 
-/*
+
 window2.tabs.Signals {
 	gui.Element : {Tab}
 	table1 {
+		cols {
+			name {
+			}
+			any {
+				gui.Fields : {indices:[1, -1]}
+				(gui.Column, ec.Signal) : {members:[ec.Signal.signal_dummy, 0]}
+			}
+		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.signals}
 		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Signal"}
-		gui.Table : {columns_count:2, columns:[cols.name, cols.any], f2c:[0, 1]}
+		gui.Table : {columns_count:2, columns:[cols.name, cols.any]}
 	}
 }
 
@@ -82,11 +90,25 @@ window2.tabs.Signals {
 window2.tabs.Pins {
 	gui.Element : {Tab}
 	table1 {
+		cols {
+			name {
+			}
+			pin {
+				gui.Fields : {indices:[1, -1]}
+				(gui.Column, ec.Pin) : {members:[ec.Signal.signal_dummy, 0]}
+			}
+			signal {
+				gui.Fields : {indices:[2, -1]}
+				(gui.Column, ec.Signal) : {members:[ec.Signal.signal_dummy, 0]}
+			}
+		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.pins}
 		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Pin, ?ec.Signal"}
-		gui.Table : {columns_count:3, columns:[cols.name, cols.pin, cols.signal], f2c:[0, 1, 2]}
+		gui.Table : {columns_count:3, columns:[cols.name, cols.pin, cols.signal]}
 	}
 }
+
+/*
 
 window2.tabs.Gui {
 	gui.Element : {Tab}
