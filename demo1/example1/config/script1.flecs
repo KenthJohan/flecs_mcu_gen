@@ -35,9 +35,24 @@ window2 {
 
 window2.tabs.Peripherals {
 	gui.Element : {Tab}
-	table1 : shared.styles.s1 {
+	table1 {
+		gui.Table : {}
+		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
+		(flecs.doc.Description, gui.Query) : {
+			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
+		}
 		cols {
+			flecs.core.OrderedChildren
 			name {
+				g1 {
+					gui.Field : {0}
+					gui.Column : {members:[flecs.core.Identifier.value, 0]}
+				}
+			}
+			access {
+				gui.Fields : {indices:[4, 3, -1]}
+				(gui.Column, ec.Field) : {members:[ec.Field.access, 0]}
+				(gui.Column, ec.Register) : {members:[ec.Register.access, 0]}
 			}
 			group {
 				gui.Fields : {indices:[1, 2, -1]}
@@ -53,21 +68,12 @@ window2.tabs.Peripherals {
 			}
 			pin {
 			}
-			access {
-				gui.Fields : {indices:[4, 3, -1]}
-				(gui.Column, ec.Field) : {members:[ec.Field.access, 0]}
-				(gui.Column, ec.Register) : {members:[ec.Register.access, 0]}
-			}
 		}
-		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
-		(flecs.doc.Description, gui.Query) : {
-			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
-		}
-		gui.Table : {columns_count:4, columns:[cols.name, cols.group, cols.any, cols.access]}
 	}
 }
 
 
+/*
 
 window2.tabs.Signals {
 	gui.Element : {Tab}
@@ -108,7 +114,7 @@ window2.tabs.Pins {
 	}
 }
 
-/*
+
 
 window2.tabs.Gui {
 	gui.Element : {Tab}

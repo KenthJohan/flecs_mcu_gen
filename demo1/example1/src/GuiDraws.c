@@ -22,11 +22,15 @@ static void SystemGuiWindow1(ecs_world_t *world, ecs_entity_t parent)
 
 static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 {
+	GuiElement *el = ecs_get_mut(world, e, GuiElement);
+	if (el == NULL) {
+		//ecs_err("GuiElement not found for entity %s", name);
+		return;
+	}
 	char const *name = ecs_get_name(world, e);
 	if (!name) {
 		return;
 	}
-	GuiElement *el = ecs_get_mut(world, e, GuiElement);
 	el->id = jmgui_get_id_by_string(name);
 
 	switch (el->type) {
