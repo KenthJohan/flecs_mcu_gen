@@ -13,7 +13,8 @@
 		"format": "c",
 		"complex": "c",
 		"ec.h": "c",
-		"ecs0.h": "c"
+		"ecs0.h": "c",
+		"flecs.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

@@ -72,3 +72,11 @@ int32_t ecs0_children_count(ecs_world_t *world, ecs_entity_t parent)
 	ecs_iter_fini(&it);
 	return count;
 }
+
+
+void ecs0_trace_system_iter(ecs_iter_t *it)
+{
+	char const * qs = ecs_query_str(it->query);
+	ecs_trace("System '%s' '%s' %i", ecs_get_name(it->world, it->system), qs, it->count);
+	ecs_os_free((void*)qs);
+}

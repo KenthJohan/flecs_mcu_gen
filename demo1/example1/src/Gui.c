@@ -1,4 +1,5 @@
 #include "Gui.h"
+#include "ecs0.h"
 
 ECS_COMPONENT_DECLARE(GuiWindow);
 ECS_COMPONENT_DECLARE(GuiType);
@@ -15,6 +16,7 @@ ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 {
+	ecs_log_push_(0);
 	ecs_iter_t it = ecs_query_iter(world, q);
 	ecs_iter_set_group(&it, parent);
 	while (ecs_query_next(&it)) {
@@ -23,10 +25,15 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 			ecs_trace("name: %s", ecs_get_name(world, e));
 		}
 	}
+	ecs_log_pop_(0);
 }
+
+
 
 static void SystemCreateGuiQuery(ecs_iter_t *it)
 {
+	ecs0_trace_system_iter(it);
+	ecs_log_push_(0);
 	EcsDocDescription *d = ecs_field(it, EcsDocDescription, 0);
 	for (int i = 0; i < it->count; ++i) {
 		ecs_entity_t e = it->entities[i];
@@ -34,7 +41,9 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 			continue;
 		}
 		char const *name = ecs_get_name(it->world, e);
-		ecs_trace("%s: Create query: %s", name, d[i].value);
+		ecs_trace("Entity: '%s'", name);
+		ecs_log_push_(0);
+		ecs_trace("ecs_query_init: '%s'", d[i].value);
 		ecs_query_t *q = ecs_query_init(it->real_world,
 		&(ecs_query_desc_t){
 		//.cache_kind = EcsQueryCacheAll,
@@ -49,7 +58,9 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 		}
 		test_query(it->world, q, e);
 		ecs_set(it->world, e, GuiQuery, {.query = q});
+		ecs_log_pop_(0);
 	}
+	ecs_log_pop_(0);
 }
 
 static void SystemGuiColumn(ecs_iter_t *it)

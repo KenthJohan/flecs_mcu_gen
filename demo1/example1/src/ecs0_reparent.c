@@ -9,9 +9,11 @@ Heja, wej => false
 */
 static bool str_cmp_sub0(char const *a, char const *b, char **a_endptr)
 {
+	/*
 	if (strcmp(a, "TIM1_BK") == 0) {
 		printf("strcmp(a, \"TIM17\") == 0\n");
 	}
+	*/
 	while (*a && *b) {
 		if (isdigit(*a) && (*b) == '*') {
 			while (*a && isdigit(*a)) {

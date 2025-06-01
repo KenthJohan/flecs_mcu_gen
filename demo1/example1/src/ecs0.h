@@ -10,3 +10,5 @@ bool ecs0_has_children(ecs_world_t *world, ecs_entity_t entity);
 int32_t ecs0_sum_offset(ecs_world_t *world, ecs_entity_t const members[], ecs_entity_t *last);
 
 int32_t ecs0_children_count(ecs_world_t *world, ecs_entity_t parent);
+
+void ecs0_trace_system_iter(ecs_iter_t *it);

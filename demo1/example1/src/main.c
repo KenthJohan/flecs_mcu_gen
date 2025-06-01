@@ -54,15 +54,19 @@ int main(int argc, char *argv[])
 	ecs_script_run_file(world, "config/script1.flecs");
 	ecs_log_set_level(-1);
 
+
+	ecs_log_set_level(0);
+
 	jmgui_context_t jmgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
 	jmgui_context_init(&jmgui);
 
 	ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030");
-	// print name of parent
 	if (parent) {
-		printf("Parent: %s\n", ecs_get_name(world, parent));
+		char * path = ecs_get_path(world, parent);
+		ecs_log(0, "Found: %s", path);
+		ecs_os_free(path);
 	} else {
-		printf("Parent not found\n");
+		printf("xmcu.STM32G030 not found\n");
 	}
 
 
