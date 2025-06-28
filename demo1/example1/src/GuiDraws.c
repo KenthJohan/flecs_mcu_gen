@@ -19,6 +19,14 @@ static void SystemGuiWindow1(ecs_world_t *world, ecs_entity_t parent)
 }
 
 
+static void gui_input_text(ecs_world_t *world, ecs_entity_t e, GuiElement * el)
+{
+	ecs_entity_t last = 0;
+	int32_t o = ecs0_sum_offset(world, el->members, &last);
+	EcsMember const *m = ecs_get(world, last, EcsMember);
+	return;
+}
+
 
 static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 {
@@ -48,6 +56,7 @@ static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e)
 		break;
 	case GuiTypeInputText:
 		if (1) {
+			gui_input_text(world, e, el);
 			char buf[128] = {0};
 			if (el == NULL) {
 				return;

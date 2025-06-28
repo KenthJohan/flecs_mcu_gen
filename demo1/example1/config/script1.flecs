@@ -18,10 +18,10 @@ shared {
 window2 {
 	gui.Window : {}
 	input1 {
-		gui.Element : {InputText, shared.input1}
+		gui.Element : {InputText, shared.input1, [flecs.doc.Description.value, 0]}
 	}
 	input2 {
-		gui.Element : {InputText, shared.input1}
+		gui.Element : {InputText, shared.input1, [flecs.doc.Description.value, 0]}
 	}
 	tabs {
 		gui.Element : {Tabs}
@@ -37,19 +37,39 @@ window2.tabs.Peripherals {
 	gui.Element : {Tab}
 	table1 {
 		gui.Table : {}
-		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
+		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals.ADC}
 		(flecs.doc.Description, gui.Query) : {
-			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
+			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
 		}
+		cols {
+			flecs.core.OrderedChildren
+			name1 {
+			}
+			access {
+			}
+		}
+	}
+}
+
+
+
+/*
+
 		cols {
 			flecs.core.OrderedChildren
 			name {
 				g1 {
-					gui.Field : {0}
-					gui.Column : {members:[flecs.core.Identifier.value, 0]}
+					gui.Field : {0, members:[flecs.core.Identifier.value, 0]}
 				}
 			}
 			access {
+				g1 {
+					gui.Field : {4, members:[ec.Field.access, 0]}
+				}
+				g2 {
+					gui.Field : {3, members:[flecs.core.Identifier.value, 0]}
+				}
+
 				gui.Fields : {indices:[4, 3, -1]}
 				(gui.Column, ec.Field) : {members:[ec.Field.access, 0]}
 				(gui.Column, ec.Register) : {members:[ec.Register.access, 0]}
@@ -69,11 +89,7 @@ window2.tabs.Peripherals {
 			pin {
 			}
 		}
-	}
-}
 
-
-/*
 
 window2.tabs.Signals {
 	gui.Element : {Tab}

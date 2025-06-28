@@ -85,11 +85,9 @@ ECS_DTOR(GuiString, ptr, {
 
 // The move hook should move resources from one location to another.
 ECS_MOVE(GuiString, dst, src, {
-	// ecs_trace("Move");
 	ecs_os_free(dst->value);
 	dst->value = src->value;
-	src->value = NULL; // This makes sure the value doesn't get deleted twice,
-	                   // as the destructor is still invoked after a move.
+	src->value = NULL;
 })
 
 // The copy hook should copy resources from one location to another.
@@ -97,6 +95,23 @@ ECS_COPY(GuiString, dst, src, {
 	// ecs_trace("Copy");
 	ecs_os_free(dst->value);
 	dst->value = ecs_os_strdup(src->value);
+})
+
+static ECS_CTOR(GuiTable, ptr, {
+    ecs_os_zeromem(ptr);
+    ecs_vec_init_t(NULL, &ptr->columns, GuiColumn, 0);
+})
+
+static
+ECS_DTOR(GuiTable, ptr, {
+    ecs_vec_fini_t(NULL, &ptr->columns, GuiColumn);
+})
+
+static
+ECS_MOVE(GuiTable, dst, src, {
+    ecs_vec_fini_t(NULL, &dst->columns, GuiColumn);
+    dst->columns = src->columns;
+    src->columns = (ecs_vec_t){0};
 })
 
 void GuiImport(ecs_world_t *world)
@@ -117,6 +132,12 @@ void GuiImport(ecs_world_t *world)
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
+
+    ecs_set_hooks(world, GuiTable, {
+        .ctor = ecs_ctor(GuiTable),
+        .dtor = ecs_dtor(GuiTable),
+        .move = ecs_move(GuiTable)
+    });
 
 	ecs_set_hooks(world, GuiString,
 	{
@@ -188,6 +209,7 @@ void GuiImport(ecs_world_t *world)
 	.members = {
 	{.name = "type", .type = ecs_id(GuiType)},
 	{.name = "storage", .type = ecs_id(ecs_entity_t)},
+	{.name = "members", .type = ecs_id(ecs_entity_t), .count = 8},
 	{.name = "id", .type = ecs_id(ecs_u32_t), .unit = GuiDebugIdUnit},
 	}});
 
