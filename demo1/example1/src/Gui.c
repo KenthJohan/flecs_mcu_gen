@@ -155,6 +155,8 @@ void GuiImport(ecs_world_t *world)
 	.quantity = EcsData,
 	.symbol = "did"});
 
+
+
 	// ecs_entity_t component_kind = ecs_lookup(world, "flecs.meta.TypeKind");
 	// ecs_entity_t component_primitive = ecs_lookup(world, "flecs.meta.PrimitiveKind");
 	ecs_struct(world,
@@ -163,10 +165,17 @@ void GuiImport(ecs_world_t *world)
 	{.name = "members", .type = ecs_id(ecs_entity_t), .count = 4},
 	}});
 
+
+    ecs_entity_t e_GuiColumnVector = ecs_vector_init(world, &(ecs_vector_desc_t){
+        .entity = ecs_entity(world, {.name = "GuiColumnVector"}),
+        .type = ecs_id(GuiColumn)
+    });
+
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
 	.members = {
 	{.name = "table_dummy", .type = ecs_id(ecs_i32_t)},
+	{.name = "columns", .type = e_GuiColumnVector},
 	}});
 
 	ecs_struct(world,

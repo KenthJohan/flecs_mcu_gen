@@ -36,7 +36,10 @@ window2 {
 window2.tabs.Peripherals {
 	gui.Element : {Tab}
 	table1 {
-		gui.Table : {}
+		gui.Table : {
+			table_dummy: 0,
+			columns: []
+		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals.ADC}
 		(flecs.doc.Description, gui.Query) : {
 			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
@@ -46,6 +49,14 @@ window2.tabs.Peripherals {
 			name1 {
 			}
 			access {
+				a1 {
+
+				}
+				a2 {
+					
+				}
+			}
+			any {
 			}
 		}
 	}

@@ -205,15 +205,14 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			if (!name) {
 				continue;
 			}
+			bool has_children = false;
 			// First row is reserved for the tree node
 			jmgui_table_next_row(0);
 			jmgui_table_next_column();
 			if (ecs0_has_children(q->world, e)) {
 				// The entity has children, draw a tree node
 				if(jmgui_tree_node(name, 0, 1, 1, 1)) {
-					// The entity has children and the node is open, draw the row
-					jmgui_qtable_recursive(table, q, e, gtable);
-					jmgui_tree_pop();
+					has_children = true;
 				}
 			} else {
 				// The entity has no children, draw a regular text
@@ -226,8 +225,15 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 				jmgui_text("NULL");
 			}
 
+			if (has_children) {
+				// The entity has children and the node is open, draw the row
+				jmgui_qtable_recursive(table, q, e, gtable);
+				jmgui_tree_pop();
+			}
+
 		}
 	}
+	ecs_iter_fini(&it);
 	return 0;
 }
 
@@ -248,14 +254,14 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 
 	// Setup the table header with the name and number of columns:
 	ecs_entity_t cols = ecs_lookup_child(world, etable, "cols");
-	int32_t columns_count = ecs0_children_count(world, cols);
+	int32_t columns_count = ecs_get_ordered_children(world, cols).count;
 	if (columns_count == 0) {
 		ecs_warn("Table '%s' has no columns", name);
 		return;
 	}
 
 	ecs_vec_set_min_count_zeromem(NULL, &guitable->columns, sizeof(GuiColumn),columns_count);
-	ecs_vec_get_t(&guitable->columns, GuiColumn, 0)->members[0] = 1;
+	//ecs_vec_get_t(&guitable->columns, GuiColumn, 0)->members[0] = 1;
 
 	jmgui_table_begin(name, columns_count, 0);
 
