@@ -21,6 +21,9 @@ void main_log(int32_t level,const char *file,int32_t line,const char *msg)
 	case -3:
 		printf("Break here\n");
 		break;
+	case -4:
+		printf("Break here\n");
+		break;
 	}
 }
 

@@ -42,7 +42,7 @@ window2.tabs.Peripherals {
 		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals.ADC}
 		(flecs.doc.Description, gui.Query) : {
-			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
+			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
 		}
 		cols {
 			flecs.core.OrderedChildren

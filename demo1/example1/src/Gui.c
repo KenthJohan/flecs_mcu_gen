@@ -8,10 +8,7 @@ ECS_COMPONENT_DECLARE(GuiColor3);
 ECS_COMPONENT_DECLARE(GuiQuery);
 ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
-ECS_COMPONENT_DECLARE(GuiColumn);
-ECS_COMPONENT_DECLARE(GuiFields);
-ECS_COMPONENT_DECLARE(GuiField);
-ECS_COMPONENT_DECLARE(GuiTest);
+ECS_COMPONENT_DECLARE(GuiQueryColumn);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
@@ -63,13 +60,7 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 	ecs_log_pop_(0);
 }
 
-static void SystemGuiColumn(ecs_iter_t *it)
-{
-	GuiColumn *c = ecs_field(it, GuiColumn, 0);
-	for (int i = 0; i < it->count; ++i, ++c) {
-		// ecs_entity_t e = it->entities[i];
-	}
-}
+
 
 // The constructor should initialize the component value.
 ECS_CTOR(GuiString, ptr, {
@@ -99,17 +90,17 @@ ECS_COPY(GuiString, dst, src, {
 
 static ECS_CTOR(GuiTable, ptr, {
     ecs_os_zeromem(ptr);
-    ecs_vec_init_t(NULL, &ptr->columns, GuiColumn, 0);
+    ecs_vec_init_t(NULL, &ptr->columns, GuiQueryColumn, 0);
 })
 
 static
 ECS_DTOR(GuiTable, ptr, {
-    ecs_vec_fini_t(NULL, &ptr->columns, GuiColumn);
+    ecs_vec_fini_t(NULL, &ptr->columns, GuiQueryColumn);
 })
 
 static
 ECS_MOVE(GuiTable, dst, src, {
-    ecs_vec_fini_t(NULL, &dst->columns, GuiColumn);
+    ecs_vec_fini_t(NULL, &dst->columns, GuiQueryColumn);
     dst->columns = src->columns;
     src->columns = (ecs_vec_t){0};
 })
@@ -125,10 +116,7 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiColor3);
 	ECS_COMPONENT_DEFINE(world, GuiQuery);
 	ECS_COMPONENT_DEFINE(world, GuiTable);
-	ECS_COMPONENT_DEFINE(world, GuiColumn);
-	ECS_COMPONENT_DEFINE(world, GuiFields);
-	ECS_COMPONENT_DEFINE(world, GuiField);
-	ECS_COMPONENT_DEFINE(world, GuiTest);
+	ECS_COMPONENT_DEFINE(world, GuiQueryColumn);
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
@@ -160,33 +148,25 @@ void GuiImport(ecs_world_t *world)
 	// ecs_entity_t component_kind = ecs_lookup(world, "flecs.meta.TypeKind");
 	// ecs_entity_t component_primitive = ecs_lookup(world, "flecs.meta.PrimitiveKind");
 	ecs_struct(world,
-	{.entity = ecs_id(GuiColumn),
+	{.entity = ecs_id(GuiQueryColumn),
 	.members = {
-	{.name = "members", .type = ecs_id(ecs_entity_t), .count = 4},
+	{.name = "fields", .type = ecs_id(ecs_entity_t), .count = 4},
+	{.name = "types", .type = ecs_id(ecs_entity_t), .count = 4},
+	{.name = "offsets", .type = ecs_id(ecs_u32_t), .count = 4},
 	}});
 
 
-    ecs_entity_t e_GuiColumnVector = ecs_vector_init(world, &(ecs_vector_desc_t){
-        .entity = ecs_entity(world, {.name = "GuiColumnVector"}),
-        .type = ecs_id(GuiColumn)
+    ecs_entity_t e_GuiQueryColumnVector = ecs_vector_init(world, &(ecs_vector_desc_t){
+        .entity = ecs_entity(world, {.name = "GuiQueryColumnVector"}),
+        .type = ecs_id(GuiQueryColumn)
     });
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
 	.members = {
 	{.name = "table_dummy", .type = ecs_id(ecs_i32_t)},
-	{.name = "columns", .type = e_GuiColumnVector},
+	{.name = "columns", .type = e_GuiQueryColumnVector},
 	}});
-
-	ecs_struct(world,
-	{.entity = ecs_id(GuiFields),
-	.members = {
-	{.name = "indices", .type = ecs_id(ecs_i8_t), .count = 16}}});
-
-	ecs_struct(world,
-	{.entity = ecs_id(GuiField),
-	.members = {
-	{.name = "index", .type = ecs_id(ecs_i8_t)}}});
 
 	ecs_enum(world,
 	{.entity = ecs_id(GuiType),
@@ -236,13 +216,6 @@ void GuiImport(ecs_world_t *world)
 	{.name = "b", .type = ecs_id(ecs_f32_t)},
 	}});
 
-	ecs_struct(world,
-	{.entity = ecs_id(GuiTest),
-	.members = {
-	{.name = "column", .type = ecs_id(GuiColumn)},
-	{.name = "color", .type = ecs_id(GuiColor3)},
-	}});
-
 	ecs_system(world,
 	{.entity = ecs_entity(world, {.name = "CreateGuiQuery", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
 	.callback = SystemCreateGuiQuery,
@@ -250,12 +223,5 @@ void GuiImport(ecs_world_t *world)
 	.query.terms = {
 	{.id = ecs_pair(ecs_id(EcsDocDescription), ecs_id(GuiQuery))},
 	{.id = ecs_id(GuiQuery), .oper = EcsNot},
-	}});
-
-	ecs_system(world,
-	{.entity = ecs_entity(world, {.name = "SystemGuiColumn", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
-	.callback = SystemGuiColumn,
-	.query.terms = {
-	{.id = ecs_pair(ecs_id(GuiColumn), EcsWildcard)},
 	}});
 }
