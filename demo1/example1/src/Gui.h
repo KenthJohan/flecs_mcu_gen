@@ -41,11 +41,11 @@ typedef struct {
 
 typedef struct {
 	int32_t table_dummy;
-	ecs_vec_t columns; //ecs_vec_t<GuiColumn> columns
+	ecs_vec_t columns; //ecs_vec_t<GuiQueryColumn> columns
 } GuiTable;
 
 typedef struct {
-	ecs_entity_t fields[4];
+	ecs_u32_t fields[4];
 	ecs_entity_t types[4];
 	ecs_u32_t offsets[4];
 } GuiQueryColumn;

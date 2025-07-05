@@ -15,7 +15,8 @@
 		"ec.h": "c",
 		"ecs0.h": "c",
 		"flecs.h": "c",
-		"random": "c"
+		"random": "c",
+		"numbers": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

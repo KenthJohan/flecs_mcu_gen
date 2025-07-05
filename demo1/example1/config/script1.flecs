@@ -50,10 +50,10 @@ window2.tabs.Peripherals {
 			}
 			access {
 				a1 {
-
+					gui.QueryColumn : {fields: [0], types : [flecs.core.Identifier.value]}
 				}
 				a2 {
-					
+					gui.QueryColumn : {fields: [1, 2], types : [ec.Group, ec.Peripheral], offsets:[]}
 				}
 			}
 			any {

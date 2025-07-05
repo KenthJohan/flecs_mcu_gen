@@ -102,6 +102,8 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 	while (ecs_children_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
+			GuiQueryColumn const * c = ecs_get(world, e, GuiQueryColumn);
+			//ecs_vec_get_t(&guitable->columns, GuiQueryColumn, 0)->members[0]
 			char const *colname = ecs_get_name(world, e);
 			if (colname) {
 				jmgui_table_setup_column(colname, 128, 0);
