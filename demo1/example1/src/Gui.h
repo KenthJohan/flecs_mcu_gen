@@ -45,9 +45,9 @@ typedef struct {
 } GuiTable;
 
 typedef struct {
-	ecs_u32_t fields[4];
-	ecs_entity_t types[4];
-	ecs_u32_t offsets[4];
+	ecs_u32_t field;
+	ecs_entity_t type;
+	ecs_u32_t offset;
 } GuiQueryColumn;
 
 typedef struct {

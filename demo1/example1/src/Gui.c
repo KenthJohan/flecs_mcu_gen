@@ -150,9 +150,9 @@ void GuiImport(ecs_world_t *world)
 	ecs_struct(world,
 	{.entity = ecs_id(GuiQueryColumn),
 	.members = {
-	{.name = "fields", .type = ecs_id(ecs_u32_t), .count = 4},
-	{.name = "types", .type = ecs_id(ecs_entity_t), .count = 4},
-	{.name = "offsets", .type = ecs_id(ecs_u32_t), .count = 4},
+	{.name = "field", .type = ecs_id(ecs_u32_t)},
+	{.name = "type", .type = ecs_id(ecs_entity_t)},
+	{.name = "offset", .type = ecs_id(ecs_u32_t)},
 	}});
 
 

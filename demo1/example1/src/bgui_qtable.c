@@ -52,10 +52,29 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 				jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
 			}
 
+			// https://github.com/SanderMertens/flecs/blob/master/src/addons/json/serialize_iter_result_query.c#L198
 			int32_t count = ecs_vec_count(&gtable->columns);
-			for (int32_t i = 1; i < count; i ++) {
+			for (int32_t c = 1; c < count; c ++) {
+				GuiQueryColumn const *column = ecs_vec_get_t(&gtable->columns, GuiQueryColumn, c);
 				jmgui_table_next_column();
-				jmgui_text("NULL");
+				if (ecs_field_is_set(&it, column->field) == false) {
+					continue;
+				}
+				ecs_size_t size = it.sizes[column->field];
+				void * ptr = ecs_field_w_size(&it, size, column->field);
+				
+				if (ptr == NULL) {
+					continue;
+				}
+				if (it.sources[column->field] == 0) {
+					ptr = ECS_ELEM(ptr, size, i);
+				}
+				char * json = ecs_ptr_to_json(q->world, column->type, ptr);
+				if (json == NULL) {
+					continue;
+				}
+				jmgui_text(json);
+				ecs_os_free(json);
 			}
 
 			if (has_children) {
@@ -86,32 +105,30 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 
 	// Setup the table header with the name and number of columns:
 	ecs_entity_t cols = ecs_lookup_child(world, etable, "cols");
-	int32_t columns_count = ecs_get_ordered_children(world, cols).count;
-	if (columns_count == 0) {
+	ecs_entities_t entities = ecs_get_ordered_children(world, cols);
+	if (entities.count == 0) {
 		ecs_warn("Table '%s' has no columns", name);
 		return;
 	}
 
-	ecs_vec_set_min_count_zeromem(NULL, &guitable->columns, sizeof(GuiQueryColumn), columns_count);
+	ecs_vec_set_min_count_zeromem(NULL, &guitable->columns, sizeof(GuiQueryColumn), entities.count);
 	//ecs_vec_get_t(&guitable->columns, GuiColumn, 0)->members[0] = 1;
 
-	jmgui_table_begin(name, columns_count, 0);
+	jmgui_table_begin(name, entities.count, 0);
 
-	// Draw each column:
-	ecs_iter_t it = ecs_children(world, cols);
-	while (ecs_children_next(&it)) {
-		for (int i = 0; i < it.count; i++) {
-			ecs_entity_t e = it.entities[i];
-			GuiQueryColumn const * c = ecs_get(world, e, GuiQueryColumn);
-			//ecs_vec_get_t(&guitable->columns, GuiQueryColumn, 0)->members[0]
-			char const *colname = ecs_get_name(world, e);
-			if (colname) {
-				jmgui_table_setup_column(colname, 128, 0);
-			} else {
-				jmgui_table_setup_column("?", 128, 0);
-			}
+
+	for (int i = 0; i < entities.count; i++) {
+		ecs_entity_t e = entities.ids[i];
+		GuiQueryColumn const * c = ecs_get(world, e, GuiQueryColumn);
+		(*ecs_vec_get_t(&guitable->columns, GuiQueryColumn, i)) = (*c);
+		char const *colname = ecs_get_name(world, e);
+		if (colname) {
+			jmgui_table_setup_column(colname, 128, 0);
+		} else {
+			jmgui_table_setup_column("?", 128, 0);
 		}
-	}
+		}
+
 
 	jmgui_table_header_row();
 	jmgui_qtable_recursive(etable, q->query, estorage, guitable);

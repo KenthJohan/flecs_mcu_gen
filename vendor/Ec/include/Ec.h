@@ -2,12 +2,12 @@
 
 #include <flecs.h>
 
-typedef uint64_t EcPinAttribute;
+typedef uint32_t EcPinAttribute;
 #define EcPinAttribute_INPUT 1
 #define EcPinAttribute_OUTPUT 2
 #define EcPinAttribute_INOUT 4
 
-typedef uint64_t EcAccess;
+typedef uint32_t EcAccess;
 #define EcAccess_READ 0x01
 #define EcAccess_WRITE 0x02
 
