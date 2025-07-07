@@ -23,6 +23,32 @@ void ecs0_id_info(ecs_world_t *ecs, ecs_id_t id)
 
 
 
+void jmgui_qtable_recursive_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns, int row)
+{
+	// https://github.com/SanderMertens/flecs/blob/master/src/addons/json/serialize_iter_result_query.c#L198
+	int32_t count = ecs_vec_count(columns);
+	for (int32_t c = 1; c < count; c ++) {
+		GuiQueryColumn const *column = ecs_vec_get_t(columns, GuiQueryColumn, c);
+		jmgui_table_next_column();
+		if (ecs_field_is_set(it, column->field) == false) {
+			continue;
+		}
+		ecs_size_t size = it->sizes[column->field];
+		void * ptr = ecs_field_w_size(it, size, column->field);
+		if (ptr == NULL) {
+			continue;
+		}
+		if (it->sources[column->field] == 0) {
+			ptr = ECS_ELEM(ptr, size, row);
+		}
+		char * json = ecs_ptr_to_json(world, column->type, ptr);
+		if (json) {
+			jmgui_text(json);
+			ecs_os_free(json);
+		}
+	}
+}
+
 
 int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t estorage, GuiTable * gtable)
 {
@@ -52,29 +78,7 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 				jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
 			}
 
-			// https://github.com/SanderMertens/flecs/blob/master/src/addons/json/serialize_iter_result_query.c#L198
-			int32_t count = ecs_vec_count(&gtable->columns);
-			for (int32_t c = 1; c < count; c ++) {
-				GuiQueryColumn const *column = ecs_vec_get_t(&gtable->columns, GuiQueryColumn, c);
-				jmgui_table_next_column();
-				if (ecs_field_is_set(&it, column->field) == false) {
-					continue;
-				}
-				ecs_size_t size = it.sizes[column->field];
-				void * ptr = ecs_field_w_size(&it, size, column->field);
-				
-				if (ptr == NULL) {
-					continue;
-				}
-				if (it.sources[column->field] == 0) {
-					ptr = ECS_ELEM(ptr, size, i);
-				}
-				char * json = ecs_ptr_to_json(q->world, column->type, ptr);
-				if (json) {
-					jmgui_text(json);
-					ecs_os_free(json);
-				}
-			}
+			jmgui_qtable_recursive_cols(q->world, &it, &gtable->columns, i);
 
 			if (has_children) {
 				// The entity has children and the node is open, draw the row
