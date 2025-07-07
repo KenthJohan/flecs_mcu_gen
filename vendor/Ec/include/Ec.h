@@ -21,14 +21,7 @@ typedef struct {
 } EcPeripheral;
 
 typedef struct {
-	int32_t bitoffset;
-	int32_t bitwidth;
-	EcAccess access;
-} EcField;
-
-typedef struct {
 	uint32_t address;
-	EcAccess access;
 } EcRegister;
 
 typedef struct {
@@ -43,7 +36,6 @@ typedef struct {
 	// Can be any unit:
 	int32_t offset;
 	int32_t width;
-	EcAccess access;
 	ecs_entity_t unit; // Unit of measure, e.g. bytes, bits
 } EcArea;
 
@@ -78,9 +70,7 @@ typedef enum {
 extern ECS_COMPONENT_DECLARE(EcPinAttribute);
 extern ECS_COMPONENT_DECLARE(EcPin);
 extern ECS_COMPONENT_DECLARE(EcPeripheral);
-extern ECS_COMPONENT_DECLARE(EcField);
 extern ECS_COMPONENT_DECLARE(EcRegister);
-extern ECS_COMPONENT_DECLARE(EcRegisterAttribute);
 extern ECS_COMPONENT_DECLARE(EcSignal);
 extern ECS_COMPONENT_DECLARE(EcQuery);
 extern ECS_COMPONENT_DECLARE(EcAf);

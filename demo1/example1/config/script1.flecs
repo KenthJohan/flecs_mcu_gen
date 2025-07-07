@@ -9,8 +9,6 @@ shared {
 	styles {
 		s1 {
 			gui.Color3 : {1, 0, 0}
-			(gui.Color3, ec.Field) : {0.5, 1, 0}
-			(gui.Color3, ec.Register) : {1, 0.5, 0}
 		}
 	}
 }
@@ -42,18 +40,18 @@ window2.tabs.Peripherals {
 		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
 		(flecs.doc.Description, gui.Query) : {
-			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Group, ?ec.Peripheral, ?ec.Register, ?ec.Field"
+			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Area"
 		}
 		cols {
 			flecs.core.OrderedChildren
 			name1 {
 				gui.QueryColumn : {field: 0, type : flecs.meta.string, offset:sum(0,0)}
 			}
-			Register {
-				gui.QueryColumn : {field: 3, type : ec.Register, offset:sum(0,0)}
+			Access {
+				gui.QueryColumn : {field: 1, type : ec.Access, offset:sum(0,0)}
 			}
-			Field {
-				gui.QueryColumn : {field: 4, type : ec.Field, offset:sum(0,0)}
+			Area {
+				gui.QueryColumn : {field: 2, type : ec.Area, offset:sum(0,0)}
 			}
 			Name2 {
 				gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}

@@ -32,9 +32,9 @@ void result_flecs_register(result_t *result, const char *address, const char *ac
 		}
 	}
 	result_indent(result);
-	fprintf(result->file, "ec.Register : {address:%s, access:%s}\n", address, access0);
+	fprintf(result->file, "ec.Access : {%s}\n", access0);
 	result_indent(result);
-	fprintf(result->file, "ec.Area : {offset:%s, width:%s, access:%s, unit:flecs.units.Data.Bytes}\n", address, size, access0);
+	fprintf(result->file, "ec.Area : {offset:%s, width:%s, unit:flecs.units.Data.Bytes}\n", address, size);
 }
 
 void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth, const char *access)
@@ -50,9 +50,9 @@ void result_flecs_field(result_t *result, char const *bitoffset, char const *bit
 		}
 	}
 	result_indent(result);
-	fprintf(result->file, "ec.Field : {bitoffset:%s, bitwidth:%s, access:%s}\n", bitoffset, bitwidth, access0);
+	fprintf(result->file, "ec.Access : {%s}\n", access0);
 	result_indent(result);
-	fprintf(result->file, "ec.Area : {offset:%s, width:%s, access:%s, unit:flecs.units.Data.Bits}\n", bitoffset, bitwidth, access0);
+	fprintf(result->file, "ec.Area : {offset:%s, width:%s, unit:flecs.units.Data.Bits}\n", bitoffset, bitwidth);
 }
 
 void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char const *pre1, char const *a1)
@@ -79,10 +79,12 @@ void result_flecs_entity_close(result_t *result)
 	fprintf(result->file, "}\n");
 }
 
-void result_flecs_peripheral(result_t *result)
+void result_flecs_peripheral(result_t *result, char const *address, char const *size)
 {
 	result_indent(result);
 	fprintf(result->file, "%s\n", "ec.Peripheral : {0}");
+	result_indent(result);
+	fprintf(result->file, "ec.Area : {offset:%s, width:%s, unit:flecs.units.Data.Bytes}\n", address, size);
 }
 
 void result_flecs_signal(result_t *result)

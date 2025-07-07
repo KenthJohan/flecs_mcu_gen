@@ -19,7 +19,8 @@
 		"numbers": "c",
 		"gui.h": "c",
 		"stdlib.h": "c",
-		"variant": "c"
+		"variant": "c",
+		"mxml.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

@@ -70,11 +70,10 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 					ptr = ECS_ELEM(ptr, size, i);
 				}
 				char * json = ecs_ptr_to_json(q->world, column->type, ptr);
-				if (json == NULL) {
-					continue;
+				if (json) {
+					jmgui_text(json);
+					ecs_os_free(json);
 				}
-				jmgui_text(json);
-				ecs_os_free(json);
 			}
 
 			if (has_children) {

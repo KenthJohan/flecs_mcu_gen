@@ -14,6 +14,8 @@ typedef struct {
 	mxml_node_t *name;
 	mxml_node_t *description;
 	mxml_node_t *registers;
+	mxml_node_t *address;
+	mxml_node_t *size;
 } svd_peripheral_t;
 
 typedef struct {
@@ -103,7 +105,7 @@ void iterate_peripherals(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		}
 		svd_peripheral_t peripheral;
 		peripheral.name = mxmlFindElement(child, top, "name", NULL, NULL, MXML_DESCEND_FIRST);
-		peripheral.description = mxmlFindElement(child, top, "description", NULL, NULL, MXML_DESCEND_FIRST);
+		peripheral.address = mxmlFindElement(child, top, "baseAddress", NULL, NULL, MXML_DESCEND_FIRST);
 
 		mxmlElementSetAttr(child, "name", mxmlGetOpaque(peripheral.name));
 		char const *a = mxmlElementGetAttr(child, "derivedFrom");
@@ -111,16 +113,21 @@ void iterate_peripherals(mxml_node_t *node, mxml_node_t *top, result_t *result)
 			mxml_node_t *g = mxmlFindElement(top, top, "peripheral", "name", a, MXML_DESCEND_ALL);
 			if (g) {
 				printf("Derived from %s\n", mxmlGetOpaque(mxmlFindElement(g, top, "name", NULL, NULL, MXML_DESCEND_FIRST)));
-				peripheral.registers = mxmlFindElement(g, top, "registers", NULL, NULL, MXML_DESCEND_FIRST);
 				peripheral.description = mxmlFindElement(g, top, "description", NULL, NULL, MXML_DESCEND_FIRST);
+				peripheral.registers = mxmlFindElement(g, top, "registers", NULL, NULL, MXML_DESCEND_FIRST);
+				mxml_node_t * ablock = mxmlFindElement(g, top, "addressBlock", NULL, NULL, MXML_DESCEND_FIRST);
+				peripheral.size = mxmlFindElement(ablock, top, "size", NULL, NULL, MXML_DESCEND_FIRST);
 			}
 		} else {
+			peripheral.description = mxmlFindElement(child, top, "description", NULL, NULL, MXML_DESCEND_FIRST);
 			peripheral.registers = mxmlFindElement(child, top, "registers", NULL, NULL, MXML_DESCEND_FIRST);
+			mxml_node_t * ablock = mxmlFindElement(child, top, "addressBlock", NULL, NULL, MXML_DESCEND_FIRST);
+			peripheral.size = mxmlFindElement(ablock, top, "size", NULL, NULL, MXML_DESCEND_FIRST);
 		}
 
 		if (peripheral.name) {
 			result_flecs_entity_open(result, mxmlGetOpaque(peripheral.name), NULL);
-			result_flecs_peripheral(result);
+			result_flecs_peripheral(result, mxmlGetOpaque(peripheral.address), mxmlGetOpaque(peripheral.size));
 			if (peripheral.description) {
 				result_flecs_description(result, mxmlGetOpaque(peripheral.description));
 			}
