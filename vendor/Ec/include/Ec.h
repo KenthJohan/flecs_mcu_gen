@@ -48,6 +48,19 @@ typedef struct {
 	EcGroup g2;
 } EcTest;
 
+typedef struct {
+	uint64_t value;
+	ecs_entity_t unit;
+} EcInteger;
+
+typedef struct {
+	EcInteger offset;
+} EcOffset;
+
+typedef struct {
+	EcInteger size;
+} EcSize;
+
 typedef enum {
 	EcAF0,
 	EcAF1,
@@ -76,5 +89,8 @@ extern ECS_COMPONENT_DECLARE(EcQuery);
 extern ECS_COMPONENT_DECLARE(EcAf);
 extern ECS_COMPONENT_DECLARE(EcArea);
 extern ECS_COMPONENT_DECLARE(EcGroup);
+extern ECS_COMPONENT_DECLARE(EcInteger);
+extern ECS_COMPONENT_DECLARE(EcOffset);
+extern ECS_COMPONENT_DECLARE(EcSize);
 
 void EcImport(ecs_world_t *world);

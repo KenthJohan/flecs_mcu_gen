@@ -19,7 +19,7 @@ void result_flecs_description(result_t *result, const char *description)
 	fprintf(result->file, "(flecs.doc.Description, flecs.doc.Brief) : {\"%s\"}\n", buf);
 }
 
-void result_flecs_register(result_t *result, const char *address, const char *access, const char *size)
+void result_flecs_register(result_t *result, const char *offset, const char *access, const char *bitsize)
 {
 	char const * access0 = "0";
 	if (access) {
@@ -34,7 +34,9 @@ void result_flecs_register(result_t *result, const char *address, const char *ac
 	result_indent(result);
 	fprintf(result->file, "ec.Access : {%s}\n", access0);
 	result_indent(result);
-	fprintf(result->file, "ec.Area : {offset:%s, width:%s, unit:flecs.units.Data.Bytes}\n", address, size);
+	fprintf(result->file, "ec.Size : {size : {%s, unit:flecs.units.Data.Bytes}}\n", bitsize);
+	result_indent(result);
+	fprintf(result->file, "ec.Offset : {offset : {%s, unit:flecs.units.Data.Bits}}\n", offset);
 }
 
 void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth, const char *access)
@@ -52,7 +54,9 @@ void result_flecs_field(result_t *result, char const *bitoffset, char const *bit
 	result_indent(result);
 	fprintf(result->file, "ec.Access : {%s}\n", access0);
 	result_indent(result);
-	fprintf(result->file, "ec.Area : {offset:%s, width:%s, unit:flecs.units.Data.Bits}\n", bitoffset, bitwidth);
+	fprintf(result->file, "ec.Size : {size : {%s, unit:flecs.units.Data.Bits}}\n", bitwidth);
+	result_indent(result);
+	fprintf(result->file, "ec.Offset : {offset : {%s, unit:flecs.units.Data.Bits}}\n", bitoffset);
 }
 
 void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char const *pre1, char const *a1)
@@ -84,7 +88,9 @@ void result_flecs_peripheral(result_t *result, char const *address, char const *
 	result_indent(result);
 	fprintf(result->file, "%s\n", "ec.Peripheral : {0}");
 	result_indent(result);
-	fprintf(result->file, "ec.Area : {offset:%s, width:%s, unit:flecs.units.Data.Bytes}\n", address, size);
+	fprintf(result->file, "ec.Size : {size : {%s, unit:flecs.units.Data.Bytes}}\n", size);
+	result_indent(result);
+	fprintf(result->file, "ec.Offset : {offset : {%s, unit:flecs.units.Data.Bytes}}\n", address);
 }
 
 void result_flecs_signal(result_t *result)

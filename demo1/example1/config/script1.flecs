@@ -40,21 +40,21 @@ window2.tabs.Peripherals {
 		}
 		gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
 		(flecs.doc.Description, gui.Query) : {
-			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Area"
+			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Offset, ?ec.Size"
 		}
 		cols {
 			flecs.core.OrderedChildren
 			name1 {
-				gui.QueryColumn : {field: 0, type : flecs.meta.string, offset:sum(0,0)}
+				gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
+			}
+			Offset {
+				gui.QueryColumn : {field: 2, type : ec.Integer, offset:sum(0,0)}
+			}
+			Size {
+				gui.QueryColumn : {field: 3, type : ec.Integer, offset:sum(0,0)}
 			}
 			Access {
 				gui.QueryColumn : {field: 1, type : ec.Access, offset:sum(0,0)}
-			}
-			Area {
-				gui.QueryColumn : {field: 2, type : ec.Area, offset:sum(0,0)}
-			}
-			Name2 {
-				gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
 			}
 		} 
 	}

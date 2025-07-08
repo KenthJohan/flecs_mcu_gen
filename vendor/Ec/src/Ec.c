@@ -11,6 +11,9 @@ ECS_COMPONENT_DECLARE(EcArea);
 ECS_COMPONENT_DECLARE(EcGroup);
 ECS_COMPONENT_DECLARE(EcTest);
 ECS_COMPONENT_DECLARE(EcRegister);
+ECS_COMPONENT_DECLARE(EcInteger);
+ECS_COMPONENT_DECLARE(EcOffset);
+ECS_COMPONENT_DECLARE(EcSize);
 
 void EcImport(ecs_world_t *world)
 {
@@ -28,9 +31,30 @@ void EcImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, EcArea);
 	ECS_COMPONENT_DEFINE(world, EcGroup);
 	ECS_COMPONENT_DEFINE(world, EcTest);
+	ECS_COMPONENT_DEFINE(world, EcInteger);
+	ECS_COMPONENT_DEFINE(world, EcOffset);
+	ECS_COMPONENT_DEFINE(world, EcSize);
 
 	ecs_add_pair(world, ecs_id(EcSignal), EcsOnInstantiate, EcsInherit);
 
+	ecs_struct(world,
+	{.entity = ecs_id(EcInteger),
+	.members = {
+	{.name = "value", .type = ecs_id(ecs_u64_t)},
+	{.name = "unit", .type = ecs_id(ecs_entity_t)}
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(EcOffset),
+	.members = {
+	{.name = "offset", .type = ecs_id(EcInteger)}
+	}});
+
+	ecs_struct(world,
+	{.entity = ecs_id(EcSize),
+	.members = {
+	{.name = "size", .type = ecs_id(EcInteger)}
+	}});
 
 	ecs_bitmask(world,
 	{.entity = ecs_id(EcPinAttribute),

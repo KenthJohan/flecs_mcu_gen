@@ -20,14 +20,39 @@ void ecs0_id_info(ecs_world_t *ecs, ecs_id_t id)
 	}
 }
 
+void jmgui_draw_type(ecs_world_t * world, ecs_entity_t type, void const * ptr)
+{
+	if (type == ecs_id(EcInteger)) {
+		EcInteger const * q = (EcInteger*)ptr;
+		EcsUnit const * u = ecs_get(world, q->unit, EcsUnit);
+		char buf[64];
+		if (q->unit == EcsBytes) {
+			snprintf(buf, sizeof(buf), "0x%jx", q->value);
+		} else {
+			snprintf(buf, sizeof(buf), "%ju", q->value);
+		}
+		jmgui_text(buf);
+		jmgui_sameline();
+		jmgui_text_colored(0.3, 0.3, 0.7, "%s", u->symbol);
+	} else if (type == ecs_id(EcsIdentifier)) {
+		EcsIdentifier const * q = (EcsIdentifier*)ptr;
+		jmgui_text_colored(1.0, 1.0, 0.7, "%s", q->value);
+	} else {
+		char * json = ecs_ptr_to_json(world, type, ptr);
+		if (json) {
+			jmgui_text(json);
+			ecs_os_free(json);
+		}
+	}
+}
 
 
 
-void jmgui_qtable_recursive_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns, int row)
+void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns, int row)
 {
 	// https://github.com/SanderMertens/flecs/blob/master/src/addons/json/serialize_iter_result_query.c#L198
 	int32_t count = ecs_vec_count(columns);
-	for (int32_t c = 1; c < count; c ++) {
+	for (int32_t c = 0; c < count; c ++) {
 		GuiQueryColumn const *column = ecs_vec_get_t(columns, GuiQueryColumn, c);
 		jmgui_table_next_column();
 		if (ecs_field_is_set(it, column->field) == false) {
@@ -41,11 +66,7 @@ void jmgui_qtable_recursive_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t 
 		if (it->sources[column->field] == 0) {
 			ptr = ECS_ELEM(ptr, size, row);
 		}
-		char * json = ecs_ptr_to_json(world, column->type, ptr);
-		if (json) {
-			jmgui_text(json);
-			ecs_os_free(json);
-		}
+		jmgui_draw_type(world, column->type, ptr);
 	}
 }
 
@@ -64,23 +85,33 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			if (!name) {
 				continue;
 			}
-			bool has_children = false;
+			bool has_open = false;
 			// First row is reserved for the tree node
 			jmgui_table_next_row(0);
 			jmgui_table_next_column();
+			jmgui_push_id_u64(e);
 			if (ecs0_has_children(q->world, e)) {
 				// The entity has children, draw a tree node
-				if(jmgui_tree_node(name, 0, 1, 1, 1)) {
-					has_children = true;
-				}
+				has_open = jmgui_tree_node("", 0, 1, 1, 1);
 			} else {
 				// The entity has no children, draw a regular text
-				jmgui_tree_node(name, 8 | 256 | 512, 1, 1, 1);
+				jmgui_tree_node("", 8 | 256 | 512, 1, 1, 1);
 			}
+			jmgui_pop_id();
+			
+			/*
+			jmgui_sameline();
+			GuiQueryColumn const *column = ecs_vec_get_t(&gtable->columns, GuiQueryColumn, 0);
+			ecs_size_t size = it.sizes[column->field];
+			void * ptr = ecs_field_w_size(&it, size, column->field);
+			if (ptr) {
+				jmgui_draw_type(q->world, column->type, ptr);
+			}
+			*/
 
-			jmgui_qtable_recursive_cols(q->world, &it, &gtable->columns, i);
+			jmgui_qtable_cols(q->world, &it, &gtable->columns, i);
 
-			if (has_children) {
+			if (has_open) {
 				// The entity has children and the node is open, draw the row
 				jmgui_qtable_recursive(table, q, e, gtable);
 				jmgui_tree_pop();
@@ -117,9 +148,10 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 	ecs_vec_set_min_count_zeromem(NULL, &guitable->columns, sizeof(GuiQueryColumn), entities.count);
 	//ecs_vec_get_t(&guitable->columns, GuiColumn, 0)->members[0] = 1;
 
-	jmgui_table_begin(name, entities.count, 0);
+	jmgui_table_begin(name, entities.count+1, 0);
 
 
+	jmgui_table_setup_column("?", (1 << 4), 40);
 	for (int i = 0; i < entities.count; i++) {
 		ecs_entity_t e = entities.ids[i];
 		GuiQueryColumn const * c = ecs_get(world, e, GuiQueryColumn);
@@ -130,7 +162,7 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 		} else {
 			jmgui_table_setup_column("?", 128, 0);
 		}
-		}
+	}
 
 
 	jmgui_table_header_row();
