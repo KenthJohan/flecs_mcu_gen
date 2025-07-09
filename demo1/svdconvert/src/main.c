@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
 {
 	ecs_world_t *world = ecs_init();
 
-	result_t result = {0, NULL};
+	result_t result = {0};
+	result.doc_mode = 1;
 	result.file = fopen("../example1/config/STM32G030.flecs", "w");
 	if (result.file == NULL) {
 		printf("Error opening file!\n");

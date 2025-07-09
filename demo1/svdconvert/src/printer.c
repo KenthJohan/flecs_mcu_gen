@@ -11,13 +11,7 @@ void result_indent(result_t *result)
 
 
 
-void result_flecs_description(result_t *result, const char *description)
-{
-	char buf[256] = {0};
-	str_copy_escape(buf, sizeof(buf), description);
-	result_indent(result);
-	fprintf(result->file, "(flecs.doc.Description, flecs.doc.Brief) : {\"%s\"}\n", buf);
-}
+
 
 void result_flecs_register(result_t *result, const char *offset, const char *access, const char *bitsize)
 {
@@ -65,8 +59,14 @@ void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char 
 	fprintf(result->file, "(%s.%s, %s.%s)\n", pre0, a0, pre1, a1);
 }
 
-void result_flecs_entity_open(result_t *result, const char *name, char const * extend)
+void result_flecs_entity_open(result_t *result, const char *name, char const * extend, char const * brief)
 {
+	if (brief && (result->doc_mode == 1)) {
+		char buf[256] = {0};
+		str_copy_escape(buf, sizeof(buf), brief);
+		result_indent(result);
+		fprintf(result->file, "@brief %s\n", buf);
+	}
 	result_indent(result);
 	if (extend) {
 		fprintf(result->file, "%s : %s {\n", name, extend);
@@ -74,6 +74,12 @@ void result_flecs_entity_open(result_t *result, const char *name, char const * e
 		fprintf(result->file, "%s {\n", name);
 	}
 	result->ident++;
+	if (brief && (result->doc_mode == 0)) {
+		char buf[256] = {0};
+		str_copy_escape(buf, sizeof(buf), brief);
+		result_indent(result);
+		fprintf(result->file, "(flecs.doc.Description, flecs.doc.Brief) : {\"%s\"}\n", buf);
+	}
 }
 
 void result_flecs_entity_close(result_t *result)

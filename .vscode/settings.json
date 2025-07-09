@@ -21,7 +21,10 @@
 		"stdlib.h": "c",
 		"variant": "c",
 		"mxml.h": "c",
-		"source_location": "c"
+		"source_location": "c",
+		"string.h": "c",
+		"printer.h": "c",
+		"functional": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

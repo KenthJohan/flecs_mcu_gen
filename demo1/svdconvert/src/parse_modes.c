@@ -57,7 +57,7 @@ void node_print_signals(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top,
 		}
 		node_get_uniqie_signals(world, base, mxmlGetFirstChild(node1), top, result);
 	}
-	result_flecs_entity_open(result, "signals", NULL);
+	result_flecs_entity_open(result, "signals", NULL, NULL);
 	ecs_query_t *q = ecs_query_init(world,
 	&(ecs_query_desc_t){
 	.terms = {
@@ -66,7 +66,7 @@ void node_print_signals(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top,
 	ecs_iter_t it = ecs_query_iter(world, q);
 	while (ecs_query_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
-			result_flecs_entity_open(result, ecs_get_name(world, it.entities[i]), NULL);
+			result_flecs_entity_open(result, ecs_get_name(world, it.entities[i]), NULL, NULL);
 			result_flecs_signal(result);
 			result_flecs_entity_close(result);
 			// printf("Found %s\n", ecs_get_name(world, it.entities[i]));
@@ -99,7 +99,7 @@ void node_print_pins_af(mxml_node_t *node, mxml_node_t *top, result_t *result)
 		ecs_strbuf_t extend = ECS_STRBUF_INIT;
 		ecs_strbuf_appendstr(&extend, "signals.");
 		ecs_strbuf_appendstr(&extend, signame);
-		result_flecs_entity_open(result, ecs_strbuf_get(&name), ecs_strbuf_get(&extend));
+		result_flecs_entity_open(result, ecs_strbuf_get(&name), ecs_strbuf_get(&extend), NULL);
 		result_flecs_entity_close(result);
 		ecs_os_free(ecs_strbuf_get(&name));
 		ecs_os_free(ecs_strbuf_get(&extend));
@@ -110,7 +110,7 @@ void node_print_pins_af(mxml_node_t *node, mxml_node_t *top, result_t *result)
 
 void node_print_pins(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, result_t *result)
 {
-	result_flecs_entity_open(result, "pins", NULL);
+	result_flecs_entity_open(result, "pins", NULL, NULL);
 	mxml_node_t *node1 = node;
 	while (1) {
 		node1 = mxmlFindElement(node1, top, "GPIO_Pin", NULL, NULL, MXML_DESCEND_NONE);
@@ -119,7 +119,7 @@ void node_print_pins(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, re
 		}
 		char buf[256] = {0};
 		str_copy_af(buf, mxmlElementGetAttr(node1, "Name"));
-		result_flecs_entity_open(result, buf, NULL);
+		result_flecs_entity_open(result, buf, NULL, NULL);
 		result_indent(result);
 		fprintf(result->file, "%s\n", "ec.Pin : {}");
 		node_print_pins_af(mxmlGetFirstChild(node1), top, result);
