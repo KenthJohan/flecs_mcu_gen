@@ -1,0 +1,3 @@
+[submodule "vendor/bake_imgui"]
+	path = vendor/bake_imgui
+	url = https://github.com/KenthJohan/bake_imgui
