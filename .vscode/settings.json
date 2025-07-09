@@ -24,7 +24,9 @@
 		"source_location": "c",
 		"string.h": "c",
 		"printer.h": "c",
-		"functional": "c"
+		"functional": "c",
+		"stdio.h": "c",
+		"str.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

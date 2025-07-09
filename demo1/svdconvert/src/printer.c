@@ -59,8 +59,12 @@ void result_flecs_pair(result_t *result, char const *pre0, char const *a0, char 
 	fprintf(result->file, "(%s.%s, %s.%s)\n", pre0, a0, pre1, a1);
 }
 
-void result_flecs_entity_open(result_t *result, const char *name, char const * extend, char const * brief)
+void result_flecs_entity_open(result_t *result, const char *name, char const * extend, char const * brief, char const * color)
 {
+	if (color) {
+		result_indent(result);
+		fprintf(result->file, "@color %s\n", color);
+	}
 	if (brief && (result->doc_mode == 1)) {
 		char buf[256] = {0};
 		str_copy_escape(buf, sizeof(buf), brief);

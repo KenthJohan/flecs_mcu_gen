@@ -15,6 +15,9 @@ int main(int argc, char *argv[])
 	ecs_world_t *world = ecs_init();
 
 	result_t result = {0};
+	result.color_fields = "#6b93d6";
+	result.color_peripherals = "#9b2316";
+	result.color_registers = "#2b6316";
 	result.doc_mode = 1;
 	result.file = fopen("../example1/config/STM32G030.flecs", "w");
 	if (result.file == NULL) {
