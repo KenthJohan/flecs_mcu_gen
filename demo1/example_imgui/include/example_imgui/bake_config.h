@@ -20,7 +20,7 @@
 /* Headers of public dependencies */
 #include <flecs.h>
 #include <imgui.h>
-#include <eximgui.h>
+#include <jmgui.h>
 
 #endif
 

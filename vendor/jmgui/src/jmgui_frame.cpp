@@ -178,7 +178,7 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
 	// io.Fonts->AddFontDefault();
 	ImFont * font = io->Fonts->AddFontFromFileTTF("/usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf", 18.0f);
-	io->Fonts->Build();
+	//io->Fonts->Build();
 	// io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
 	// io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
 	// io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
