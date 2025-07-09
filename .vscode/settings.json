@@ -29,7 +29,16 @@
 		"str.h": "c",
 		"parse_svd.h": "c",
 		"parse_modes.h": "c",
-		"mxml-private.h": "c"
+		"mxml-private.h": "c",
+		"jmgui.h": "c",
+		"charconv": "c",
+		"optional": "c",
+		"ratio": "c",
+		"system_error": "c",
+		"array": "c",
+		"tuple": "c",
+		"type_traits": "c",
+		"utility": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

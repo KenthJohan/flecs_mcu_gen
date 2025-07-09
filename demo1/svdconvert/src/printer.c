@@ -28,9 +28,9 @@ void result_flecs_register(result_t *result, const char *offset, const char *acc
 	result_indent(result);
 	fprintf(result->file, "ec.Access : {%s}\n", access0);
 	result_indent(result);
-	fprintf(result->file, "ec.Size : {size : {%s, unit:flecs.units.Data.Bytes}}\n", bitsize);
+	fprintf(result->file, "ec.Size : {size : {%s, unit:flecs.units.Data.Bits}}\n", bitsize);
 	result_indent(result);
-	fprintf(result->file, "ec.Offset : {offset : {%s, unit:flecs.units.Data.Bits}}\n", offset);
+	fprintf(result->file, "ec.Offset : {offset : {%s, unit:flecs.units.Data.Bytes}}\n", offset);
 }
 
 void result_flecs_field(result_t *result, char const *bitoffset, char const *bitwidth, const char *access)

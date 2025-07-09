@@ -179,7 +179,9 @@ void GuiImport(ecs_world_t *world)
 	{.name = "Text", .value = GuiTypeText},
 	{.name = "NodeTreeReflection", .value = GuiTypeNodeTreeReflection},
 	{.name = "ColumnComponent", .value = GuiTypeColumnComponent},
-	{.name = "InputText", .value = GuiTypeInputText}}});
+	{.name = "TypeEntityInfo", .value = GuiTypeEntityInfo},
+	{.name = "InputText", .value = GuiTypeInputText}
+}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiString),

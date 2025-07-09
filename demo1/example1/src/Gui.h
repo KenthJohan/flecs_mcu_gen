@@ -15,6 +15,7 @@ typedef enum {
 	GuiTypeText,
 	GuiTypeNodeTreeReflection,
 	GuiTypeColumnComponent,
+	GuiTypeEntityInfo,
 	GuiTypeInputText
 } GuiType;
 

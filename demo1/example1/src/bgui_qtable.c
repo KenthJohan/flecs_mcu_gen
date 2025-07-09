@@ -97,7 +97,13 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 				// The entity has no children, draw a regular text
 				jmgui_tree_node("", 8 | 256 | 512, 1, 1, 1);
 			}
+			jmgui_sameline();
+			bool a = jmgui_button("Hello");
+			if (a) {
+				ecs_set(q->world, e, GuiElement, {GuiTypeEntityInfo});
+			}
 			jmgui_pop_id();
+
 			
 			/*
 			jmgui_sameline();
