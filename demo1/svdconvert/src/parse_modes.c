@@ -7,7 +7,7 @@ https://jsonformatter.org/xml-viewer
 #include <stdio.h>
 #include <flecs.h>
 #include <flecs.h>
-#include <libmxml4/mxml.h>
+#include <mxml.h>
 #include "printer.h"
 #include "str.h"
 

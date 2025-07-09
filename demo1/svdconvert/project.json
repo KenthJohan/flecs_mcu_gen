@@ -5,7 +5,8 @@
 		"language": "c",
 		"public": false,
 		"use": [
-			"flecs"
+			"flecs",
+			"mxml"
 		]
 	},
 	"lang.c": {
@@ -16,7 +17,7 @@
 		"lib": [
 			"flecs",
 			"m",
-			"mxml4"
+			"mxml"
 		],
 		"cflags": [
 			"-Werror",

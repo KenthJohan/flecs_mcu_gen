@@ -26,7 +26,10 @@
 		"printer.h": "c",
 		"functional": "c",
 		"stdio.h": "c",
-		"str.h": "c"
+		"str.h": "c",
+		"parse_svd.h": "c",
+		"parse_modes.h": "c",
+		"mxml-private.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

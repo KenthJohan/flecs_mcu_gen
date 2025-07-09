@@ -1,3 +1,6 @@
 [submodule "vendor/bake_imgui"]
 	path = vendor/bake_imgui
 	url = https://github.com/KenthJohan/bake_imgui
+[submodule "vendor/bake_mxml"]
+	path = vendor/bake_mxml
+	url = https://github.com/KenthJohan/bake_mxml
