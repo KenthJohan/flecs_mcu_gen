@@ -1,8 +1,7 @@
 #include "bgui_qtable.h"
-#include "ecs0.h"
-#include "ecs0_ser.h"
+#include <ecsx.h>
 #include "jmgui.h"
-#include "Gui.h"
+#include "../Gui.h"
 #include "Ec.h"
 #include <stdio.h>
 
@@ -90,7 +89,7 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			jmgui_table_next_row(0);
 			jmgui_table_next_column();
 			jmgui_push_id_u64(e);
-			if (ecs0_has_children(q->world, e)) {
+			if (ecsx_has_children(q->world, e)) {
 				// The entity has children, draw a tree node
 				has_open = jmgui_tree_node("", 0, 1, 1, 1);
 			} else {

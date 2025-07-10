@@ -1,6 +1,6 @@
 #include "bgui.h"
 #include <jmgui.h>
-#include "Gui.h"
+#include "../Gui.h"
 
 /*
 bool ecs_has_children(ecs_world_t *world, ecs_entity_t entity)

@@ -1,4 +1,4 @@
-#include "ecs0_reparent.h"
+#include "ecsx/ecsx_reparent.h"
 #include <ctype.h>
 #include <stdio.h>
 
@@ -51,7 +51,7 @@ static int str_cmp_sub0v(char const *a, char const *bv[], char **a_endptr)
 	return -1;
 }
 
-void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_query_t *q, const ecs_id_t *add)
+void ecsx_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_query_t *q, const ecs_id_t *add)
 {
 	ecs_defer_begin(world);
 	ecs_iter_t it = ecs_query_iter(world, q);
@@ -95,7 +95,7 @@ void ecs0_reparent_by_subname(ecs_world_t *world, char const *filters[], ecs_que
 	ecs_defer_end(world);
 }
 
-void ecs0_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component, const ecs_id_t *add)
+void ecsx_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_entity_t component, const ecs_id_t *add)
 {
 	//str_cmp_sub0("TIM17", "TIM*", NULL);
 	ecs_query_t *q = ecs_query_init(world,
@@ -103,6 +103,6 @@ void ecs0_reparent_by_subname1(ecs_world_t *world, char const *names[], ecs_enti
 	.terms = {
 	{.id = component},
 	}});
-	ecs0_reparent_by_subname(world, names, q, add);
+	ecsx_reparent_by_subname(world, names, q, add);
 	ecs_query_fini(q);
 }

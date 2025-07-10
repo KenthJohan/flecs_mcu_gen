@@ -1,7 +1,7 @@
-#include "ecs0.h"
+#include "ecsx.h"
 #include <stdlib.h>
 
-int ecs0_get_entities_by_query(ecs_world_t *world, ecs_query_t *query, ecs_entity_t entities[], int count)
+int ecsx_get_entities_by_query(ecs_world_t *world, ecs_query_t *query, ecs_entity_t entities[], int count)
 {
 	ecs_iter_t it = ecs_query_iter(world, query);
 	int i = 0;
@@ -18,19 +18,19 @@ exit_return:
 	return i;
 }
 
-int ecs0_get_entities_from_parent(ecs_world_t *world, ecs_entity_t parent, ecs_id_t component, ecs_entity_t entities[], int count)
+int ecsx_get_entities_from_parent(ecs_world_t *world, ecs_entity_t parent, ecs_id_t component, ecs_entity_t entities[], int count)
 {
 	ecs_query_t *q = ecs_query(world,
 	{.terms = {
 	 {ecs_childof(parent), .inout = EcsInOutFilter},
 	 {component, .inout = EcsInOutFilter},
 	 }});
-	int k = ecs0_get_entities_by_query(world, q, entities, count);
+	int k = ecsx_get_entities_by_query(world, q, entities, count);
 	ecs_query_fini(q);
 	return k;
 }
 
-bool ecs0_has_children(ecs_world_t *world, ecs_entity_t entity)
+bool ecsx_has_children(ecs_world_t *world, ecs_entity_t entity)
 {
 	ecs_iter_t it = ecs_children(world, entity);
 	if (it.world == NULL) {
@@ -42,7 +42,7 @@ bool ecs0_has_children(ecs_world_t *world, ecs_entity_t entity)
 }
 
 
-int32_t ecs0_sum_offset(ecs_world_t *world, ecs_entity_t const members[], ecs_entity_t *last)
+int32_t ecsx_sum_offset(ecs_world_t *world, ecs_entity_t const members[], ecs_entity_t *last)
 {
 	int32_t o = 0;
 	int i = 0;
@@ -59,7 +59,7 @@ int32_t ecs0_sum_offset(ecs_world_t *world, ecs_entity_t const members[], ecs_en
 }
 
 
-int32_t ecs0_children_count(ecs_world_t *world, ecs_entity_t parent)
+int32_t ecsx_children_count(ecs_world_t *world, ecs_entity_t parent)
 {
 	ecs_iter_t it = ecs_children(world, parent);
 	if (it.world == NULL) {
@@ -74,7 +74,7 @@ int32_t ecs0_children_count(ecs_world_t *world, ecs_entity_t parent)
 }
 
 
-void ecs0_trace_system_iter(ecs_iter_t *it)
+void ecsx_trace_system_iter(ecs_iter_t *it)
 {
 	char const * qs = ecs_query_str(it->query);
 	ecs_trace("System '%s' '%s' %i", ecs_get_name(it->world, it->system), qs, it->count);

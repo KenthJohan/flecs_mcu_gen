@@ -8,6 +8,7 @@
 			"flecs",
 			"imgui",
 			"jmgui",
+			"ecsx",
 			"Ec"
 		]
 	},
@@ -22,6 +23,7 @@
 			"Ec",
 			"jmgui",
 			"imgui",
+			"ecsx",
 			"stdc++",
 			"SDL3",
 			"m"

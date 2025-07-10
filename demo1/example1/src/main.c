@@ -3,7 +3,7 @@
 #include <flecs.h>
 #include <jmgui.h>
 #include <Ec.h>
-#include "ecs0_reparent.h"
+#include <ecsx.h>
 #include "Gui.h"
 #include "GuiDraws.h"
 
@@ -78,22 +78,22 @@ int main(int argc, char *argv[])
 
 	{
 		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcPeripheral), (ecs_id_t[]){ecs_id(EcGroup), 0});
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcPeripheral), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	{
 		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", "LPUART", "LPTIM", "I2S", "RCC", "SYS", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	{
 		char const *names[] = {"USART*", "TIM*", "I2S*", "LPTIM*", "SPI*", "LPUART*", "I2C*", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	{
 		char const *names[] = {"PA", "PB", "PC", "PD", "PF", NULL};
-		ecs0_reparent_by_subname1(world, names, ecs_id(EcPin), (ecs_id_t[]){ecs_id(EcGroup), 0});
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcPin), (ecs_id_t[]){ecs_id(EcGroup), 0});
 	}
 
 	ecs_log_set_level(0);

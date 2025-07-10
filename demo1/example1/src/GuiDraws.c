@@ -1,10 +1,10 @@
 #include "GuiDraws.h"
 #include "Gui.h"
-#include "bgui.h"
+#include "bgui/bgui.h"
 #include <jmgui.h>
 #include <stdio.h>
-#include "ecs0.h"
-#include "bgui_qtable.h"
+#include <ecsx.h>
+#include "bgui/bgui_qtable.h"
 
 static void SystemGuiWindow2(ecs_world_t *world, ecs_entity_t e);
 
@@ -23,7 +23,7 @@ static void SystemGuiWindow1(ecs_world_t *world, ecs_entity_t parent)
 static void gui_input_text(ecs_world_t *world, ecs_entity_t e, GuiElement * el)
 {
 	ecs_entity_t last = 0;
-	int32_t o = ecs0_sum_offset(world, el->members, &last);
+	int32_t o = ecsx_sum_offset(world, el->members, &last);
 	EcsMember const *m = ecs_get(world, last, EcsMember);
 	return;
 }

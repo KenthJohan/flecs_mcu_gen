@@ -1,5 +1,5 @@
 #include "Gui.h"
-#include "ecs0.h"
+#include <ecsx.h>
 
 ECS_COMPONENT_DECLARE(GuiWindow);
 ECS_COMPONENT_DECLARE(GuiType);
@@ -29,7 +29,7 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 
 static void SystemCreateGuiQuery(ecs_iter_t *it)
 {
-	ecs0_trace_system_iter(it);
+	ecsx_trace_system_iter(it);
 	ecs_log_push_(0);
 	EcsDocDescription *d = ecs_field(it, EcsDocDescription, 0);
 	for (int i = 0; i < it->count; ++i) {

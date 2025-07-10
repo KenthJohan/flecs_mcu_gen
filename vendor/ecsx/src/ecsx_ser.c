@@ -1,9 +1,9 @@
-#include "ecs0_ser.h"
+#include "ecsx/ecsx_ser.h"
 
 #define flecs_uto(T, value) (T)(value)
 #define flecs_ito(T, value) (T)(value)
 
-int ecs0_flecs_expr_ser_primitive(const ecs_world_t *world, ecs_primitive_kind_t kind, const void *base, ecs_strbuf_t *str, bool is_expr)
+int ecsx_flecs_expr_ser_primitive(const ecs_world_t *world, ecs_primitive_kind_t kind, const void *base, ecs_strbuf_t *str, bool is_expr)
 {
 	switch (kind) {
 	case EcsBool:
@@ -119,7 +119,7 @@ int ecs0_flecs_expr_ser_primitive(const ecs_world_t *world, ecs_primitive_kind_t
 	return 0;
 }
 
-int ecs0_expr_ser_bitmask(const ecs_world_t *world, ecs_entity_t type, const void *ptr, ecs_strbuf_t *str)
+int ecsx_expr_ser_bitmask(const ecs_world_t *world, ecs_entity_t type, const void *ptr, ecs_strbuf_t *str)
 {
 	const EcsBitmask *bitmask_type = ecs_get(world, type, EcsBitmask);
 	ecs_check(bitmask_type != NULL, ECS_INVALID_PARAMETER, NULL);

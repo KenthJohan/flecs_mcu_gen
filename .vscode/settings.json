@@ -38,7 +38,10 @@
 		"array": "c",
 		"tuple": "c",
 		"type_traits": "c",
-		"utility": "c"
+		"utility": "c",
+		"cstdlib": "c",
+		"ecsx_reparent.h": "c",
+		"ecsx.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""
