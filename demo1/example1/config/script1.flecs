@@ -13,25 +13,29 @@ shared {
 	}
 }
 
-window2 {
-	gui.Window : {}
-	input1 {
-		gui.Element : {InputText, shared.input1}
-	}
-	input2 {
-		gui.Element : {InputText, shared.input1}
-	}
-	tabs {
-		gui.Element : {Tabs}
+root {
+	gui.Root
+	window2 {
+		gui.Element : {Window}
+		input1 {
+			gui.Element : {InputText, shared.input1}
+		}
+		input2 {
+			gui.Element : {InputText, shared.input1}
+		}
+		tabs {
+			gui.Element : {Tabs}
+		}
 	}
 }
 
 
 
 
+
 const level: ec.Pin.attribute[member].offset
 
-window2.tabs.Peripherals {
+root.window2.tabs.Peripherals {
 	gui.Element : {Tab}
 	table1 {
 		gui.Table : {

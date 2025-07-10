@@ -4,6 +4,10 @@
 
 typedef struct {
 	int32_t dummy;
+} GuiRoot;
+
+typedef struct {
+	int32_t dummy;
 } GuiWindow;
 
 typedef enum {
@@ -63,6 +67,7 @@ typedef struct {
 // the callback signature, while allowing hooks to be called on multiple
 // entities.
 
+extern ECS_COMPONENT_DECLARE(GuiRoot);
 extern ECS_COMPONENT_DECLARE(GuiString);
 extern ECS_COMPONENT_DECLARE(GuiWindow);
 extern ECS_COMPONENT_DECLARE(GuiType);

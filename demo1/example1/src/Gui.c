@@ -1,6 +1,7 @@
 #include "Gui.h"
 #include <ecsx.h>
 
+ECS_COMPONENT_DECLARE(GuiRoot);
 ECS_COMPONENT_DECLARE(GuiWindow);
 ECS_COMPONENT_DECLARE(GuiType);
 ECS_COMPONENT_DECLARE(GuiElement);
@@ -109,6 +110,7 @@ void GuiImport(ecs_world_t *world)
 {
 	ECS_MODULE(world, Gui);
 	ecs_set_name_prefix(world, "Gui");
+	ECS_COMPONENT_DEFINE(world, GuiRoot);
 	ECS_COMPONENT_DEFINE(world, GuiString);
 	ECS_COMPONENT_DEFINE(world, GuiWindow);
 	ECS_COMPONENT_DEFINE(world, GuiType);
