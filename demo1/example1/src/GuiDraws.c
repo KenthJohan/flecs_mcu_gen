@@ -14,12 +14,16 @@ static void SystemGuiTraverse1(ecs_world_t *world, ecs_entity_t parent)
 	while (ecs_children_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
+			if (ecs_has_id(world, e, EcsPrefab)) {
+				continue;
+			}
+
+			jmgui_push_id_u64(e);
 			SystemGuiTraverse2(world, e);
+			jmgui_pop_id();
 		}
 	}
 }
-
-
 
 void iterate_components(ecs_world_t *ecs, ecs_entity_t e)
 {
@@ -75,19 +79,34 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		// ecs_err("GuiElement not found for entity %s", name);
 		return;
 	}
-	char const *name = ecs_get_name(world, e);
-	if (!name) {
-		return;
+	char name[128] = {0};
+	{
+		char const * name1 = NULL;
+		if (name1 == NULL) {
+			name1 = ecs_doc_get_name(world, e);
+			snprintf(name, sizeof(name), "%s", name1);
+		}
+		if (name1 == NULL) {
+			name1 = ecs_get_name(world, e);
+			snprintf(name, sizeof(name), "%s", name1);
+		}
+		if (name1 == NULL) {
+			snprintf(name, sizeof(name), "%jx", e);
+		}
+		el->id = jmgui_get_id_by_string(name);
 	}
-	el->id = jmgui_get_id_by_string(name);
 
 	switch (el->type) {
-	case GuiTypeWindow:
-		if (jmgui_begin(name, NULL)) {
+	case GuiTypeWindow: {
+		bool open = true;
+		if (jmgui_begin(name, &open)) {
 			SystemGuiTraverse1(world, e);
 		}
 		jmgui_end();
-		break;
+		if (open == false) {
+			ecs_delete(world, e);
+		}
+	} break;
 	case GuiTypeTabs:
 		if (jmgui_tab_begin(name, 0)) {
 			SystemGuiTraverse1(world, e);
@@ -139,7 +158,7 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 
 static void SystemDraw(ecs_iter_t *it)
 {
-	//GuiRoot *r = ecs_field(it, GuiRoot, 0);
+	// GuiRoot *r = ecs_field(it, GuiRoot, 0);
 	for (int i = 0; i < it->count; ++i) {
 		// ecs_defer_begin(it->world);
 		ecs_entity_t e = it->entities[i];

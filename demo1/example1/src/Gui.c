@@ -155,6 +155,7 @@ void GuiImport(ecs_world_t *world)
 	{.name = "field", .type = ecs_id(ecs_u32_t)},
 	{.name = "type", .type = ecs_id(ecs_entity_t)},
 	{.name = "offset", .type = ecs_id(ecs_u32_t)},
+	{.name = "on_click", .type = ecs_id(ecs_entity_t)},
 	}});
 
 

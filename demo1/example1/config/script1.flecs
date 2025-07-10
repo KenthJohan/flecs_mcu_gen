@@ -30,8 +30,13 @@ root {
 }
 
 
-
-
+prefab entity_indow_window {
+	(flecs.core.ChildOf, root)
+	gui.Element : {Window}
+	input1 {
+		gui.Element : {InputText, shared.input1}
+	}
+}
 
 const level: ec.Pin.attribute[member].offset
 
@@ -49,7 +54,7 @@ root.window2.tabs.Peripherals {
 		cols {
 			flecs.core.OrderedChildren
 			name1 {
-				gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
+				gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0), on_click : entity_indow_window}
 			}
 			Offset {
 				gui.QueryColumn : {field: 2, type : ec.Integer, offset:sum(0,0)}

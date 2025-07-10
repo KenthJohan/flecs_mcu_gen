@@ -52,6 +52,7 @@ typedef struct {
 	ecs_u32_t field;
 	ecs_entity_t type;
 	ecs_u32_t offset;
+	ecs_entity_t on_click;
 } GuiQueryColumn;
 
 typedef struct {

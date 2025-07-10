@@ -88,18 +88,27 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			// First row is reserved for the tree node
 			jmgui_table_next_row(0);
 			jmgui_table_next_column();
+
 			jmgui_push_id_u64(e);
 			if (ecsx_has_children(q->world, e)) {
 				// The entity has children, draw a tree node
-				has_open = jmgui_tree_node("", 0, 1, 1, 1);
+				has_open = jmgui_tree_node("", (0), 1, 1, 1);
 			} else {
 				// The entity has no children, draw a regular text
-				jmgui_tree_node("", 8 | 256 | 512, 1, 1, 1);
+				jmgui_tree_node("", (8 | 256 | 512), 1, 1, 1);
+			
 			}
 			jmgui_sameline();
 			bool a = jmgui_button("Hello");
 			if (a) {
-				ecs_set(q->world, e, GuiElement, {GuiTypeEntityInfo});
+				char name[128] = {0};
+				snprintf(name, sizeof(name), "%s", "popup");
+				GuiQueryColumn const *column = ecs_vec_get_t(&gtable->columns, GuiQueryColumn, 0);
+				ecs_entity_t inst = ecs_entity(q->world, { .name = NULL });
+				ecs_doc_set_name(q->world, inst, name);
+				ecs_entity_t parent = ecs_get_parent(q->world, column->on_click);
+				ecs_add_pair(q->world, inst, EcsChildOf, parent);
+				ecs_add_pair(q->world, inst, EcsIsA, column->on_click);
 			}
 			jmgui_pop_id();
 
