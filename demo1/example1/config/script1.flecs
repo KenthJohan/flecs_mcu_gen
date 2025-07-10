@@ -16,10 +16,10 @@ shared {
 window2 {
 	gui.Window : {}
 	input1 {
-		gui.Element : {InputText, shared.input1, [flecs.doc.Description.value, 0]}
+		gui.Element : {InputText, shared.input1}
 	}
 	input2 {
-		gui.Element : {InputText, shared.input1, [flecs.doc.Description.value, 0]}
+		gui.Element : {InputText, shared.input1}
 	}
 	tabs {
 		gui.Element : {Tabs}

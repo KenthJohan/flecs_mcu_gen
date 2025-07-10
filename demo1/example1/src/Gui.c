@@ -200,7 +200,6 @@ void GuiImport(ecs_world_t *world)
 	.members = {
 	{.name = "type", .type = ecs_id(GuiType)},
 	{.name = "storage", .type = ecs_id(ecs_entity_t)},
-	{.name = "members", .type = ecs_id(ecs_entity_t), .count = 8},
 	{.name = "id", .type = ecs_id(ecs_u32_t), .unit = GuiDebugIdUnit},
 	}});
 

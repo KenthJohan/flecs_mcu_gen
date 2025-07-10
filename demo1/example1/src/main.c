@@ -41,6 +41,44 @@ ecs_value_t *result)
 	*(int64_t *)argv[1].ptr;
 }
 
+
+
+static void load_mcu(ecs_world_t *world)
+{
+	ecs_log_set_level(0);
+	ecs_script_run_file(world, "config/STM32G030.flecs");
+	ecs_log_set_level(-1);
+
+	ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030");
+	if (parent) {
+		char *path = ecs_get_path(world, parent);
+		ecs_log(0, "Found: %s", path);
+		ecs_os_free(path);
+	} else {
+		printf("xmcu.STM32G030 not found\n");
+	}
+
+	{
+		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", NULL};
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcPeripheral), (ecs_id_t[]){ecs_id(EcGroup), 0});
+	}
+
+	{
+		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", "LPUART", "LPTIM", "I2S", "RCC", "SYS", NULL};
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
+	}
+
+	{
+		char const *names[] = {"USART*", "TIM*", "I2S*", "LPTIM*", "SPI*", "LPUART*", "I2C*", NULL};
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
+	}
+
+	{
+		char const *names[] = {"PA", "PB", "PC", "PD", "PF", NULL};
+		ecsx_reparent_by_subname1(world, names, ecs_id(EcPin), (ecs_id_t[]){ecs_id(EcGroup), 0});
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	ecs_os_set_api_defaults();
@@ -72,47 +110,16 @@ int main(int argc, char *argv[])
 	{.name = "b", .type = ecs_id(ecs_i64_t)}},
 	.callback = sum});
 
-	ecs_log_set_level(0);
-	ecs_script_run_file(world, "config/STM32G030.flecs");
-	ecs_log_set_level(-1);
-
-	{
-		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", NULL};
-		ecsx_reparent_by_subname1(world, names, ecs_id(EcPeripheral), (ecs_id_t[]){ecs_id(EcGroup), 0});
-	}
-
-	{
-		char const *names[] = {"DMA", "GPIO", "TIM", "SPI", "I2C", "USART", "LPUART", "LPTIM", "I2S", "RCC", "SYS", NULL};
-		ecsx_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
-	}
-
-	{
-		char const *names[] = {"USART*", "TIM*", "I2S*", "LPTIM*", "SPI*", "LPUART*", "I2C*", NULL};
-		ecsx_reparent_by_subname1(world, names, ecs_id(EcSignal), (ecs_id_t[]){ecs_id(EcGroup), 0});
-	}
-
-	{
-		char const *names[] = {"PA", "PB", "PC", "PD", "PF", NULL};
-		ecsx_reparent_by_subname1(world, names, ecs_id(EcPin), (ecs_id_t[]){ecs_id(EcGroup), 0});
-	}
-
+	load_mcu(world);
+	
 	ecs_log_set_level(0);
 	ecs_script_run_file(world, "config/script1.flecs");
 	ecs_log_set_level(-1);
 
-	ecs_log_set_level(0);
-
 	jmgui_context_t jmgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
 	jmgui_context_init(&jmgui);
 
-	ecs_entity_t parent = ecs_lookup(world, "xmcu.STM32G030");
-	if (parent) {
-		char *path = ecs_get_path(world, parent);
-		ecs_log(0, "Found: %s", path);
-		ecs_os_free(path);
-	} else {
-		printf("xmcu.STM32G030 not found\n");
-	}
+
 
 	/*
 	{

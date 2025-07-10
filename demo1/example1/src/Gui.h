@@ -22,7 +22,6 @@ typedef enum {
 typedef struct {
 	GuiType type;
 	ecs_entity_t storage;
-	ecs_entity_t members[8];
 	uint32_t id; // Unique ID for the element, used for ImGui
 } GuiElement;
 
