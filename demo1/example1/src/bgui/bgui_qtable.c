@@ -101,10 +101,10 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			jmgui_sameline();
 			bool a = jmgui_button("Hello");
 			if (a) {
-				char name[128] = {0};
-				snprintf(name, sizeof(name), "%s", "popup");
 				GuiQueryColumn const *column = ecs_vec_get_t(&gtable->columns, GuiQueryColumn, 0);
 				ecs_entity_t inst = ecs_entity(q->world, { .name = NULL });
+				char name[128] = {0};
+				snprintf(name, sizeof(name), "%s %jx", "popup", inst);
 				ecs_doc_set_name(q->world, inst, name);
 				ecs_entity_t parent = ecs_get_parent(q->world, column->on_click);
 				ecs_add_pair(q->world, inst, EcsChildOf, parent);

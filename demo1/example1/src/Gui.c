@@ -26,8 +26,6 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 	ecs_log_pop_(0);
 }
 
-
-
 static void SystemCreateGuiQuery(ecs_iter_t *it)
 {
 	ecsx_trace_system_iter(it);
@@ -61,8 +59,6 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 	ecs_log_pop_(0);
 }
 
-
-
 // The constructor should initialize the component value.
 ECS_CTOR(GuiString, ptr, {
 	// ecs_trace("Ctor");
@@ -90,20 +86,18 @@ ECS_COPY(GuiString, dst, src, {
 })
 
 static ECS_CTOR(GuiTable, ptr, {
-    ecs_os_zeromem(ptr);
-    ecs_vec_init_t(NULL, &ptr->columns, GuiQueryColumn, 0);
+	ecs_os_zeromem(ptr);
+	ecs_vec_init_t(NULL, &ptr->columns, GuiQueryColumn, 0);
 })
 
-static
-ECS_DTOR(GuiTable, ptr, {
-    ecs_vec_fini_t(NULL, &ptr->columns, GuiQueryColumn);
+static ECS_DTOR(GuiTable, ptr, {
+	ecs_vec_fini_t(NULL, &ptr->columns, GuiQueryColumn);
 })
 
-static
-ECS_MOVE(GuiTable, dst, src, {
-    ecs_vec_fini_t(NULL, &dst->columns, GuiQueryColumn);
-    dst->columns = src->columns;
-    src->columns = (ecs_vec_t){0};
+static ECS_MOVE(GuiTable, dst, src, {
+	ecs_vec_fini_t(NULL, &dst->columns, GuiQueryColumn);
+	dst->columns = src->columns;
+	src->columns = (ecs_vec_t){0};
 })
 
 void GuiImport(ecs_world_t *world)
@@ -123,11 +117,7 @@ void GuiImport(ecs_world_t *world)
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
 
-    ecs_set_hooks(world, GuiTable, {
-        .ctor = ecs_ctor(GuiTable),
-        .dtor = ecs_dtor(GuiTable),
-        .move = ecs_move(GuiTable)
-    });
+	ecs_set_hooks(world, GuiTable, {.ctor = ecs_ctor(GuiTable), .dtor = ecs_dtor(GuiTable), .move = ecs_move(GuiTable)});
 
 	ecs_set_hooks(world, GuiString,
 	{
@@ -145,8 +135,6 @@ void GuiImport(ecs_world_t *world)
 	.quantity = EcsData,
 	.symbol = "did"});
 
-
-
 	// ecs_entity_t component_kind = ecs_lookup(world, "flecs.meta.TypeKind");
 	// ecs_entity_t component_primitive = ecs_lookup(world, "flecs.meta.PrimitiveKind");
 	ecs_struct(world,
@@ -158,11 +146,9 @@ void GuiImport(ecs_world_t *world)
 	{.name = "on_click", .type = ecs_id(ecs_entity_t)},
 	}});
 
-
-    ecs_entity_t e_GuiQueryColumnVector = ecs_vector_init(world, &(ecs_vector_desc_t){
-        .entity = ecs_entity(world, {.name = "GuiQueryColumnVector"}),
-        .type = ecs_id(GuiQueryColumn)
-    });
+	ecs_entity_t e_GuiQueryColumnVector = ecs_vector_init(world, &(ecs_vector_desc_t){
+	                                                             .entity = ecs_entity(world, {.name = "GuiQueryColumnVector"}),
+	                                                             .type = ecs_id(GuiQueryColumn)});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
@@ -183,8 +169,7 @@ void GuiImport(ecs_world_t *world)
 	{.name = "NodeTreeReflection", .value = GuiTypeNodeTreeReflection},
 	{.name = "ColumnComponent", .value = GuiTypeColumnComponent},
 	{.name = "TypeEntityInfo", .value = GuiTypeEntityInfo},
-	{.name = "InputText", .value = GuiTypeInputText}
-}});
+	{.name = "InputText", .value = GuiTypeInputText}}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiString),
