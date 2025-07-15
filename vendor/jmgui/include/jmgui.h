@@ -56,6 +56,7 @@ void jmgui_dummy(float x, float y);
 bool jmgui_last_hover();
 void jmgui_same_line(float offset_from_start_x, float spacing);
 void jmgui_text_colored(float r, float g, float b, const char* fmt, ...);
+bool jmgui_text_link(const char* label);
 
 #ifdef __cplusplus
 }

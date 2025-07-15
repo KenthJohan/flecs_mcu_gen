@@ -19,8 +19,9 @@ void ecs0_id_info(ecs_world_t *ecs, ecs_id_t id)
 	}
 }
 
-void jmgui_draw_type(ecs_world_t * world, ecs_entity_t type, void const * ptr)
+bool jmgui_draw_type(ecs_world_t * world, ecs_entity_t type, void const * ptr)
 {
+	bool clicked = false;
 	if (type == ecs_id(EcInteger)) {
 		EcInteger const * q = (EcInteger*)ptr;
 		EcsUnit const * u = ecs_get(world, q->unit, EcsUnit);
@@ -35,7 +36,8 @@ void jmgui_draw_type(ecs_world_t * world, ecs_entity_t type, void const * ptr)
 		jmgui_text_colored(0.3, 0.3, 0.7, "%s", u->symbol);
 	} else if (type == ecs_id(EcsIdentifier)) {
 		EcsIdentifier const * q = (EcsIdentifier*)ptr;
-		jmgui_text_colored(1.0, 1.0, 0.7, "%s", q->value);
+		//jmgui_text_colored(1.0, 1.0, 0.7, "%s", q->value);
+		clicked = jmgui_text_link(q->value);
 	} else {
 		char * json = ecs_ptr_to_json(world, type, ptr);
 		if (json) {
@@ -43,6 +45,7 @@ void jmgui_draw_type(ecs_world_t * world, ecs_entity_t type, void const * ptr)
 			ecs_os_free(json);
 		}
 	}
+	return clicked;
 }
 
 
@@ -65,7 +68,16 @@ void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns,
 		if (it->sources[column->field] == 0) {
 			ptr = ECS_ELEM(ptr, size, row);
 		}
-		jmgui_draw_type(world, column->type, ptr);
+		bool clicked = jmgui_draw_type(world, column->type, ptr);
+		if (clicked) {
+			ecs_entity_t inst = ecs_entity(world, { .name = NULL });
+			char name[128] = {0};
+			snprintf(name, sizeof(name), "%s %jx", "popup", inst);
+			ecs_doc_set_name(world, inst, name);
+			ecs_entity_t parent = ecs_get_parent(world, column->on_click);
+			ecs_add_pair(world, inst, EcsChildOf, parent);
+			ecs_add_pair(world, inst, EcsIsA, column->on_click);
+		}
 	}
 }
 
@@ -96,20 +108,9 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			} else {
 				// The entity has no children, draw a regular text
 				jmgui_tree_node("", (8 | 256 | 512), 1, 1, 1);
-			
 			}
-			jmgui_sameline();
-			bool a = jmgui_button("Hello");
-			if (a) {
-				GuiQueryColumn const *column = ecs_vec_get_t(&gtable->columns, GuiQueryColumn, 0);
-				ecs_entity_t inst = ecs_entity(q->world, { .name = NULL });
-				char name[128] = {0};
-				snprintf(name, sizeof(name), "%s %jx", "popup", inst);
-				ecs_doc_set_name(q->world, inst, name);
-				ecs_entity_t parent = ecs_get_parent(q->world, column->on_click);
-				ecs_add_pair(q->world, inst, EcsChildOf, parent);
-				ecs_add_pair(q->world, inst, EcsIsA, column->on_click);
-			}
+			//jmgui_sameline();
+			//jmgui_text("");
 			jmgui_pop_id();
 
 			

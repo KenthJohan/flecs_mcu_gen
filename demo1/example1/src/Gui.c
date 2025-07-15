@@ -11,6 +11,7 @@ ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
 ECS_COMPONENT_DECLARE(GuiQueryColumn);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
+ECS_TAG_DECLARE(GuiClicked);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 {
@@ -113,6 +114,7 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiQuery);
 	ECS_COMPONENT_DEFINE(world, GuiTable);
 	ECS_COMPONENT_DEFINE(world, GuiQueryColumn);
+	ECS_TAG_DEFINE(world, GuiClicked);
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
@@ -146,9 +148,11 @@ void GuiImport(ecs_world_t *world)
 	{.name = "on_click", .type = ecs_id(ecs_entity_t)},
 	}});
 
-	ecs_entity_t e_GuiQueryColumnVector = ecs_vector_init(world, &(ecs_vector_desc_t){
-	                                                             .entity = ecs_entity(world, {.name = "GuiQueryColumnVector"}),
-	                                                             .type = ecs_id(GuiQueryColumn)});
+	ecs_entity_t e_GuiQueryColumnVector = ecs_vector_init(world,
+	&(ecs_vector_desc_t){
+	.entity = ecs_entity(world, {.name = "GuiQueryColumnVector"}),
+	.type = ecs_id(GuiQueryColumn),
+	});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
@@ -168,8 +172,9 @@ void GuiImport(ecs_world_t *world)
 	{.name = "Text", .value = GuiTypeText},
 	{.name = "NodeTreeReflection", .value = GuiTypeNodeTreeReflection},
 	{.name = "ColumnComponent", .value = GuiTypeColumnComponent},
-	{.name = "TypeEntityInfo", .value = GuiTypeEntityInfo},
-	{.name = "InputText", .value = GuiTypeInputText}}});
+	{.name = "EntityInfo", .value = GuiTypeEntityInfo},
+	{.name = "InputText", .value = GuiTypeInputText},
+	}});
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiString),

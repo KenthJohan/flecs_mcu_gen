@@ -25,48 +25,66 @@ root {
 		}
 		tabs {
 			gui.Element : {Tabs}
+			@name Peripherals123
+			Peripherals {
+				gui.Element : {Tab}
+			}
 		}
 	}
 }
+
+template Fence {
+  prop width = flecs.meta.f32: 20
+  prop height = flecs.meta.f32: 10
+ 
+  // fence code
+}
+
 
 
 prefab entity_indow_window {
 	(flecs.core.ChildOf, root)
 	gui.Element : {Window}
-	input1 {
-		gui.Element : {InputText, shared.input1}
+	tabs {
+		gui.Element : {Tabs}
+		tab1 {
+			gui.Element : {Tab}
+			input1 {
+				gui.Element : {InputText, shared.input1}
+			}
+		}
+		tab2 {
+			gui.Element : {Tab}
+			info {
+				gui.Element : {EntityInfo}
+			}
+		}
 	}
 }
 
 const level: ec.Pin.attribute[member].offset
 
-root.window2.tabs.Peripherals {
-	gui.Element : {Tab}
-	table1 {
-		gui.Table : {
-			table_dummy: 0,
-			columns: []
-		}
-		gui.Element : {NodeTreeReflection, xmcu.STM32G030}
-		(flecs.doc.Description, gui.Query) : {
-			"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Offset, ?ec.Size"
-		}
-		cols {
-			flecs.core.OrderedChildren
-			name1 {
-				gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0), on_click : entity_indow_window}
-			}
-			Offset {
-				gui.QueryColumn : {field: 2, type : ec.Integer, offset:sum(0,0)}
-			}
-			Size {
-				gui.QueryColumn : {field: 3, type : ec.Integer, offset:sum(0,0)}
-			}
-			Access {
-				gui.QueryColumn : {field: 1, type : ec.Access, offset:sum(0,0)}
-			}
-		} 
+root.window2.tabs.Peripherals.table1 {
+	gui.Element : {NodeTreeReflection, xmcu.STM32G030}
+	gui.Table : {table_dummy: 0,columns: []}
+	(flecs.doc.Description, gui.Query) : {
+		"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Offset, ?ec.Size"
 	}
+	cols {
+		flecs.core.OrderedChildren
+		name1 {
+			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0), on_click : entity_indow_window}
+		}
+		Offset {
+			gui.QueryColumn : {field: 2, type : ec.Integer, offset:sum(0,0)}
+		}
+		Size {
+			gui.QueryColumn : {field: 3, type : ec.Integer, offset:sum(0,0)}
+		}
+		Access {
+			gui.QueryColumn : {field: 1, type : ec.Access, offset:sum(0,0)}
+		}
+	} 
 }
 
 

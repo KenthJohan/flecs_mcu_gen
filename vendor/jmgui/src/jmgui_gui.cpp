@@ -211,3 +211,10 @@ bool jmgui_last_hover()
 	p += 10;
 	*/
 }
+
+
+
+bool jmgui_text_link(const char* label)
+{
+	return ImGui::TextLink(label);
+}

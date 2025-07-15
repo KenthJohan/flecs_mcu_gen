@@ -78,5 +78,6 @@ extern ECS_COMPONENT_DECLARE(GuiQuery);
 extern ECS_COMPONENT_DECLARE(GuiTable);
 extern ECS_COMPONENT_DECLARE(GuiQueryColumn);
 extern ECS_TAG_DECLARE(GuiDebugIdUnit);
+extern ECS_TAG_DECLARE(GuiClicked);
 
 void GuiImport(ecs_world_t *world);
