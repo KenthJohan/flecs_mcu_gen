@@ -56,7 +56,6 @@ void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns,
 	int32_t count = ecs_vec_count(columns);
 	for (int32_t c = 0; c < count; c ++) {
 		GuiQueryColumn const *column = ecs_vec_get_t(columns, GuiQueryColumn, c);
-		jmgui_table_next_column();
 		if (ecs_field_is_set(it, column->field) == false) {
 			continue;
 		}
@@ -78,6 +77,7 @@ void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns,
 			ecs_add_pair(world, inst, EcsChildOf, parent);
 			ecs_add_pair(world, inst, EcsIsA, column->on_click);
 		}
+		jmgui_table_next_column();
 	}
 }
 
@@ -109,7 +109,7 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 				// The entity has no children, draw a regular text
 				jmgui_tree_node("", (8 | 256 | 512), 1, 1, 1);
 			}
-			//jmgui_sameline();
+			jmgui_sameline();
 			//jmgui_text("");
 			jmgui_pop_id();
 
@@ -163,10 +163,10 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 	ecs_vec_set_min_count_zeromem(NULL, &guitable->columns, sizeof(GuiQueryColumn), entities.count);
 	//ecs_vec_get_t(&guitable->columns, GuiColumn, 0)->members[0] = 1;
 
-	jmgui_table_begin(name, entities.count+1, 0);
+	jmgui_table_begin(name, entities.count, 0);
 
 
-	jmgui_table_setup_column("?", (1 << 4), 40);
+	//jmgui_table_setup_column("?", (1 << 4), 40)
 	for (int i = 0; i < entities.count; i++) {
 		ecs_entity_t e = entities.ids[i];
 		GuiQueryColumn const * c = ecs_get(world, e, GuiQueryColumn);
