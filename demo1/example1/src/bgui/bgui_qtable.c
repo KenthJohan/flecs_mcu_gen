@@ -50,12 +50,11 @@ bool jmgui_draw_type(ecs_world_t * world, ecs_entity_t type, void const * ptr)
 
 
 
-void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns, int row)
+void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, int row, ecs_entities_t entities)
 {
-	// https://github.com/SanderMertens/flecs/blob/master/src/addons/json/serialize_iter_result_query.c#L198
-	int32_t count = ecs_vec_count(columns);
-	for (int32_t c = 0; c < count; c ++) {
-		GuiQueryColumn const *column = ecs_vec_get_t(columns, GuiQueryColumn, c);
+	for (int i = 0; i < entities.count; i++) {
+		ecs_entity_t e = entities.ids[i];
+		GuiQueryColumn const *column = ecs_get(world, e, GuiQueryColumn);
 		if (ecs_field_is_set(it, column->field) == false) {
 			continue;
 		}
@@ -69,20 +68,14 @@ void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, ecs_vec_t * columns,
 		}
 		bool clicked = jmgui_draw_type(world, column->type, ptr);
 		if (clicked) {
-			ecs_entity_t inst = ecs_entity(world, { .name = NULL });
-			char name[128] = {0};
-			snprintf(name, sizeof(name), "%s %jx", "popup", inst);
-			ecs_doc_set_name(world, inst, name);
-			ecs_entity_t parent = ecs_get_parent(world, column->on_click);
-			ecs_add_pair(world, inst, EcsChildOf, parent);
-			ecs_add_pair(world, inst, EcsIsA, column->on_click);
+			ecs_add_pair(world, e, GuiClicked, it->entities[row]);
 		}
 		jmgui_table_next_column();
 	}
 }
 
 
-int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t estorage, GuiTable * gtable)
+int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t estorage, ecs_entities_t cols_entities)
 {
 	ecs_iter_t it = ecs_query_iter(q->world, q);
 	ecs_iter_set_group(&it, estorage);
@@ -124,11 +117,11 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			}
 			*/
 
-			jmgui_qtable_cols(q->world, &it, &gtable->columns, i);
+			jmgui_qtable_cols(q->world, &it, i, cols_entities);
 
 			if (has_open) {
 				// The entity has children and the node is open, draw the row
-				jmgui_qtable_recursive(table, q, e, gtable);
+				jmgui_qtable_recursive(table, q, e, cols_entities);
 				jmgui_tree_pop();
 			}
 
@@ -160,17 +153,12 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 		return;
 	}
 
-	ecs_vec_set_min_count_zeromem(NULL, &guitable->columns, sizeof(GuiQueryColumn), entities.count);
-	//ecs_vec_get_t(&guitable->columns, GuiColumn, 0)->members[0] = 1;
-
 	jmgui_table_begin(name, entities.count, 0);
 
 
 	//jmgui_table_setup_column("?", (1 << 4), 40)
 	for (int i = 0; i < entities.count; i++) {
 		ecs_entity_t e = entities.ids[i];
-		GuiQueryColumn const * c = ecs_get(world, e, GuiQueryColumn);
-		(*ecs_vec_get_t(&guitable->columns, GuiQueryColumn, i)) = (*c);
 		char const *colname = ecs_get_name(world, e);
 		if (colname) {
 			jmgui_table_setup_column(colname, 128, 0);
@@ -181,6 +169,6 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 
 
 	jmgui_table_header_row();
-	jmgui_qtable_recursive(etable, q->query, estorage, guitable);
+	jmgui_qtable_recursive(etable, q->query, estorage, entities);
 	jmgui_table_end();
 }

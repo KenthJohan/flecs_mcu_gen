@@ -45,7 +45,6 @@ typedef struct {
 
 typedef struct {
 	int32_t table_dummy;
-	ecs_vec_t columns; //ecs_vec_t<GuiQueryColumn> columns
 } GuiTable;
 
 typedef struct {

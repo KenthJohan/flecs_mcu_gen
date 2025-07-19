@@ -66,7 +66,7 @@ const level: ec.Pin.attribute[member].offset
 
 root.window2.tabs.Peripherals.table1 {
 	gui.Element : {NodeTreeReflection, xmcu.STM32G030}
-	gui.Table : {table_dummy: 0,columns: []}
+	gui.Table : {table_dummy: 0}
 	(flecs.doc.Description, gui.Query) : {
 		"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Offset, ?ec.Size"
 	}

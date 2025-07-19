@@ -86,20 +86,6 @@ ECS_COPY(GuiString, dst, src, {
 	dst->value = ecs_os_strdup(src->value);
 })
 
-static ECS_CTOR(GuiTable, ptr, {
-	ecs_os_zeromem(ptr);
-	ecs_vec_init_t(NULL, &ptr->columns, GuiQueryColumn, 0);
-})
-
-static ECS_DTOR(GuiTable, ptr, {
-	ecs_vec_fini_t(NULL, &ptr->columns, GuiQueryColumn);
-})
-
-static ECS_MOVE(GuiTable, dst, src, {
-	ecs_vec_fini_t(NULL, &dst->columns, GuiQueryColumn);
-	dst->columns = src->columns;
-	src->columns = (ecs_vec_t){0};
-})
 
 void GuiImport(ecs_world_t *world)
 {
@@ -118,8 +104,6 @@ void GuiImport(ecs_world_t *world)
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
 	// ecs_add_id(world, ecs_id(GuiElement), EcsInheritable);
-
-	ecs_set_hooks(world, GuiTable, {.ctor = ecs_ctor(GuiTable), .dtor = ecs_dtor(GuiTable), .move = ecs_move(GuiTable)});
 
 	ecs_set_hooks(world, GuiString,
 	{
@@ -148,17 +132,18 @@ void GuiImport(ecs_world_t *world)
 	{.name = "on_click", .type = ecs_id(ecs_entity_t)},
 	}});
 
+	/*
 	ecs_entity_t e_GuiQueryColumnVector = ecs_vector_init(world,
 	&(ecs_vector_desc_t){
 	.entity = ecs_entity(world, {.name = "GuiQueryColumnVector"}),
 	.type = ecs_id(GuiQueryColumn),
 	});
+	*/
 
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
 	.members = {
-	{.name = "table_dummy", .type = ecs_id(ecs_i32_t)},
-	{.name = "columns", .type = e_GuiQueryColumnVector},
+	{.name = "table_dummy", .type = ecs_id(ecs_i32_t)}
 	}});
 
 	ecs_enum(world,
