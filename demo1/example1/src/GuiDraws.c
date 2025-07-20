@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <ecsx.h>
 #include "bgui/bgui_qtable.h"
+#include "bgui/bgui_draw_type.h"
 
 static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e);
 
@@ -25,13 +26,13 @@ static void SystemGuiTraverse1(ecs_world_t *world, ecs_entity_t parent)
 	}
 }
 
-void iterate_components(ecs_world_t *ecs, ecs_entity_t e)
+void iterate_components(ecs_world_t *world, ecs_entity_t e_data)
 {
 	// First get the entity's type, which is a vector of (component) ids.
-	const ecs_type_t *type = ecs_get_type(ecs, e);
+	const ecs_type_t *type = ecs_get_type(world, e_data);
 
 	// 1. The easiest way to print the components is to use ecs_type_str
-	char *type_str = ecs_type_str(ecs, type);
+	char *type_str = ecs_type_str(world, type);
 	printf("ecs_type_str: %s\n\n", type_str);
 	ecs_os_free(type_str);
 
@@ -41,7 +42,7 @@ void iterate_components(ecs_world_t *ecs, ecs_entity_t e)
 
 	for (i = 0; i < count; i++) {
 		ecs_id_t id = type_ids[i];
-		char *id_str = ecs_id_str(ecs, id);
+		char *id_str = ecs_id_str(world, id);
 		printf("%d: %s\n", i, id_str);
 		ecs_os_free(id_str);
 	}
@@ -57,15 +58,23 @@ void iterate_components(ecs_world_t *ecs, ecs_entity_t e)
 		printf("%d: ", i);
 
 		if (ECS_HAS_ID_FLAG(id, PAIR)) { // See relationships
-			ecs_entity_t rel = ecs_pair_first(ecs, id);
-			ecs_entity_t tgt = ecs_pair_second(ecs, id);
+			ecs_entity_t rel = ecs_pair_first(world, id);
+			ecs_entity_t tgt = ecs_pair_second(world, id);
 			printf("rel: %s, tgt: %s",
-			ecs_get_name(ecs, rel), ecs_get_name(ecs, tgt));
+			ecs_get_name(world, rel), ecs_get_name(world, tgt));
+			jmgui_text("Pair:");
+			jmgui_text_link(ecs_get_name(world, tgt));
 		} else {
 			ecs_entity_t comp = id & ECS_COMPONENT_MASK;
-			printf("entity: %s", ecs_get_name(ecs, comp));
+			printf("entity: %s", ecs_get_name(world, comp));
+			char *id_str = ecs_id_str(world, id);
+			//jmgui_text_link(ecs_get_name(world, comp));
+			jmgui_text_link(id_str);
+			ecs_os_free(id_str);
+			jmgui_draw_type(world, comp, ecs_get_id(world, e_data, comp));
 		}
 
+		jmgui_separator();
 		printf("\n");
 	}
 
@@ -147,7 +156,7 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		break;
 	case GuiTypeEntityInfo:
 		if (1) {
-			iterate_components(world, e);
+			iterate_components(world, el->storage);
 		}
 		break;
 

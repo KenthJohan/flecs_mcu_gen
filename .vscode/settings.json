@@ -41,7 +41,9 @@
 		"utility": "c",
 		"cstdlib": "c",
 		"ecsx_reparent.h": "c",
-		"ecsx.h": "c"
+		"ecsx.h": "c",
+		"bgui_qtable.h": "c",
+		"bgui_draw_type.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

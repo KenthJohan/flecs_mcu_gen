@@ -57,7 +57,7 @@ template entity_window {
 		tab2 {
 			gui.Element : {Tab}
 			info {
-				gui.Element : {EntityInfo}
+				gui.Element : {EntityInfo, $e_data}
 			}
 		}
 	}

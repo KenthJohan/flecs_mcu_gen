@@ -218,3 +218,9 @@ bool jmgui_text_link(const char* label)
 {
 	return ImGui::TextLink(label);
 }
+
+
+void jmgui_separator()
+{
+	ImGui::Separator();
+}
