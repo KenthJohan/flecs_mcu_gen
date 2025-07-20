@@ -47,18 +47,18 @@ void jmgui_text(const char *text)
 	ImGui::Text("%s", text);
 }
 
-void jmgui_text_colored_va(float r, float g, float b, const char* fmt, va_list args)
+void jmgui_text_colored_va(float r, float g, float b, const char *fmt, va_list args)
 {
 	const ImVec4 col = ImVec4(r, g, b, 1.0f);
 	ImGui::TextColoredV(col, fmt, args);
 }
 
-void jmgui_text_colored(float r, float g, float b, const char* fmt, ...)
+void jmgui_text_colored(float r, float g, float b, const char *fmt, ...)
 {
-    va_list args;
-    va_start(args, fmt);
-    jmgui_text_colored_va(r, g, b, fmt, args);
-    va_end(args);
+	va_list args;
+	va_start(args, fmt);
+	jmgui_text_colored_va(r, g, b, fmt, args);
+	va_end(args);
 }
 
 bool jmgui_collapsing_header(const char *name)
@@ -150,7 +150,6 @@ void jmgui_tab_item_end()
 	ImGui::EndTabItem();
 }
 
-
 bool jmgui_input_text(const char *label, char *buf, size_t buf_size)
 {
 	return ImGui::InputText(label, buf, buf_size, 0, NULL, NULL);
@@ -158,21 +157,20 @@ bool jmgui_input_text(const char *label, char *buf, size_t buf_size)
 
 void jmgui_debug_locate(unsigned int id)
 {
-	//ImGui::DebugTextUnformattedWithLocateItem(line_begin, line_end);
+	// ImGui::DebugTextUnformattedWithLocateItem(line_begin, line_end);
 	ImGui::DebugLocateItemOnHover(id);
 }
 
-unsigned int jmgui_get_id_by_string(const char* str_id)
+unsigned int jmgui_get_id_by_string(const char *str_id)
 {
 	return ImGui::GetID(str_id);
 }
 
 unsigned int jmgui_get_last_id()
 {
-	ImGuiContext* g = ImGui::GetCurrentContext();
+	ImGuiContext *g = ImGui::GetCurrentContext();
 	return g->LastItemData.ID;
 }
-
 
 void jmgui_dummy(float x, float y)
 {
@@ -186,7 +184,7 @@ void jmgui_same_line(float offset_from_start_x, float spacing)
 
 bool jmgui_last_hover()
 {
-	ImGuiContext* g = ImGui::GetCurrentContext();
+	ImGuiContext *g = ImGui::GetCurrentContext();
 	ImRect r = g->LastItemData.Rect;
 	if (ImGui::IsMouseHoveringRect(r.Min, r.Max, true)) {
 		return true;
@@ -212,15 +210,18 @@ bool jmgui_last_hover()
 	*/
 }
 
-
-
-bool jmgui_text_link(const char* label)
+bool jmgui_text_link(const char *label)
 {
 	return ImGui::TextLink(label);
 }
 
-
 void jmgui_separator()
 {
 	ImGui::Separator();
+}
+
+void jmgui_color_edit3(float c[3])
+{
+	static ImGuiColorEditFlags base_flags = ImGuiColorEditFlags_None;
+	ImGui::ColorEdit3("MyColor##1", c, base_flags);
 }

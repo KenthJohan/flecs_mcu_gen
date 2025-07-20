@@ -60,10 +60,22 @@ void iterate_components(ecs_world_t *world, ecs_entity_t e_data)
 		if (ECS_HAS_ID_FLAG(id, PAIR)) { // See relationships
 			ecs_entity_t rel = ecs_pair_first(world, id);
 			ecs_entity_t tgt = ecs_pair_second(world, id);
-			printf("rel: %s, tgt: %s",
-			ecs_get_name(world, rel), ecs_get_name(world, tgt));
+			printf("rel: %s, tgt: %s", ecs_get_name(world, rel), ecs_get_name(world, tgt));
 			jmgui_text("Pair:");
-			jmgui_text_link(ecs_get_name(world, tgt));
+			if (ecs_has(world, rel, EcsComponent)) {
+				jmgui_text_link(ecs_get_name(world, rel));
+				void const * d = ecs_get_id(world, e_data, ecs_pair(rel, tgt));
+				jmgui_draw_type(world, rel, d);
+				if (tgt == EcsColor) {
+					//char buf[64] = {0};
+					//snprintf(buf, sizeof(buf), "#%02X%02X%02X", )
+					//jmgui_color_edit3();
+				}
+			} else {
+				jmgui_text_link(ecs_get_name(world, rel));
+				jmgui_sameline();
+				jmgui_text_link(ecs_get_name(world, tgt));
+			}
 		} else {
 			ecs_entity_t comp = id & ECS_COMPONENT_MASK;
 			printf("entity: %s", ecs_get_name(world, comp));

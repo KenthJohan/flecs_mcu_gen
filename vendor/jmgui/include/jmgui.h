@@ -58,6 +58,7 @@ void jmgui_same_line(float offset_from_start_x, float spacing);
 void jmgui_text_colored(float r, float g, float b, const char* fmt, ...);
 bool jmgui_text_link(const char* label);
 void jmgui_separator();
+void jmgui_color_edit3(float c[3]);
 
 #ifdef __cplusplus
 }
