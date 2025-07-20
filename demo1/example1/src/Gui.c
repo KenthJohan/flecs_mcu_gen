@@ -202,5 +202,6 @@ void GuiImport(ecs_world_t *world)
 	.query.terms = {
 	{.id = ecs_pair(ecs_id(EcsDocDescription), ecs_id(GuiQuery))},
 	{.id = ecs_id(GuiQuery), .oper = EcsNot},
+	{.id = EcsPrefab, .oper = EcsOptional},
 	}});
 }

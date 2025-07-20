@@ -34,15 +34,16 @@ root {
 }
 
 template Fence {
-  prop width = flecs.meta.f32: 20
-  prop height = flecs.meta.f32: 10
- 
-  // fence code
+	prop width = flecs.meta.entity: 0
+	prop height = flecs.meta.entity: 0
 }
 
 
 
-prefab entity_indow_window {
+template entity_window {
+	prop e_gui = flecs.meta.entity: 0
+	prop e_data = flecs.meta.entity: 0
+	(flecs.doc.Description, flecs.core.Name) : {"popup {$e_data}"}
 	(flecs.core.ChildOf, root)
 	gui.Element : {Window}
 	tabs {
@@ -73,7 +74,7 @@ root.window2.tabs.Peripherals.table1 {
 	cols {
 		flecs.core.OrderedChildren
 		name1 {
-			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0), on_click : entity_indow_window}
+			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0), on_click:entity_window}
 		}
 		Offset {
 			gui.QueryColumn : {field: 2, type : ec.Integer, offset:sum(0,0)}

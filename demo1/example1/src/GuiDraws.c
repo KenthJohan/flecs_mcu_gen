@@ -175,7 +175,7 @@ void GuiDrawsImport(ecs_world_t *world)
 	ecs_system(world,
 	{.entity = ecs_entity(world, {.name = "SystemDraw", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
 	.callback = SystemDraw,
-	//.immediate = true,
+	.immediate = true,
 	.query.terms = {
 	{.id = ecs_id(GuiRoot)},
 	}});

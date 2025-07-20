@@ -50,25 +50,33 @@ bool jmgui_draw_type(ecs_world_t * world, ecs_entity_t type, void const * ptr)
 
 
 
-void jmgui_qtable_cols(ecs_world_t * world, ecs_iter_t *it, int row, ecs_entities_t entities)
+void jmgui_qtable_draw_row(ecs_world_t * world, ecs_iter_t *it, int row, ecs_entities_t columns)
 {
-	for (int i = 0; i < entities.count; i++) {
-		ecs_entity_t e = entities.ids[i];
-		GuiQueryColumn const *column = ecs_get(world, e, GuiQueryColumn);
-		if (ecs_field_is_set(it, column->field) == false) {
+	for (int i = 0; i < columns.count; i++) {
+		ecs_entity_t e = columns.ids[i];
+		GuiQueryColumn const *c = ecs_get(world, e, GuiQueryColumn);
+		if (ecs_field_is_set(it, c->field) == false) {
 			continue;
 		}
-		ecs_size_t size = it->sizes[column->field];
-		void * ptr = ecs_field_w_size(it, size, column->field);
+		ecs_size_t size = it->sizes[c->field];
+		void * ptr = ecs_field_w_size(it, size, c->field);
 		if (ptr == NULL) {
 			continue;
 		}
-		if (it->sources[column->field] == 0) {
+		if (it->sources[c->field] == 0) {
 			ptr = ECS_ELEM(ptr, size, row);
 		}
-		bool clicked = jmgui_draw_type(world, column->type, ptr);
+		bool clicked = jmgui_draw_type(world, c->type, ptr);
 		if (clicked) {
-			ecs_add_pair(world, e, GuiClicked, it->entities[row]);
+			//ecs_doc_set_name(world, e, "Hej");
+			ecs_entity_t e2[] = {e, it->entities[row]};
+			void * data[] = {e2};
+			ecs_bulk_init(world, &(ecs_bulk_desc_t) {
+				.count = 1,
+				.ids = {c->on_click},
+				.data = data
+			});
+			//ecs_add_pair(world, e, GuiClicked, it->entities[row]);
 		}
 		jmgui_table_next_column();
 	}
@@ -80,50 +88,32 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 	ecs_iter_t it = ecs_query_iter(q->world, q);
 	ecs_iter_set_group(&it, estorage);
 	while (ecs_query_next(&it)) {
-		
-		//EcsIdentifier const *id = ecs_get(q->world, it.entities[0], EcsIdentifier);
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
 			char const *name = ecs_get_name(q->world, e);
-			//printf("name: %s\n", name);
 			if (!name) {
 				continue;
 			}
 			bool has_open = false;
-			// First row is reserved for the tree node
 			jmgui_table_next_row(0);
 			jmgui_table_next_column();
-
-			jmgui_push_id_u64(e);
+			jmgui_push_id_u64(e); // Allows using same node name of hierarchical data.
 			if (ecsx_has_children(q->world, e)) {
 				// The entity has children, draw a tree node
 				has_open = jmgui_tree_node("", (0), 1, 1, 1);
 			} else {
-				// The entity has no children, draw a regular text
+				// The entity has no children
 				jmgui_tree_node("", (8 | 256 | 512), 1, 1, 1);
 			}
 			jmgui_sameline();
-			//jmgui_text("");
-			jmgui_pop_id();
-
-			
-			/*
-			jmgui_sameline();
-			GuiQueryColumn const *column = ecs_vec_get_t(&gtable->columns, GuiQueryColumn, 0);
-			ecs_size_t size = it.sizes[column->field];
-			void * ptr = ecs_field_w_size(&it, size, column->field);
-			if (ptr) {
-				jmgui_draw_type(q->world, column->type, ptr);
-			}
-			*/
-
-			jmgui_qtable_cols(q->world, &it, i, cols_entities);
-
+			jmgui_qtable_draw_row(q->world, &it, i, cols_entities);
 			if (has_open) {
-				// The entity has children and the node is open, draw the row
+				// The entity has children and the tree node is open.
+				// Draw all entities again under this node:
 				jmgui_qtable_recursive(table, q, e, cols_entities);
 				jmgui_tree_pop();
 			}
+			jmgui_pop_id();
 
 		}
 	}
