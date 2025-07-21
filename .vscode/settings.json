@@ -43,7 +43,8 @@
 		"ecsx_reparent.h": "c",
 		"ecsx.h": "c",
 		"bgui_qtable.h": "c",
-		"bgui_draw_type.h": "c"
+		"bgui_draw_type.h": "c",
+		"bgui_entinfo.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""
