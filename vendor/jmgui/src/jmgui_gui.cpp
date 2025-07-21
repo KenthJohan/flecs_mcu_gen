@@ -83,10 +83,10 @@ void jmgui_sameline()
 
 bool jmgui_tree_node(const char *name, int flags, float r, float g, float b)
 {
-	const ImVec4 col = ImVec4(r, g, b, 1.0f);
-	ImGui::PushStyleColor(ImGuiCol_Text, col);
+	//const ImVec4 col = ImVec4(r, g, b, 1.0f);
+	//ImGui::PushStyleColor(ImGuiCol_Text, col);
 	bool result = ImGui::TreeNodeEx(name, flags);
-	ImGui::PopStyleColor(1);
+	//ImGui::PopStyleColor(1);
 	return result;
 }
 

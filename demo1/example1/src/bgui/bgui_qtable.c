@@ -52,6 +52,9 @@ void jmgui_qtable_draw_row(ecs_world_t * world, ecs_iter_t *it, int row, ecs_ent
 			});
 			//ecs_add_pair(world, e, GuiClicked, it->entities[row]);
 		}
+		if ((i+1) >= columns.count) {
+			break;
+		}
 		jmgui_table_next_column();
 	}
 }
@@ -59,6 +62,8 @@ void jmgui_qtable_draw_row(ecs_world_t * world, ecs_iter_t *it, int row, ecs_ent
 
 int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t estorage, ecs_entities_t cols_entities)
 {
+	uint32_t tree_node_flags_leaf = (8 | 256 | 512);
+	uint32_t tree_node_flags = ((1 << 19));
 	ecs_iter_t it = ecs_query_iter(q->world, q);
 	ecs_iter_set_group(&it, estorage);
 	while (ecs_query_next(&it)) {
@@ -74,10 +79,10 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 			jmgui_push_id_u64(e); // Allows using same node name of hierarchical data.
 			if (ecsx_has_children(q->world, e)) {
 				// The entity has children, draw a tree node
-				has_open = jmgui_tree_node("", (0), 1, 1, 1);
+				has_open = jmgui_tree_node("", tree_node_flags, 1, 1, 1);
 			} else {
 				// The entity has no children
-				jmgui_tree_node("", (8 | 256 | 512), 1, 1, 1);
+				jmgui_tree_node("", tree_node_flags | tree_node_flags_leaf, 1, 1, 1);
 			}
 			jmgui_sameline();
 			jmgui_qtable_draw_row(q->world, &it, i, cols_entities);
