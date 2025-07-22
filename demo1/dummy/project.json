@@ -5,7 +5,8 @@
 		"language": "c",
 		"public": false,
 		"use": [
-			"flecs"
+			"flecs",
+			"ecsx"
 		]
 	},
 	"lang.c": {
@@ -14,7 +15,8 @@
 			"_FORTIFY_SOURCE=2"
 		],
 		"lib": [
-			"flecs"
+			"flecs",
+			"ecsx"
 		],
 		"cflags": [
 			"-Werror",

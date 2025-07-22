@@ -83,10 +83,10 @@ void jmgui_sameline()
 
 bool jmgui_tree_node(const char *name, int flags, float r, float g, float b)
 {
-	//const ImVec4 col = ImVec4(r, g, b, 1.0f);
-	//ImGui::PushStyleColor(ImGuiCol_Text, col);
+	// const ImVec4 col = ImVec4(r, g, b, 1.0f);
+	// ImGui::PushStyleColor(ImGuiCol_Text, col);
 	bool result = ImGui::TreeNodeEx(name, flags);
-	//ImGui::PopStyleColor(1);
+	// ImGui::PopStyleColor(1);
 	return result;
 }
 
@@ -224,4 +224,33 @@ void jmgui_color_edit3(float c[3])
 {
 	static ImGuiColorEditFlags base_flags = ImGuiColorEditFlags_None;
 	ImGui::ColorEdit3("MyColor##1", c, base_flags);
+}
+
+void jmgui_get_current_tree_node(unsigned int *id, int *treeflags, int *itemflags)
+{
+	ImGuiContext &g = *GImGui;
+	if (g.TreeNodeStack.size() == 0) {
+		return;
+	}
+	const ImGuiTreeNodeStackData *data = &g.TreeNodeStack.back();
+	if (id) {
+		(*id) = data->ID;
+	}
+	if (treeflags) {
+		(*treeflags) = data->TreeFlags;
+	}
+	if (itemflags) {
+		(*itemflags) = data->ItemFlags;
+	}
+}
+
+unsigned int jmgui_tree_node_get_open(unsigned int storage_id)
+{
+	return ImGui::TreeNodeGetOpen(storage_id);
+}
+
+
+void jmgui_set_next_item_storage_id(unsigned int id)
+{
+	ImGui::SetNextItemStorageID((ImGuiID)id);
 }

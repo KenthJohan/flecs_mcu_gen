@@ -7,6 +7,11 @@ extern "C" {
 #endif
 
 
+
+
+
+
+
 typedef struct {
 	bool done;
 	bool show_demo_window;
@@ -59,6 +64,13 @@ void jmgui_text_colored(float r, float g, float b, const char* fmt, ...);
 bool jmgui_text_link(const char* label);
 void jmgui_separator();
 void jmgui_color_edit3(float c[3]);
+
+unsigned int jmgui_tree_node_get_open(unsigned int storage_id);
+void jmgui_get_current_tree_node(unsigned int * id, int * treeflags, int * itemflags);
+
+
+//SetNextItemStorageID
+void jmgui_set_next_item_storage_id(unsigned int id);
 
 #ifdef __cplusplus
 }
