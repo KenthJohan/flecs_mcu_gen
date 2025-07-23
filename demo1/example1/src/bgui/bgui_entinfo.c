@@ -60,7 +60,7 @@ enum ImGuiDataType_
 #define NODE_DEFAULT (ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_DefaultOpen)
 #define NODE_LEAF (ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet)
 
-bool col0(ecs_meta_type_op_t *op, int i)
+bool col_name(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	char buf[128];
@@ -74,14 +74,22 @@ bool col0(ecs_meta_type_op_t *op, int i)
 	}
 }
 
-bool col1(ecs_meta_type_op_t *op, int i)
+bool col_op(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	jmgui_text(ecsx_meta_type_op_kind_str(op->kind));
 	return false;
 }
 
-bool col2(ecs_meta_type_op_t *op, int i)
+bool col_type(ecs_world_t * world, ecs_meta_type_op_t *op, int i)
+{
+	jmgui_table_next_column();
+	char const * name = ecs_get_name(world, op->type);
+	jmgui_text(name);
+	return false;
+}
+
+bool col_n(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	char buf[128];
@@ -90,7 +98,7 @@ bool col2(ecs_meta_type_op_t *op, int i)
 	return false;
 }
 
-bool col3(ecs_meta_type_op_t *op, int i)
+bool col_size(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	char buf[128];
@@ -101,7 +109,7 @@ bool col3(ecs_meta_type_op_t *op, int i)
 
 
 
-bool col4(ecs_meta_type_op_t *op, int i, void * ptr)
+bool col_value(ecs_world_t * world, ecs_meta_type_op_t *op, int i, void * ptr)
 {
 	void * data = ECS_OFFSET(ptr, op->offset);
 	jmgui_push_id_u64(i);
@@ -135,6 +143,10 @@ bool col4(ecs_meta_type_op_t *op, int i, void * ptr)
 		jmgui_slider_float("input", data, -10.0f, 10.0f);
 		break;
 	case EcsOpF64:
+		break;
+	case EcsOpEntity:
+		jmgui_text(ecs_get_name(world, *(ecs_entity_t*)data));
+		break;
 	default:
 		break;
 	}
@@ -146,30 +158,32 @@ bool col4(ecs_meta_type_op_t *op, int i, void * ptr)
 // printf("TREE(%02i) %7s, o:%i\n", i, ecsx_meta_type_op_kind_str(op->kind), sp, o);
 bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr)
 {
-	{
-		// Draw table header columns
-		char const *name = ecs_get_name(world, type);
-		jmgui_table_begin(name, 5, 0);
-		jmgui_table_setup_column("name", 128, 0);
-		jmgui_table_setup_column("type", 128|16|32, 6);
-		jmgui_table_setup_column("n", 128|16|32, 4);
-		jmgui_table_setup_column("size", 128|16|32, 4);
-		jmgui_table_setup_column("value", 128, 0);
-		jmgui_table_header_row();
-	}
 	const EcsComponent *comp = ecs_get(world, type, EcsComponent);
 	if (!comp) {
-		char *path = ecs_get_path(world, type);
-		ecs_err("cannot serialize to JSON, '%s' is not a component", path);
-		ecs_os_free(path);
+		//char *path = ecs_get_path(world, type);
+		//ecs_err("cannot serialize to JSON, '%s' is not a component", path);
+		//ecs_os_free(path);
 		return -1;
 	}
 	const EcsTypeSerializer *ser = ecs_get(world, type, EcsTypeSerializer);
 	if (!ser) {
-		char *path = ecs_get_path(world, type);
-		ecs_err("cannot serialize to JSON, '%s' has no reflection data", path);
-		ecs_os_free(path);
+		//char *path = ecs_get_path(world, type);
+		//ecs_err("cannot serialize to JSON, '%s' has no reflection data", path);
+		//ecs_os_free(path);
 		return -1;
+	}
+
+	{
+		// Draw table header columns
+		char const *name = ecs_get_name(world, type);
+		jmgui_table_begin(name, 6, 0);
+		jmgui_table_setup_column("name", 128, 0);
+		jmgui_table_setup_column("op", 128|16|32, 6);
+		jmgui_table_setup_column("type", 128|16|32, 20);
+		jmgui_table_setup_column("n", 128|16|32, 4);
+		jmgui_table_setup_column("size", 128|16|32, 4);
+		jmgui_table_setup_column("value", 128, 0);
+		jmgui_table_header_row();
 	}
 	ecs_meta_type_op_t *ops = ecs_vec_first_t(&ser->ops, ecs_meta_type_op_t);
 	int32_t count = ecs_vec_count(&ser->ops);
@@ -179,12 +193,13 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr)
 			jmgui_tree_pop();
 			continue;
 		} 
-		// Draw cell
-		bool o = col0(op, i);
-		col1(op, i);
-		col2(op, i);
-		col3(op, i);
-		col4(op, i, ptr);
+		// Draw row
+		bool o = col_name(op, i);
+		col_op(op, i);
+		col_type(world, op, i);
+		col_n(op, i);
+		col_size(op, i);
+		col_value(world, op, i, ptr);
 		// Collapse tree view
 		if ((op->kind == EcsOpPush) && (o == false)) {
 			int s = 1;

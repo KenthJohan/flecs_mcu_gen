@@ -28,74 +28,43 @@ static void SystemGuiTraverse1(ecs_world_t *world, ecs_entity_t parent)
 	}
 }
 
+
+/*
+	char *id_str = ecs_id_str(world, id);
+	jmgui_text_link(id_str);
+	ecs_os_free(id_str);
+	char *type_str = ecs_type_str(world, type);
+	ecs_os_free(type_str);
+*/
 void iterate_components(ecs_world_t *world, ecs_entity_t e_data)
 {
-	// First get the entity's type, which is a vector of (component) ids.
 	const ecs_type_t *type = ecs_get_type(world, e_data);
-
-	// 1. The easiest way to print the components is to use ecs_type_str
-	char *type_str = ecs_type_str(world, type);
-	//printf("ecs_type_str: %s\n\n", type_str);
-	ecs_os_free(type_str);
-
-	// 2. To print individual ids, iterate the type array with ecs_id_str
-	const ecs_id_t *type_ids = type->array;
-	int32_t i, count = type->count;
-
-	for (i = 0; i < count; i++) {
-		ecs_id_t id = type_ids[i];
-		char *id_str = ecs_id_str(world, id);
-		//printf("%d: %s\n", i, id_str);
-		ecs_os_free(id_str);
-	}
-
-	//printf("\n");
-
-	// 3. we can also inspect and print the ids in our own way. This is a
-	// bit more complicated as we need to handle the edge cases of what can be
-	// encoded in an id, but provides the most flexibility.
-	for (i = 0; i < count; i++) {
-		ecs_id_t id = type_ids[i];
-
-		//printf("%d: ", i);
-
-		if (ECS_HAS_ID_FLAG(id, PAIR)) { // See relationships
-			ecs_entity_t rel = ecs_pair_first(world, id);
-			ecs_entity_t tgt = ecs_pair_second(world, id);
-			//printf("rel: %s, tgt: %s", ecs_get_name(world, rel), ecs_get_name(world, tgt));
-			//jmgui_text("Pair:");
-			if (ecs_has(world, rel, EcsComponent)) {
-				jmgui_text_link(ecs_get_name(world, rel));
-				void const * d = ecs_get_id(world, e_data, ecs_pair(rel, tgt));
-				jmgui_draw_type(world, rel, d);
-				if (tgt == EcsColor) {
-					//char buf[64] = {0};
-					//snprintf(buf, sizeof(buf), "#%02X%02X%02X", )
-					//jmgui_color_edit3();
-				}
-			} else {
-				jmgui_text_link(ecs_get_name(world, rel));
-				jmgui_sameline();
-				jmgui_text_link(ecs_get_name(world, tgt));
-			}
+	for (int i = 0; i < type->count; i++) {
+		ecs_id_t id = type->array[i];
+		void * ptr = NULL;
+		ecs_entity_t comp = 0;
+		ecs_entity_t tgt = 0;
+		if (ECS_HAS_ID_FLAG(id, PAIR)) {
+			comp = ecs_pair_first(world, id);
+			tgt = ecs_pair_second(world, id);
 		} else {
-			ecs_entity_t comp = id & ECS_COMPONENT_MASK;
-			//printf("entity: %s\n\n", ecs_get_name(world, comp));
-			char *id_str = ecs_id_str(world, id);
-			//jmgui_text_link(ecs_get_name(world, comp));
-			jmgui_text_link(id_str);
-			ecs_os_free(id_str);
-			//if (comp == ecs_id(EcOffset)) {
-			void * ptr =  ecs_get_mut_id(world, e_data, comp);
-				bgui_entinfo_draw(world, comp, ptr);
-			//}
+			comp = id & ECS_COMPONENT_MASK;
 		}
-
+		if (ecs_has(world, comp, EcsComponent)) {
+			ptr = ecs_get_mut_id(world, e_data, id);
+		}
+		if (comp && tgt) {
+			jmgui_text_link(ecs_get_name(world, comp));
+			jmgui_sameline();
+			jmgui_text_link(ecs_get_name(world, tgt));
+		} else if (comp) {
+			jmgui_text_link(ecs_get_name(world, comp));
+		}
+		if (ptr) {
+			bgui_entinfo_draw(world, comp, ptr);
+		}
 		jmgui_separator();
-		//printf("\n");
 	}
-
-	//printf("\n\n");
 }
 
 static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
