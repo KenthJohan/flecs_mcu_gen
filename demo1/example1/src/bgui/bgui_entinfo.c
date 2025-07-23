@@ -4,6 +4,7 @@
 #include "jmgui.h"
 #include <ecsx.h>
 #include <inttypes.h>
+#include "bgui_entlink.h"
 
 enum ImGuiTreeNodeFlags_ {
 	ImGuiTreeNodeFlags_None = 0,

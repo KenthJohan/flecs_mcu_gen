@@ -8,6 +8,7 @@
 #include "bgui/bgui_draw_type.h"
 #include "bgui/bgui_entinfo.h"
 #include <Ec.h>
+#include "bgui/bgui_entlink.h"
 
 static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e);
 
@@ -36,9 +37,9 @@ static void SystemGuiTraverse1(ecs_world_t *world, ecs_entity_t parent)
 	char *type_str = ecs_type_str(world, type);
 	ecs_os_free(type_str);
 */
-void iterate_components(ecs_world_t *world, ecs_entity_t e_data)
+void iterate_components(ecs_world_t *world, ecs_entity_t gent, ecs_entity_t subject)
 {
-	const ecs_type_t *type = ecs_get_type(world, e_data);
+	const ecs_type_t *type = ecs_get_type(world, subject);
 	for (int i = 0; i < type->count; i++) {
 		ecs_id_t id = type->array[i];
 		void * ptr = NULL;
@@ -51,14 +52,14 @@ void iterate_components(ecs_world_t *world, ecs_entity_t e_data)
 			comp = id & ECS_COMPONENT_MASK;
 		}
 		if (ecs_has(world, comp, EcsComponent)) {
-			ptr = ecs_get_mut_id(world, e_data, id);
+			ptr = ecs_get_mut_id(world, subject, id);
 		}
 		if (comp && tgt) {
-			jmgui_text_link(ecs_get_name(world, comp));
+			bgui_entlink_draw(world, gent, comp);
 			jmgui_sameline();
-			jmgui_text_link(ecs_get_name(world, tgt));
+			bgui_entlink_draw(world, gent, tgt);
 		} else if (comp) {
-			jmgui_text_link(ecs_get_name(world, comp));
+			bgui_entlink_draw(world, gent, comp);
 		}
 		if (ptr) {
 			bgui_entinfo_draw(world, comp, ptr);
@@ -142,7 +143,7 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		break;
 	case GuiTypeEntityInfo:
 		if (1) {
-			iterate_components(world, el->storage);
+			iterate_components(world, e, el->storage);
 		}
 		break;
 

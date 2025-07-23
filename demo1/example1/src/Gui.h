@@ -63,6 +63,11 @@ typedef struct {
 	ecs_entity_t members[4];
 } GuiField;
 
+typedef struct {
+	ecs_entity_t egui;
+	ecs_entity_t subject;
+} GuiEventClick;
+
 // Resource management hooks. The convenience macros hide details of
 // the callback signature, while allowing hooks to be called on multiple
 // entities.
@@ -76,6 +81,7 @@ extern ECS_COMPONENT_DECLARE(GuiColor3);
 extern ECS_COMPONENT_DECLARE(GuiQuery);
 extern ECS_COMPONENT_DECLARE(GuiTable);
 extern ECS_COMPONENT_DECLARE(GuiQueryColumn);
+extern ECS_COMPONENT_DECLARE(GuiEventClick);
 extern ECS_TAG_DECLARE(GuiDebugIdUnit);
 extern ECS_TAG_DECLARE(GuiClicked);
 

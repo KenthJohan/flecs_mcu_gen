@@ -1,5 +1,6 @@
 #include "Gui.h"
 #include <ecsx.h>
+#include <stdio.h>
 
 ECS_COMPONENT_DECLARE(GuiRoot);
 ECS_COMPONENT_DECLARE(GuiWindow);
@@ -10,6 +11,7 @@ ECS_COMPONENT_DECLARE(GuiQuery);
 ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
 ECS_COMPONENT_DECLARE(GuiQueryColumn);
+ECS_COMPONENT_DECLARE(GuiEventClick);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
 ECS_TAG_DECLARE(GuiClicked);
 
@@ -86,6 +88,12 @@ ECS_COPY(GuiString, dst, src, {
 	dst->value = ecs_os_strdup(src->value);
 })
 
+void OnResize(ecs_iter_t *it)
+{
+	// Event payload can be obtained from the it->param member
+	GuiEventClick *p = it->param;
+	printf("%08jX %08jX\n", p->egui, p->subject);
+}
 
 void GuiImport(ecs_world_t *world)
 {
@@ -100,6 +108,7 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiQuery);
 	ECS_COMPONENT_DEFINE(world, GuiTable);
 	ECS_COMPONENT_DEFINE(world, GuiQueryColumn);
+	ECS_COMPONENT_DEFINE(world, GuiEventClick);
 	ECS_TAG_DEFINE(world, GuiClicked);
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
@@ -120,6 +129,18 @@ void GuiImport(ecs_world_t *world)
 	.entity = ecs_entity(world, {.name = "DebugId"}),
 	.quantity = EcsData,
 	.symbol = "did"});
+
+	ecs_struct(world,
+	{.entity = ecs_id(GuiEventClick),
+	.members = {
+	{.name = "egui", .type = ecs_id(ecs_entity_t)},
+	{.name = "subject", .type = ecs_id(ecs_entity_t)},
+	}});
+
+	ecs_observer(world,
+	{.query.terms = {{.id = EcsAny}},
+	.events = {ecs_id(GuiEventClick)},
+	.callback = OnResize});
 
 	// ecs_entity_t component_kind = ecs_lookup(world, "flecs.meta.TypeKind");
 	// ecs_entity_t component_primitive = ecs_lookup(world, "flecs.meta.PrimitiveKind");
@@ -143,8 +164,7 @@ void GuiImport(ecs_world_t *world)
 	ecs_struct(world,
 	{.entity = ecs_id(GuiTable),
 	.members = {
-	{.name = "table_dummy", .type = ecs_id(ecs_i32_t)}
-	}});
+	{.name = "table_dummy", .type = ecs_id(ecs_i32_t)}}});
 
 	ecs_enum(world,
 	{.entity = ecs_id(GuiType),
