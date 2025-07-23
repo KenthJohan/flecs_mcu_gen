@@ -86,7 +86,8 @@ void iterate_components(ecs_world_t *world, ecs_entity_t e_data)
 			jmgui_text_link(id_str);
 			ecs_os_free(id_str);
 			//if (comp == ecs_id(EcOffset)) {
-				bgui_entinfo_draw(world, comp, ecs_get_id(world, e_data, comp));
+			void * ptr =  ecs_get_mut_id(world, e_data, comp);
+				bgui_entinfo_draw(world, comp, ptr);
 			//}
 		}
 

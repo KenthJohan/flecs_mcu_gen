@@ -4,7 +4,7 @@ module xmcu
 module STM32G030
 
 struct Position {
-  x = f32
+  x = i32,4
   y = f32
 }
 
@@ -14,7 +14,7 @@ struct Rectangle {
 }
 
 struct Room {
-  a = Rectangle
+  a = Rectangle,3
   b = Rectangle
 }
 

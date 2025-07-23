@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "jmgui.h"
 #include <ecsx.h>
+#include <inttypes.h>
 
 enum ImGuiTreeNodeFlags_ {
 	ImGuiTreeNodeFlags_None = 0,
@@ -39,6 +40,23 @@ enum ImGuiTreeNodeFlags_ {
 #endif
 };
 
+enum ImGuiDataType_
+{
+    ImGuiDataType_S8,       // signed char / char (with sensible compilers)
+    ImGuiDataType_U8,       // unsigned char
+    ImGuiDataType_S16,      // short
+    ImGuiDataType_U16,      // unsigned short
+    ImGuiDataType_S32,      // int
+    ImGuiDataType_U32,      // unsigned int
+    ImGuiDataType_S64,      // long long / __int64
+    ImGuiDataType_U64,      // unsigned long long / unsigned __int64
+    ImGuiDataType_Float,    // float
+    ImGuiDataType_Double,   // double
+    ImGuiDataType_Bool,     // bool (provided for user convenience, not supported by scalar widgets)
+    ImGuiDataType_String,   // char* (provided for user convenience, not supported by scalar widgets)
+    ImGuiDataType_COUNT
+};
+
 #define NODE_DEFAULT (ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_DefaultOpen)
 #define NODE_LEAF (ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet)
 
@@ -46,7 +64,8 @@ bool col0(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	char buf[128];
-	snprintf(buf, sizeof(buf), "%i:%s", i, op->name ? op->name : "?");
+	//snprintf(buf, sizeof(buf), "%i:%s", i, op->name ? op->name : "?");
+	snprintf(buf, sizeof(buf), "%s", op->name ? op->name : "root");
 	if (op->kind == EcsOpPush) {
 		return jmgui_tree_node(buf, NODE_DEFAULT, 1, 1, 1);
 	} else {
@@ -65,21 +84,79 @@ bool col1(ecs_meta_type_op_t *op, int i)
 bool col2(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
-	jmgui_text("value");
+	char buf[128];
+	snprintf(buf, sizeof(buf), "%i", op->count);
+	jmgui_text(buf);
 	return false;
 }
 
-bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void const *ptr)
+bool col3(ecs_meta_type_op_t *op, int i)
+{
+	jmgui_table_next_column();
+	char buf[128];
+	snprintf(buf, sizeof(buf), "%i", op->size);
+	jmgui_text(buf);
+	return false;
+}
+
+
+
+bool col4(ecs_meta_type_op_t *op, int i, void * ptr)
+{
+	void * data = ECS_OFFSET(ptr, op->offset);
+	jmgui_push_id_u64(i);
+	jmgui_table_next_column();
+	switch (op->kind) {
+	case EcsOpU8:
+		jmgui_input_scalar_n("input", ImGuiDataType_U8, data, op->count, NULL, NULL, "%"PRIu8, 0);
+		break;
+	case EcsOpU16:
+		jmgui_input_scalar_n("input", ImGuiDataType_U16, data, op->count, NULL, NULL, "%"PRIu16, 0);
+		break;
+	case EcsOpU32:
+		jmgui_input_scalar_n("input", ImGuiDataType_U32, data, op->count, NULL, NULL, "%"PRIu32, 0);
+		break;
+	case EcsOpU64:
+		jmgui_input_scalar_n("input", ImGuiDataType_U64, data, op->count, NULL, NULL, "%"PRIu64, 0);
+		break;
+	case EcsOpI8:
+		jmgui_input_scalar_n("input", ImGuiDataType_S8, data, op->count, NULL, NULL, "%"PRIi8, 0);
+		break;
+	case EcsOpI16:
+		jmgui_input_scalar_n("input", ImGuiDataType_S16, data, op->count, NULL, NULL, "%"PRIi16, 0);
+		break;
+	case EcsOpI32:
+		jmgui_input_scalar_n("input", ImGuiDataType_S32, data, op->count, NULL, NULL, "%"PRIi32, 0);
+		break;
+	case EcsOpI64:
+		jmgui_input_scalar_n("input", ImGuiDataType_S64, data, op->count, NULL, NULL, "%"PRIi64, 0);
+		break;
+	case EcsOpF32:
+		jmgui_slider_float("input", data, -10.0f, 10.0f);
+		break;
+	case EcsOpF64:
+	default:
+		break;
+	}
+	jmgui_pop_id();
+	return false;
+}
+
+
+// printf("TREE(%02i) %7s, o:%i\n", i, ecsx_meta_type_op_kind_str(op->kind), sp, o);
+bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr)
 {
 	{
+		// Draw table header columns
 		char const *name = ecs_get_name(world, type);
-		jmgui_table_begin(name, 3, 0);
+		jmgui_table_begin(name, 5, 0);
 		jmgui_table_setup_column("name", 128, 0);
-		jmgui_table_setup_column("type", 128, 0);
+		jmgui_table_setup_column("type", 128|16|32, 6);
+		jmgui_table_setup_column("n", 128|16|32, 4);
+		jmgui_table_setup_column("size", 128|16|32, 4);
 		jmgui_table_setup_column("value", 128, 0);
 		jmgui_table_header_row();
 	}
-
 	const EcsComponent *comp = ecs_get(world, type, EcsComponent);
 	if (!comp) {
 		char *path = ecs_get_path(world, type);
@@ -94,59 +171,21 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void const *ptr)
 		ecs_os_free(path);
 		return -1;
 	}
-
-	int sp = -1;
 	ecs_meta_type_op_t *ops = ecs_vec_first_t(&ser->ops, ecs_meta_type_op_t);
 	int32_t count = ecs_vec_count(&ser->ops);
-
 	for (int i = 0; i < count; ++i) {
 		ecs_meta_type_op_t *op = ops + i;
-
-		switch (op->kind) {
-		case EcsOpPush:
-			break;
-		case EcsOpPop:
-			break;
-		case EcsOpArray:
-		case EcsOpVector:
-		case EcsOpScope:
-		case EcsOpEnum:
-		case EcsOpBitmask:
-		case EcsOpPrimitive:
-		case EcsOpBool:
-		case EcsOpChar:
-		case EcsOpByte:
-		case EcsOpU8:
-		case EcsOpU16:
-		case EcsOpU32:
-		case EcsOpU64:
-		case EcsOpI8:
-		case EcsOpI16:
-		case EcsOpI32:
-		case EcsOpI64:
-		case EcsOpF32:
-		case EcsOpF64:
-		case EcsOpUPtr:
-		case EcsOpIPtr:
-		case EcsOpEntity:
-		case EcsOpId:
-		case EcsOpString:
-		case EcsOpOpaque:
-			break;
-		default:
-			break;
-		}
-
-
-
+		if (op->kind == EcsOpPop) {
+			jmgui_tree_pop();
+			continue;
+		} 
+		// Draw cell
 		bool o = col0(op, i);
-		printf("TREE(%02i) %7s  sp:%2i, o:%i\n", i, ecsx_meta_type_op_kind_str(op->kind), sp, o);
-		if ((op->kind == EcsOpPush) && o) {
-			sp++;
-		}
 		col1(op, i);
 		col2(op, i);
-
+		col3(op, i);
+		col4(op, i, ptr);
+		// Collapse tree view
 		if ((op->kind == EcsOpPush) && (o == false)) {
 			int s = 1;
 			do {
@@ -155,15 +194,7 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void const *ptr)
 				s += (ops[i].kind == EcsOpPush);
 			} while ((ops[i].kind != EcsOpPop) || (s > 0));
 		}
-
-		if ((op->kind == EcsOpPop) && (sp >= 0)) {
-			jmgui_tree_pop();
-			sp--;
-			//printf("TREE %10s  sp:%i\n", ecsx_meta_type_op_kind_str(op->kind), sp);
-		}
 	}
-
 	jmgui_table_end();
-	printf("\n");
 	return false;
 }
