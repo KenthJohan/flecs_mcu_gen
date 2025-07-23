@@ -22,7 +22,7 @@ struct Room {
 peripherals {
 	@color #9b2316
 	@brief Analog to Digital ConverteR
-	Rectangle
+	Room
 	ADC {
 		ec.Peripheral : {0}
 		ec.Size : {size : {0x400, unit:flecs.units.Data.Bytes}}

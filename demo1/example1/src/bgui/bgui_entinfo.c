@@ -42,16 +42,43 @@ enum ImGuiTreeNodeFlags_ {
 #define NODE_DEFAULT (ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_DefaultOpen)
 #define NODE_LEAF (ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet)
 
+bool col0(ecs_meta_type_op_t *op, int i)
+{
+	jmgui_table_next_column();
+	char buf[128];
+	snprintf(buf, sizeof(buf), "%i:%s", i, op->name ? op->name : "?");
+	if (op->kind == EcsOpPush) {
+		return jmgui_tree_node(buf, NODE_DEFAULT, 1, 1, 1);
+	} else {
+		jmgui_tree_node(buf, NODE_DEFAULT | NODE_LEAF, 1, 1, 1);
+		return false;
+	}
+}
+
+bool col1(ecs_meta_type_op_t *op, int i)
+{
+	jmgui_table_next_column();
+	jmgui_text(ecsx_meta_type_op_kind_str(op->kind));
+	return false;
+}
+
+bool col2(ecs_meta_type_op_t *op, int i)
+{
+	jmgui_table_next_column();
+	jmgui_text("value");
+	return false;
+}
+
 bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void const *ptr)
 {
-	bool stack[16] = {false};
-	int sp = -1;
-	char const *name = ecs_get_name(world, type);
-	jmgui_table_begin(name, 3, 0);
-	jmgui_table_setup_column("name", 128, 0);
-	jmgui_table_setup_column("type", 128, 0);
-	jmgui_table_setup_column("value", 128, 0);
-	jmgui_table_header_row();
+	{
+		char const *name = ecs_get_name(world, type);
+		jmgui_table_begin(name, 3, 0);
+		jmgui_table_setup_column("name", 128, 0);
+		jmgui_table_setup_column("type", 128, 0);
+		jmgui_table_setup_column("value", 128, 0);
+		jmgui_table_header_row();
+	}
 
 	const EcsComponent *comp = ecs_get(world, type, EcsComponent);
 	if (!comp) {
@@ -67,8 +94,11 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void const *ptr)
 		ecs_os_free(path);
 		return -1;
 	}
+
+	int sp = -1;
 	ecs_meta_type_op_t *ops = ecs_vec_first_t(&ser->ops, ecs_meta_type_op_t);
 	int32_t count = ecs_vec_count(&ser->ops);
+
 	for (int i = 0; i < count; ++i) {
 		ecs_meta_type_op_t *op = ops + i;
 
@@ -107,48 +137,29 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void const *ptr)
 			break;
 		}
 
-		jmgui_table_next_row(0);
-		{
-			jmgui_table_next_column();
-			char buf[128];
-			snprintf(buf, sizeof(buf), "%i:%s", i, op->name ? op->name : "?");
 
-			if (op->kind == EcsOpPush) {
-				bool has_open = jmgui_tree_node(buf, NODE_DEFAULT, 1, 1, 1);
-				sp++;
-				stack[sp] = has_open;
-				if (has_open) {
-					printf("TREE %10s: %s, open:%s\n", ecsx_meta_type_op_kind_str(op->kind), buf, has_open ? "true" : "false");
-				} else {
-					printf("TREE %10s: %s, open:%s\n", ecsx_meta_type_op_kind_str(op->kind), buf, has_open ? "true" : "false");
-					while (ops[i].kind != EcsOpPop) {
-						i++;
-					}
-				}
-			} else {
-				jmgui_tree_node(buf, NODE_DEFAULT | NODE_LEAF, 1, 1, 1);
-				printf("TREE %10s: %s\n", ecsx_meta_type_op_kind_str(op->kind), buf);
-			}
 
-			// printf("%s: op:%s, open:%s\n", buf, ecsx_meta_type_op_kind_str(op->kind), has_open ? "true" : "false");
+		bool o = col0(op, i);
+		printf("TREE(%02i) %7s  sp:%2i, o:%i\n", i, ecsx_meta_type_op_kind_str(op->kind), sp, o);
+		if ((op->kind == EcsOpPush) && o) {
+			sp++;
+		}
+		col1(op, i);
+		col2(op, i);
+
+		if ((op->kind == EcsOpPush) && (o == false)) {
+			int s = 1;
+			do {
+				i++;
+				s -= (ops[i].kind == EcsOpPop);
+				s += (ops[i].kind == EcsOpPush);
+			} while ((ops[i].kind != EcsOpPop) || (s > 0));
 		}
 
-		{
-			jmgui_table_next_column();
-			jmgui_text(ecsx_meta_type_op_kind_str(op->kind));
-		}
-
-		{
-			jmgui_table_next_column();
-			jmgui_text("value");
-		}
-
-		if (op->kind == EcsOpPop) {
-			if ((sp >= 0) && stack[sp]) {
-				jmgui_tree_pop();
-				printf("TREE %10s  sp:%i\n", ecsx_meta_type_op_kind_str(op->kind), sp);
-			}
+		if ((op->kind == EcsOpPop) && (sp >= 0)) {
+			jmgui_tree_pop();
 			sp--;
+			//printf("TREE %10s  sp:%i\n", ecsx_meta_type_op_kind_str(op->kind), sp);
 		}
 	}
 
