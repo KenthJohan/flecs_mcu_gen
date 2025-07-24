@@ -101,11 +101,13 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 
 void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t estorage)
 {
-	GuiQuery const *q = ecs_get(world, etable, GuiQuery);
-	if (q == NULL) {
+	//GuiQuery const *q = ecs_get(world, etable, GuiQuery);
+	EcsPoly const *poly = ecs_get_pair(world, etable, EcsPoly, EcsQuery);
+	if (poly == NULL) {
 		return;
 	}
-	if (q->query == NULL) {
+	ecs_query_t * query = poly->poly;
+	if (query == NULL) {
 		return;
 	}
 	char const *name = ecs_get_name(world, etable);
@@ -138,6 +140,6 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 
 
 	jmgui_table_header_row();
-	jmgui_qtable_recursive(etable, q->query, estorage, entities);
+	jmgui_qtable_recursive(etable, query, estorage, entities);
 	jmgui_table_end();
 }

@@ -29,13 +29,20 @@ root {
 			Peripherals {
 				gui.Element : {Tab}
 			}
+			Gui {
+				gui.Element : {Tab}
+			}
 		}
 	}
 }
 
-template Fence {
-	prop width = flecs.meta.entity: 0
-	prop height = flecs.meta.entity: 0
+observers {
+	entview {
+		gui.ObserverDesc : {
+			events:[gui.EventClick]
+		}
+		(flecs.doc.Description, gui.ObserverDesc) : {"gui.Element"}
+	}
 }
 
 
@@ -63,12 +70,11 @@ template entity_window {
 	}
 }
 
-const level: ec.Pin.attribute[member].offset
 
 root.window2.tabs.Peripherals.table1 {
 	gui.Element : {NodeTreeReflection, xmcu.STM32G030}
 	gui.Table : {table_dummy: 0}
-	(flecs.doc.Description, gui.Query) : {
+	(flecs.doc.Description, flecs.core.Query) : {
 		"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Offset, ?ec.Size"
 	}
 	cols {
@@ -89,6 +95,19 @@ root.window2.tabs.Peripherals.table1 {
 }
 
 
+root.window2.tabs.Gui.table2 {
+	gui.Element : {NodeTreeReflection, root}
+	gui.Table : {table_dummy: 0}
+	(flecs.doc.Description, flecs.core.Query) : {
+		"[in] (flecs.core.Identifier, flecs.core.Name), gui.Element"
+	}
+	cols {
+		flecs.core.OrderedChildren
+		name1 {
+			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0), on_click:entity_window}
+		}
+	} 
+}
 
 /*
 

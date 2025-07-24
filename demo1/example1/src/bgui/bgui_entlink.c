@@ -15,6 +15,7 @@ void bgui_entlink_draw(ecs_world_t * world, ecs_entity_t gui, ecs_entity_t subje
 		ecs_emit(world, &(ecs_event_desc_t) {
 			.event = ecs_id(GuiEventClick),
 			.entity = gui,
+			.ids = &(ecs_type_t){ (ecs_id_t[]){ ecs_id(GuiElement) }, 1 },
 			.param = &(GuiEventClick){gui, subject} // pass payload
 		});
 

@@ -7,7 +7,7 @@ ECS_COMPONENT_DECLARE(GuiWindow);
 ECS_COMPONENT_DECLARE(GuiType);
 ECS_COMPONENT_DECLARE(GuiElement);
 ECS_COMPONENT_DECLARE(GuiColor3);
-ECS_COMPONENT_DECLARE(GuiQuery);
+ECS_COMPONENT_DECLARE(GuiObserverDesc);
 ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
 ECS_COMPONENT_DECLARE(GuiQueryColumn);
@@ -31,6 +31,7 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 
 static void SystemCreateGuiQuery(ecs_iter_t *it)
 {
+	ecs_log_set_level(0);
 	ecsx_trace_system_iter(it);
 	ecs_log_push_(0);
 	EcsDocDescription *d = ecs_field(it, EcsDocDescription, 0);
@@ -56,7 +57,62 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 			continue;
 		}
 		test_query(it->world, q, e);
-		ecs_set(it->world, e, GuiQuery, {.query = q});
+		ecs_log_pop_(0);
+	}
+	ecs_log_pop_(0);
+}
+
+
+
+static void OnResize(ecs_iter_t *it)
+{
+	ecs_world_t *world = it->world;
+	// Event payload can be obtained from the it->param member
+	GuiEventClick *p = it->param;
+	printf("%08jX %08jX\n", p->egui, p->subject);
+
+	for (int i = 0; i < it->count; i++) {
+		ecs_entity_t e = it->entities[i];
+		printf(" - %s: %s: %s. ", ecs_get_name(world, it->event), ecs_get_name(world, it->event_id), ecs_get_name(world, e));
+		const ecs_type_t *type = ecs_get_type(world, e);
+		char *type_str = ecs_type_str(world, type);
+		printf("t: %s\n", type_str);
+		ecs_os_free(type_str);
+	}
+}
+
+static void SystemCreateGuiObserver(ecs_iter_t *it)
+{
+	ecs_world_t *world = it->world;
+	ecsx_trace_system_iter(it);
+	ecs_log_set_level(0);
+	ecs_log_push_(0);
+	EcsDocDescription *d = ecs_field(it, EcsDocDescription, 0);
+	GuiObserverDesc *o = ecs_field(it, GuiObserverDesc, 1);
+	for (int i = 0; i < it->count; ++i) {
+		ecs_entity_t e = it->entities[i];
+		char const *name = ecs_get_name(it->world, e);
+		ecs_entity_t const * ev = o[i].events;
+		char const * exp = d[i].value;
+		if (ecs_has_id(it->world, e, EcsObserver)) {
+			ecs_warn("Entity: '%s' already has an observer", name);
+			continue;
+		}
+		if (exp == NULL) {
+			ecs_warn("Entity: '%s' has no expression", name);
+			continue;
+		}
+		ecs_trace("Entity: '%s'", name);
+		ecs_log_push_(0);
+		ecs_trace("ecs_observer_init: '%s'", exp);
+		ecs_observer_init(it->real_world,
+		&(ecs_observer_desc_t){
+		.entity = e,
+		.query.expr = exp,
+		.events = {ev[0],ev[1],ev[2],ev[3],ev[4],ev[5],ev[6],ev[7]},
+		.callback = OnResize});
+		ecs_add_id(world, e, EcsObserver);
+		//ecs_set(it->world, e, GuiQuery, {.query = q});
 		ecs_log_pop_(0);
 	}
 	ecs_log_pop_(0);
@@ -88,13 +144,6 @@ ECS_COPY(GuiString, dst, src, {
 	dst->value = ecs_os_strdup(src->value);
 })
 
-void OnResize(ecs_iter_t *it)
-{
-	// Event payload can be obtained from the it->param member
-	GuiEventClick *p = it->param;
-	printf("%08jX %08jX\n", p->egui, p->subject);
-}
-
 void GuiImport(ecs_world_t *world)
 {
 	ECS_MODULE(world, Gui);
@@ -105,10 +154,10 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiType);
 	ECS_COMPONENT_DEFINE(world, GuiElement);
 	ECS_COMPONENT_DEFINE(world, GuiColor3);
-	ECS_COMPONENT_DEFINE(world, GuiQuery);
 	ECS_COMPONENT_DEFINE(world, GuiTable);
 	ECS_COMPONENT_DEFINE(world, GuiQueryColumn);
 	ECS_COMPONENT_DEFINE(world, GuiEventClick);
+	ECS_COMPONENT_DEFINE(world, GuiObserverDesc);
 	ECS_TAG_DEFINE(world, GuiClicked);
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
@@ -131,14 +180,21 @@ void GuiImport(ecs_world_t *world)
 	.symbol = "did"});
 
 	ecs_struct(world,
+	{.entity = ecs_id(GuiObserverDesc),
+	.members = {
+	{.name = "events", .type = ecs_id(ecs_entity_t), .count = 8}
+	}});
+
+	ecs_struct(world,
 	{.entity = ecs_id(GuiEventClick),
 	.members = {
 	{.name = "egui", .type = ecs_id(ecs_entity_t)},
 	{.name = "subject", .type = ecs_id(ecs_entity_t)},
 	}});
 
-	ecs_observer(world,
-	{.query.terms = {{.id = EcsAny}},
+	ecs_observer_init(world,
+	&(ecs_observer_desc_t){
+	.query.expr = "gui.Element",
 	.events = {ecs_id(GuiEventClick)},
 	.callback = OnResize});
 
@@ -188,12 +244,6 @@ void GuiImport(ecs_world_t *world)
 	}});
 
 	ecs_struct(world,
-	{.entity = ecs_id(GuiQuery),
-	.members = {
-	{.name = "query", .type = ecs_id(ecs_uptr_t)},
-	}});
-
-	ecs_struct(world,
 	{.entity = ecs_id(GuiElement),
 	.members = {
 	{.name = "type", .type = ecs_id(GuiType)},
@@ -216,12 +266,25 @@ void GuiImport(ecs_world_t *world)
 	}});
 
 	ecs_system(world,
-	{.entity = ecs_entity(world, {.name = "CreateGuiQuery", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
+	{.entity = ecs_entity(world, {.name = "CreateGuiQuery", .add = ecs_ids(ecs_dependson(EcsOnStart))}),
 	.callback = SystemCreateGuiQuery,
 	.immediate = true,
 	.query.terms = {
-	{.id = ecs_pair(ecs_id(EcsDocDescription), ecs_id(GuiQuery))},
-	{.id = ecs_id(GuiQuery), .oper = EcsNot},
+	{.id = ecs_pair(ecs_id(EcsDocDescription), EcsQuery)},
+	{.id = EcsQuery, .oper = EcsNot},
 	{.id = EcsPrefab, .oper = EcsOptional},
 	}});
+
+	
+	ecs_system_init(world, &(ecs_system_desc_t)
+	{.entity = ecs_entity(world, {.name = "SystemCreateGuiObserver", .add = ecs_ids(ecs_dependson(EcsOnStart))}),
+	.callback = SystemCreateGuiObserver,
+	.immediate = true,
+	.query.terms = {
+	{.id = ecs_pair(ecs_id(EcsDocDescription), ecs_id(GuiObserverDesc))},
+	{.id = ecs_id(GuiObserverDesc)},
+	{.id = EcsObserver, .oper = EcsNot},
+	{.id = EcsPrefab, .oper = EcsOptional},
+	}});
+	
 }
