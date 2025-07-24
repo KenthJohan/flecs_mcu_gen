@@ -31,35 +31,39 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 
 static void SystemCreateGuiQuery(ecs_iter_t *it)
 {
-	ecs_log_set_level(0);
+	ecs_log_set_level(-1);
+	ecs_world_t *world = it->world;
 	ecsx_trace_system_iter(it);
 	ecs_log_push_(0);
 	EcsDocDescription *d = ecs_field(it, EcsDocDescription, 0);
 	for (int i = 0; i < it->count; ++i) {
 		ecs_entity_t e = it->entities[i];
-		if (d[i].value == NULL) {
+		char * exp = d[i].value;
+		if (exp == NULL) {
 			continue;
 		}
-		char const *name = ecs_get_name(it->world, e);
-		ecs_trace("Entity: '%s'", name);
+		char const *name = ecs_get_name(world, e);
+		ecs_type_t const * type = ecs_get_type(world, e);
+		char *type_str = ecs_type_str(world, type);
+		ecs_trace("Entity: '%s', %s", name, type_str);
+		ecs_os_free(type_str);
 		ecs_log_push_(0);
 		ecs_trace("ecs_query_init: '%s'", d[i].value);
-		ecs_query_t *q = ecs_query_init(it->real_world,
+		ecs_query_t *q = ecs_query_init(world,
 		&(ecs_query_desc_t){
-		//.cache_kind = EcsQueryCacheAll,
-		//.entity = ecs_entity_init(it->real_world, &(ecs_entity_desc_t){.name = "GuiQuery"}),
 		.entity = e,
 		.expr = d[i].value,
 		.group_by = EcsChildOf});
 		if (q == NULL) {
 			ecs_err("Failed to create query");
-			ecs_enable(it->world, e, false);
+			ecs_enable(world, e, false);
 			continue;
 		}
-		test_query(it->world, q, e);
+		test_query(world, q, e);
 		ecs_log_pop_(0);
 	}
 	ecs_log_pop_(0);
+	ecs_log_set_level(0);
 }
 
 
@@ -83,21 +87,17 @@ static void OnResize(ecs_iter_t *it)
 
 static void SystemCreateGuiObserver(ecs_iter_t *it)
 {
+	ecs_log_set_level(-1);
 	ecs_world_t *world = it->world;
 	ecsx_trace_system_iter(it);
-	ecs_log_set_level(0);
 	ecs_log_push_(0);
 	EcsDocDescription *d = ecs_field(it, EcsDocDescription, 0);
 	GuiObserverDesc *o = ecs_field(it, GuiObserverDesc, 1);
 	for (int i = 0; i < it->count; ++i) {
 		ecs_entity_t e = it->entities[i];
-		char const *name = ecs_get_name(it->world, e);
+		char const *name = ecs_get_name(world, e);
 		ecs_entity_t const * ev = o[i].events;
 		char const * exp = d[i].value;
-		if (ecs_has_id(it->world, e, EcsObserver)) {
-			ecs_warn("Entity: '%s' already has an observer", name);
-			continue;
-		}
 		if (exp == NULL) {
 			ecs_warn("Entity: '%s' has no expression", name);
 			continue;
@@ -105,14 +105,12 @@ static void SystemCreateGuiObserver(ecs_iter_t *it)
 		ecs_trace("Entity: '%s'", name);
 		ecs_log_push_(0);
 		ecs_trace("ecs_observer_init: '%s'", exp);
-		ecs_observer_init(it->real_world,
+		ecs_observer_init(world,
 		&(ecs_observer_desc_t){
 		.entity = e,
 		.query.expr = exp,
 		.events = {ev[0],ev[1],ev[2],ev[3],ev[4],ev[5],ev[6],ev[7]},
 		.callback = OnResize});
-		ecs_add_id(world, e, EcsObserver);
-		//ecs_set(it->world, e, GuiQuery, {.query = q});
 		ecs_log_pop_(0);
 	}
 	ecs_log_pop_(0);
@@ -265,26 +263,28 @@ void GuiImport(ecs_world_t *world)
 	{.name = "b", .type = ecs_id(ecs_f32_t)},
 	}});
 
-	ecs_system(world,
-	{.entity = ecs_entity(world, {.name = "CreateGuiQuery", .add = ecs_ids(ecs_dependson(EcsOnStart))}),
+	ecs_system_init(world, &(ecs_system_desc_t)
+	{.entity = ecs_entity(world, {.name = "CreateGuiQuery", .add = ecs_ids(ecs_dependson(EcsPostFrame))}),
 	.callback = SystemCreateGuiQuery,
 	.immediate = true,
 	.query.terms = {
 	{.id = ecs_pair(ecs_id(EcsDocDescription), EcsQuery)},
-	{.id = EcsQuery, .oper = EcsNot},
+	{.id = ecs_pair(ecs_id(EcsPoly), EcsQuery), .oper = EcsNot},
 	{.id = EcsPrefab, .oper = EcsOptional},
 	}});
 
 	
+	
 	ecs_system_init(world, &(ecs_system_desc_t)
-	{.entity = ecs_entity(world, {.name = "SystemCreateGuiObserver", .add = ecs_ids(ecs_dependson(EcsOnStart))}),
+	{.entity = ecs_entity(world, {.name = "SystemCreateGuiObserver", .add = ecs_ids(ecs_dependson(EcsPostFrame))}),
 	.callback = SystemCreateGuiObserver,
 	.immediate = true,
 	.query.terms = {
 	{.id = ecs_pair(ecs_id(EcsDocDescription), ecs_id(GuiObserverDesc))},
 	{.id = ecs_id(GuiObserverDesc)},
-	{.id = EcsObserver, .oper = EcsNot},
+	{.id = ecs_pair(ecs_id(EcsPoly), EcsObserver), .oper = EcsNot},
 	{.id = EcsPrefab, .oper = EcsOptional},
 	}});
+	
 	
 }

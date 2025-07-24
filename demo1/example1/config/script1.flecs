@@ -94,7 +94,7 @@ root.window2.tabs.Peripherals.table1 {
 	} 
 }
 
-
+/*
 root.window2.tabs.Gui.table2 {
 	gui.Element : {NodeTreeReflection, root}
 	gui.Table : {table_dummy: 0}
@@ -108,7 +108,7 @@ root.window2.tabs.Gui.table2 {
 		}
 	} 
 }
-
+*/
 /*
 
 		cols {
