@@ -4,6 +4,7 @@
 #include "../Gui.h"
 #include "Ec.h"
 #include "bgui_draw_type.h"
+#include "bgui_entlink.h"
 #include <stdio.h>
 
 
@@ -20,7 +21,32 @@ void ecs0_id_info(ecs_world_t *ecs, ecs_id_t id)
 	}
 }
 
-
+bool draw(ecs_world_t *world, ecs_entity_t type, void const *ptr, ecs_entity_t egui, ecs_entity_t edata)
+{
+	bool clicked = false;
+	if (type == ecs_id(EcInteger)) {
+		EcInteger const *q = (EcInteger *)ptr;
+		EcsUnit const *u = ecs_get(world, q->unit, EcsUnit);
+		char buf[64];
+		if (q->unit == EcsBytes) {
+			snprintf(buf, sizeof(buf), "0x%jx", q->value);
+		} else {
+			snprintf(buf, sizeof(buf), "%ju", q->value);
+		}
+		jmgui_text(buf);
+		jmgui_sameline();
+		jmgui_text_colored(0.3, 0.3, 0.7, "%s", u->symbol);
+	} else if (type == ecs_id(EcsIdentifier)) {
+		bgui_entlink_draw(world, egui, edata);
+	} else {
+		char *json = ecs_ptr_to_json(world, type, ptr);
+		if (json) {
+			jmgui_text(json);
+			ecs_os_free(json);
+		}
+	}
+	return clicked;
+}
 
 
 
@@ -40,18 +66,7 @@ void jmgui_qtable_draw_row(ecs_world_t * world, ecs_iter_t *it, int row, ecs_ent
 		if (it->sources[c->field] == 0) {
 			ptr = ECS_ELEM(ptr, size, row);
 		}
-		bool clicked = jmgui_draw_type(world, c->type, ptr);
-		if (clicked) {
-			//ecs_doc_set_name(world, e, "Hej");
-			ecs_entity_t e2[] = {e, it->entities[row]};
-			void * data[] = {e2};
-			ecs_bulk_init(world, &(ecs_bulk_desc_t) {
-				.count = 1,
-				.ids = {c->on_click},
-				.data = data
-			});
-			//ecs_add_pair(world, e, GuiClicked, it->entities[row]);
-		}
+		draw(world, c->type, ptr, e, it->entities[row]);
 		if ((i+1) >= columns.count) {
 			break;
 		}

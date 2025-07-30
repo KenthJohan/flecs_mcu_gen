@@ -70,24 +70,66 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 
 static void OnResize(ecs_iter_t *it)
 {
+	ecs_log_set_level(-1);
 	ecs_world_t *world = it->world;
 	// Event payload can be obtained from the it->param member
 	GuiEventClick *p = it->param;
-	printf("%08jX %08jX\n", p->egui, p->subject);
+	printf("%08jX %08jX\n", it->system, it->event);
+	char * path_subject = ecs_get_path(world, p->subject);
+	char * path_egui = ecs_get_path(world, p->egui);
+	ecs_trace("GuiEventClick param: egui='%s' subject='%s'", path_egui, path_subject);
+	ecs_os_free(path_subject);
+	ecs_os_free(path_egui);
 
-	for (int i = 0; i < it->count; i++) {
-		ecs_entity_t e = it->entities[i];
-		printf(" - %s: %s: %s. ", ecs_get_name(world, it->event), ecs_get_name(world, it->event_id), ecs_get_name(world, e));
-		const ecs_type_t *type = ecs_get_type(world, e);
+	{
+		char * path_system = ecs_get_path(world, it->system);
+		ecs_trace("system: %s\n", path_system);
+		ecs_os_free(path_system);
+		const ecs_type_t *type = ecs_get_type(world, it->system);
 		char *type_str = ecs_type_str(world, type);
-		printf("t: %s\n", type_str);
+		ecs_trace("system=%s\n", type_str);
 		ecs_os_free(type_str);
 	}
+
+	GuiObserverDesc const * a = ecs_get(world, it->system, GuiObserverDesc);
+	if (a == NULL) {
+		ecs_err("Missing GuiObserverDesc");
+		return;
+	}
+
+	if (a->spawn) {
+		char * path_spawn = ecs_get_path(world, a->spawn);
+		ecs_trace("path_spawn: %s\n", path_spawn);
+		ecs_os_free(path_spawn);
+		if (ecs_has_id(world, a->spawn, ecs_id(EcsComponent))) {
+			ecs_entity_t e2[] = {p->egui, p->subject};
+			void * data[] = {e2};
+			ecs_bulk_init(world, &(ecs_bulk_desc_t) {
+				.count = 1,
+				.ids = {a->spawn},
+				.data = data
+			});
+		}
+	}
+
+
+
+	/*
+	for (int i = 0; i < it->count; i++) {
+		ecs_entity_t e = it->entities[i];
+		ecs_trace("event='%s', event_id='%s' e='%s'", ecs_get_name(world, it->event), ecs_get_name(world, it->event_id), ecs_get_name(world, e));
+		const ecs_type_t *type = ecs_get_type(world, e);
+		char *type_str = ecs_type_str(world, type);
+		ecs_trace("t=%s\n", type_str);
+		ecs_os_free(type_str);
+	}
+	*/
+	ecs_log_set_level(0);
 }
 
 static void SystemCreateGuiObserver(ecs_iter_t *it)
 {
-	ecs_log_set_level(-1);
+	ecs_log_set_level(1);
 	ecs_world_t *world = it->world;
 	ecsx_trace_system_iter(it);
 	ecs_log_push_(0);
@@ -114,6 +156,7 @@ static void SystemCreateGuiObserver(ecs_iter_t *it)
 		ecs_log_pop_(0);
 	}
 	ecs_log_pop_(0);
+	ecs_log_set_level(0);
 }
 
 // The constructor should initialize the component value.
@@ -180,7 +223,8 @@ void GuiImport(ecs_world_t *world)
 	ecs_struct(world,
 	{.entity = ecs_id(GuiObserverDesc),
 	.members = {
-	{.name = "events", .type = ecs_id(ecs_entity_t), .count = 8}
+	{.name = "events", .type = ecs_id(ecs_entity_t), .count = 8},
+	{.name = "spawn", .type = ecs_id(ecs_entity_t)},
 	}});
 
 	ecs_struct(world,
@@ -204,7 +248,6 @@ void GuiImport(ecs_world_t *world)
 	{.name = "field", .type = ecs_id(ecs_u32_t)},
 	{.name = "type", .type = ecs_id(ecs_entity_t)},
 	{.name = "offset", .type = ecs_id(ecs_u32_t)},
-	{.name = "on_click", .type = ecs_id(ecs_entity_t)},
 	}});
 
 	/*

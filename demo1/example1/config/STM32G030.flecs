@@ -1,7 +1,7 @@
 @color #AA99AF
 xmcu {}
 module xmcu
-module STM32G030
+module xmcu.STM32G030
 
 struct Position {
   x = i32,4
@@ -18,11 +18,13 @@ struct Room {
   b = Rectangle
 }
 
+aaa {
+	Room
+}
 
 peripherals {
 	@color #9b2316
 	@brief Analog to Digital ConverteR
-	Room
 	ADC {
 		ec.Peripheral : {0}
 		ec.Size : {size : {0x400, unit:flecs.units.Data.Bytes}}

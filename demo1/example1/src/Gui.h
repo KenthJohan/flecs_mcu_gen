@@ -51,7 +51,6 @@ typedef struct {
 	ecs_u32_t field;
 	ecs_entity_t type;
 	ecs_u32_t offset;
-	ecs_entity_t on_click;
 } GuiQueryColumn;
 
 typedef struct {
@@ -70,6 +69,7 @@ typedef struct {
 
 typedef struct {
 	ecs_entity_t events[8];
+	ecs_entity_t spawn;
 } GuiObserverDesc;
 
 // Resource management hooks. The convenience macros hide details of
