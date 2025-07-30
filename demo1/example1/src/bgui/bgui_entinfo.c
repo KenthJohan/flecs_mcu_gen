@@ -61,7 +61,7 @@ enum ImGuiDataType_
 #define NODE_DEFAULT (ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_DefaultOpen)
 #define NODE_LEAF (ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet)
 
-bool col_name(ecs_meta_type_op_t *op, int i)
+static bool col_name(ecs_meta_type_op_t *op, int i)
 {
 	bool clicked = false;
 	jmgui_table_next_column();
@@ -77,21 +77,21 @@ bool col_name(ecs_meta_type_op_t *op, int i)
 	return clicked;
 }
 
-bool col_op(ecs_meta_type_op_t *op, int i)
+static bool col_op(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	jmgui_text(ecsx_meta_type_op_kind_str(op->kind));
 	return false;
 }
 
-bool col_type(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i)
+static bool col_type(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	bgui_entlink_draw(world, egui, op->type);
 	return false;
 }
 
-bool col_n(ecs_meta_type_op_t *op, int i)
+static bool col_n(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	char buf[128];
@@ -100,7 +100,7 @@ bool col_n(ecs_meta_type_op_t *op, int i)
 	return false;
 }
 
-bool col_size(ecs_meta_type_op_t *op, int i)
+static bool col_size(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	char buf[128];
@@ -111,7 +111,7 @@ bool col_size(ecs_meta_type_op_t *op, int i)
 
 
 
-bool col_value(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i, void * ptr)
+static bool col_value(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i, void * ptr)
 {
 	void * data = ECS_OFFSET(ptr, op->offset);
 	jmgui_push_id_u64(i);
@@ -181,9 +181,9 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 	{
 		// Draw table header columns
 		char const *name = ecs_get_name(world, type);
-		jmgui_table_begin(name, 6, 0);
+		jmgui_table_begin(name, 5, 0);
 		jmgui_table_setup_column("name", 128, 0);
-		jmgui_table_setup_column("op", 128|16|32, 6);
+		//jmgui_table_setup_column("op", 128|16|32, 6);
 		jmgui_table_setup_column("type", 128|16|32, 20);
 		jmgui_table_setup_column("n", 128|16|32, 4);
 		jmgui_table_setup_column("size", 128|16|32, 4);
@@ -200,7 +200,7 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 		} 
 		// Draw row
 		bool o = col_name(op, i);
-		col_op(op, i);
+		//col_op(op, i);
 		col_type(world, egui, op, i);
 		col_n(op, i);
 		col_size(op, i);

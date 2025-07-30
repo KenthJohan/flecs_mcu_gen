@@ -2,34 +2,25 @@
 script1 {}
 module script1
 
-shared {
-	input1 {
-		flecs.doc.Description : {"Input field"}
-	}
-	styles {
-		s1 {
-			gui.Color3 : {1, 0, 0}
-		}
-	}
-}
+
 
 root {
 	gui.Root
 	window2 {
 		gui.Element : {Window}
 		input1 {
-			gui.Element : {InputText, shared.input1}
+			gui.Element : {InputText, storage.input1}
 		}
 		input2 {
-			gui.Element : {InputText, shared.input1}
+			gui.Element : {InputText, storage.input1}
 		}
 		tabs {
 			gui.Element : {Tabs}
-			@name Peripherals123
-			Peripherals {
+			@name peripherals
+			peripherals {
 				gui.Element : {Tab}
 			}
-			Gui {
+			dummy {
 				gui.Element : {Tab}
 			}
 		}
@@ -37,46 +28,9 @@ root {
 }
 
 
-template entity_window {
-	prop e_gui = flecs.meta.entity: 0
-	prop e_data = flecs.meta.entity: 0
-	(flecs.doc.Description, flecs.core.Name) : {"popup {$e_data}"}
-	(flecs.core.ChildOf, root)
-	gui.Element : {Window}
-	tabs {
-		gui.Element : {Tabs}
-		view {
-			gui.Element : {Tab}
-			entity_info_gui {
-				gui.Element : {EntityInfo, $e_data}
-			}
-		}
-		tab1 {
-			gui.Element : {Tab}
-			input1 {
-				gui.Element : {InputText, shared.input1}
-			}
-		}
-	}
-}
 
-observers {
-	spawn_entview {
-		(flecs.doc.Description, gui.ObserverDesc) : {"?gui.Element, ?gui.QueryColumn"}
-		gui.ObserverDesc : {
-			events: [gui.EventClick],
-			spawn: entity_window
-		}
-	}
-}
-
-
-
-
-
-
-root.window2.tabs.Peripherals.table1 {
-	gui.Element : {NodeTreeReflection, xmcu.STM32G030}
+root.window2.tabs.peripherals.table1 {
+	gui.Element : {NodeTreeReflection, xmcu.STM32G030.peripherals}
 	gui.Table : {table_dummy: 0}
 	(flecs.doc.Description, flecs.core.Query) : {
 		"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Access, ?ec.Offset, ?ec.Size"
@@ -99,8 +53,8 @@ root.window2.tabs.Peripherals.table1 {
 }
 
 
-root.window2.tabs.Gui.table2 {
-	gui.Element : {NodeTreeReflection, script1}
+root.window2.tabs.dummy.table2 {
+	gui.Element : {NodeTreeReflection, dummy123}
 	gui.Table : {table_dummy: 0}
 	(flecs.doc.Description, flecs.core.Query) : {
 		"[in] (flecs.core.Identifier, flecs.core.Name)"
@@ -113,113 +67,5 @@ root.window2.tabs.Gui.table2 {
 	} 
 }
 
-/*
-
-		cols {
-			flecs.core.OrderedChildren
-			name {
-				g1 {
-					gui.Field : {0, members:[flecs.core.Identifier.value, 0]}
-				}
-			}
-			access {
-				g1 {
-					gui.Field : {4, members:[ec.Field.access, 0]}
-				}
-				g2 {
-					gui.Field : {3, members:[flecs.core.Identifier.value, 0]}
-				}
-
-				gui.Fields : {indices:[4, 3, -1]}
-				(gui.Column, ec.Field) : {members:[ec.Field.access, 0]}
-				(gui.Column, ec.Register) : {members:[ec.Register.access, 0]}
-			}
-			group {
-				gui.Fields : {indices:[1, 2, -1]}
-				//(gui.Column, ec.Group) : {offset:0}
-			}
-			any {
-				gui.Fields : {indices:[3, 4, -1]}
-				(gui.Column, ec.Register) : {members:[ec.Register.address, 0]}
-				(gui.Column, ec.Field) : {members:[ec.Field.bitoffset, 0]}
-			}
-			signal {
-				//(gui.Column, ec.Signal) : {offset:0}
-			}
-			pin {
-			}
-		}
-
-
-window2.tabs.Signals {
-	gui.Element : {Tab}
-	table1 {
-		cols {
-			name {
-			}
-			any {
-				gui.Fields : {indices:[1, -1]}
-				(gui.Column, ec.Signal) : {members:[ec.Signal.signal_dummy, 0]}
-			}
-		}
-		gui.Element : {NodeTreeReflection, xmcu.STM32G030.signals}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Signal"}
-		gui.Table : {columns_count:2, columns:[cols.name, cols.any]}
-	}
-}
-
-
-window2.tabs.Pins {
-	gui.Element : {Tab}
-	table1 {
-		cols {
-			name {
-			}
-			pin {
-				gui.Fields : {indices:[1, -1]}
-				(gui.Column, ec.Pin) : {members:[ec.Signal.signal_dummy, 0]}
-			}
-			signal {
-				gui.Fields : {indices:[2, -1]}
-				(gui.Column, ec.Signal) : {members:[ec.Signal.signal_dummy, 0]}
-			}
-		}
-		gui.Element : {NodeTreeReflection, xmcu.STM32G030.pins}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?ec.Pin, ?ec.Signal"}
-		gui.Table : {columns_count:3, columns:[cols.name, cols.pin, cols.signal]}
-	}
-}
-
-
-
-window2.tabs.Gui {
-	gui.Element : {Tab}
-	table1 {
-		gui.Element : {NodeTreeReflection, script1}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?gui.Element"}
-		gui.Table : {columns_count:3, columns:[cols.name, cols.any], f2c:[0, 1]}
-	}
-}
-
-window2.tabs.Shared {
-	gui.Element : {Tab}
-	table1 {
-		gui.Element : {NodeTreeReflection, shared}
-		(flecs.doc.Description, gui.Query) : {"[in] (flecs.core.Identifier, flecs.core.Name), ?gui.Color3"}
-		gui.Table : {columns_count:2, columns:[cols.name, cols.any], f2c:[0, 1]}
-	}
-}
-*/
-
-
-/*
-window3 {
-	gui.Window : {}
-	table1 {
-		gui.Element : {NodeTreeReflection, script1}
-		(gui.ColumnComponent, gui.Element) : {}
-	}
-}
-*/
 
 

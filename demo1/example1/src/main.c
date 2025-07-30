@@ -111,9 +111,25 @@ int main(int argc, char *argv[])
 	.callback = sum});
 
 	load_mcu(world);
+
+	ecs_log_set_level(0);
+	ecs_script_run_file(world, "config/storage.flecs");
+	ecs_log_set_level(-1);
+
+	ecs_log_set_level(0);
+	ecs_script_run_file(world, "config/dummy.flecs");
+	ecs_log_set_level(-1);
 	
 	ecs_log_set_level(0);
 	ecs_script_run_file(world, "config/script1.flecs");
+	ecs_log_set_level(-1);
+
+	ecs_log_set_level(0);
+	ecs_script_run_file(world, "config/template_entview.flecs");
+	ecs_log_set_level(-1);
+
+	ecs_log_set_level(0);
+	ecs_script_run_file(world, "config/observers.flecs");
 	ecs_log_set_level(-1);
 
 	jmgui_context_t jmgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};

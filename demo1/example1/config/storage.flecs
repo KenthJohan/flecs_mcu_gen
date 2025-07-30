@@ -1,0 +1,10 @@
+module storage
+
+input1 {
+	flecs.doc.Description : {"Input field"}
+}
+styles {
+	s1 {
+		gui.Color3 : {1, 0, 0}
+	}
+}

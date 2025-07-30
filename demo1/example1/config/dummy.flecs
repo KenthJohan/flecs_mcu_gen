@@ -1,0 +1,22 @@
+@color #AA99AF
+dummy123 {}
+module dummy123
+
+struct Position {
+  x = i32,4
+  y = f32
+}
+
+struct Rectangle {
+  a = Position
+  b = Position
+}
+
+struct Room {
+  a = Rectangle,3
+  b = Rectangle
+}
+
+aaa {
+	Room
+}

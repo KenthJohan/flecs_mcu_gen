@@ -1,0 +1,24 @@
+template template_entview {
+	prop e_gui = flecs.meta.entity: 0
+	prop e_data = flecs.meta.entity: 0
+	gui.Root
+	window {
+		(flecs.doc.Description, flecs.core.Name) : {"popup {$e_data}"}
+		gui.Element : {Window}
+		tabs {
+			gui.Element : {Tabs}
+			view {
+				gui.Element : {Tab}
+				entity_info_gui {
+					gui.Element : {EntityInfo, $e_data}
+				}
+			}
+			tab1 {
+				gui.Element : {Tab}
+				input1 {
+					gui.Element : {InputText, storage.input1}
+				}
+			}
+		}
+	}
+}

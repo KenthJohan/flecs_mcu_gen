@@ -1,26 +1,5 @@
-@color #AA99AF
-xmcu {}
 module xmcu
 module xmcu.STM32G030
-
-struct Position {
-  x = i32,4
-  y = f32
-}
-
-struct Rectangle {
-  a = Position
-  b = Position
-}
-
-struct Room {
-  a = Rectangle,3
-  b = Rectangle
-}
-
-aaa {
-	Room
-}
 
 peripherals {
 	@color #9b2316

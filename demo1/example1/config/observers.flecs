@@ -1,0 +1,9 @@
+module observers
+
+spawn_entview {
+	(flecs.doc.Description, gui.ObserverDesc) : {"?gui.Element, ?gui.QueryColumn"}
+	gui.ObserverDesc : {
+		events: [gui.EventClick],
+		spawn: template_entview
+	}
+}
