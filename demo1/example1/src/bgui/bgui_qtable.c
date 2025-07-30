@@ -3,23 +3,8 @@
 #include "jmgui.h"
 #include "../Gui.h"
 #include "Ec.h"
-#include "bgui_draw_type.h"
 #include "bgui_entlink.h"
 #include <stdio.h>
-
-
-void ecs0_id_info(ecs_world_t *ecs, ecs_id_t id)
-{
-	if (ECS_HAS_ID_FLAG(id, PAIR)) { // See relationships
-		ecs_entity_t rel = ecs_pair_first(ecs, id);
-		ecs_entity_t tgt = ecs_pair_second(ecs, id);
-		printf("rel: %s, tgt: %s",
-		ecs_get_name(ecs, rel), ecs_get_name(ecs, tgt));
-	} else {
-		ecs_entity_t comp = id & ECS_COMPONENT_MASK;
-		printf("entity: %s", ecs_get_name(ecs, comp));
-	}
-}
 
 bool draw(ecs_world_t *world, ecs_entity_t type, void const *ptr, ecs_entity_t egui, ecs_entity_t edata)
 {
@@ -48,9 +33,7 @@ bool draw(ecs_world_t *world, ecs_entity_t type, void const *ptr, ecs_entity_t e
 	return clicked;
 }
 
-
-
-void jmgui_qtable_draw_row(ecs_world_t * world, ecs_iter_t *it, int row, ecs_entities_t columns)
+void jmgui_qtable_draw_row(ecs_world_t *world, ecs_iter_t *it, int row, ecs_entities_t columns)
 {
 	for (int i = 0; i < columns.count; i++) {
 		ecs_entity_t e = columns.ids[i];
@@ -59,7 +42,7 @@ void jmgui_qtable_draw_row(ecs_world_t * world, ecs_iter_t *it, int row, ecs_ent
 			continue;
 		}
 		ecs_size_t size = it->sizes[c->field];
-		void * ptr = ecs_field_w_size(it, size, c->field);
+		void *ptr = ecs_field_w_size(it, size, c->field);
 		if (ptr == NULL) {
 			continue;
 		}
@@ -67,13 +50,12 @@ void jmgui_qtable_draw_row(ecs_world_t * world, ecs_iter_t *it, int row, ecs_ent
 			ptr = ECS_ELEM(ptr, size, row);
 		}
 		draw(world, c->type, ptr, e, it->entities[row]);
-		if ((i+1) >= columns.count) {
+		if ((i + 1) >= columns.count) {
 			break;
 		}
 		jmgui_table_next_column();
 	}
 }
-
 
 int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t estorage, ecs_entities_t cols_entities)
 {
@@ -108,7 +90,6 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 				jmgui_tree_pop();
 			}
 			jmgui_pop_id();
-
 		}
 	}
 	return 0;
@@ -116,12 +97,12 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 
 void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t estorage)
 {
-	//GuiQuery const *q = ecs_get(world, etable, GuiQuery);
+	// GuiQuery const *q = ecs_get(world, etable, GuiQuery);
 	EcsPoly const *poly = ecs_get_pair(world, etable, EcsPoly, EcsQuery);
 	if (poly == NULL) {
 		return;
 	}
-	ecs_query_t * query = poly->poly;
+	ecs_query_t *query = poly->poly;
 	if (query == NULL) {
 		return;
 	}
@@ -141,8 +122,7 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 
 	jmgui_table_begin(name, entities.count, 0);
 
-
-	//jmgui_table_setup_column("?", (1 << 4), 40)
+	// jmgui_table_setup_column("?", (1 << 4), 40)
 	for (int i = 0; i < entities.count; i++) {
 		ecs_entity_t e = entities.ids[i];
 		char const *colname = ecs_get_name(world, e);
@@ -152,7 +132,6 @@ void bgui_qtable_draw(ecs_world_t *world, ecs_entity_t etable, ecs_entity_t esto
 			jmgui_table_setup_column("?", 128, 0);
 		}
 	}
-
 
 	jmgui_table_header_row();
 	jmgui_qtable_recursive(etable, query, estorage, entities);

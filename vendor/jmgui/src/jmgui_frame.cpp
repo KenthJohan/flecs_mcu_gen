@@ -185,6 +185,11 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	// ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
 	IM_ASSERT(font != nullptr);
 
+	// https://github.com/ocornut/imgui/blob/master/docs/FONTS.md#excluding-overlapping-ranges
+	ImFontConfig cfg2;
+	cfg2.MergeMode = true;
+	io->Fonts->AddFontFromFileTTF("config/forkawesome-webfont.ttf", 0.0f, &cfg2);
+
 	
 	/*
 	//static ImWchar ranges[] = { 0x1, UINT16_C(0x1FFFF), 0 };

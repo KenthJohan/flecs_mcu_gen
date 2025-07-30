@@ -145,6 +145,9 @@ bool col_value(ecs_world_t * world, ecs_meta_type_op_t *op, int i, void * ptr)
 		break;
 	case EcsOpF64:
 		break;
+	case EcsOpString:
+		jmgui_text(*(ecs_string_t*)data);
+		break;
 	case EcsOpEntity:
 		jmgui_text(ecs_get_name(world, *(ecs_entity_t*)data));
 		break;

@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <ecsx.h>
 #include "bgui/bgui_qtable.h"
-#include "bgui/bgui_draw_type.h"
 #include "bgui/bgui_entinfo.h"
 #include <Ec.h>
 #include "bgui/bgui_entlink.h"
