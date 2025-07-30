@@ -61,7 +61,7 @@ template entity_window {
 }
 
 observers {
-	entview {
+	spawn_entview {
 		(flecs.doc.Description, gui.ObserverDesc) : {"?gui.Element, ?gui.QueryColumn"}
 		gui.ObserverDesc : {
 			events: [gui.EventClick],

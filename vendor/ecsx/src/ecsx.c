@@ -74,9 +74,3 @@ int32_t ecsx_children_count(ecs_world_t *world, ecs_entity_t parent)
 }
 
 
-void ecsx_trace_system_iter(ecs_iter_t *it)
-{
-	char const * qs = ecs_query_str(it->query);
-	ecs_trace("System '%s' '%s' %i", ecs_get_name(it->world, it->system), qs, it->count);
-	ecs_os_free((void*)qs);
-}
