@@ -51,7 +51,10 @@ void iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_entity_t subj
 		} else {
 			comp = id & ECS_COMPONENT_MASK;
 		}
-		if (ecs_has(world, comp, EcsComponent)) {
+		// flecs.meta.quantity EcsComponent has zero size. 
+		// ecs_get_mut_id() fails if EcsComponent.size is zero.
+		EcsComponent const * cc = ecs_get(world, comp, EcsComponent);
+		if (cc && (cc->size > 0)) {
 			ptr = ecs_get_mut_id(world, subject, id);
 		}
 		if (comp && tgt) {
