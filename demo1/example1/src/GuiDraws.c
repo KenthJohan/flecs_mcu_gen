@@ -37,41 +37,7 @@ static void SystemGuiTraverse1(ecs_world_t *world, ecs_entity_t parent)
 	char *type_str = ecs_type_str(world, type);
 	ecs_os_free(type_str);
 */
-void iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_entity_t subject)
-{
-	const ecs_type_t *type = ecs_get_type(world, subject);
-	for (int i = 0; i < type->count; i++) {
-		ecs_id_t id = type->array[i];
-		void * ptr = NULL;
-		ecs_entity_t comp = 0;
-		ecs_entity_t tgt = 0;
-		if (ECS_HAS_ID_FLAG(id, PAIR)) {
-			comp = ecs_pair_first(world, id);
-			tgt = ecs_pair_second(world, id);
-		} else {
-			comp = id & ECS_COMPONENT_MASK;
-		}
-		// flecs.meta.quantity EcsComponent has zero size. 
-		// ecs_get_mut_id() fails if EcsComponent.size is zero.
-		EcsComponent const * cc = ecs_get(world, comp, EcsComponent);
-		if (cc && (cc->size > 0)) {
-			ptr = ecs_get_mut_id(world, subject, id);
-		}
-		if (comp && tgt) {
-			bgui_entlink_draw(world, egui, comp);
-			jmgui_sameline();
-			jmgui_text(ICON_FK_LONG_ARROW_RIGHT);
-			jmgui_sameline();
-			bgui_entlink_draw(world, egui, tgt);
-		} else if (comp) {
-			bgui_entlink_draw(world, egui, comp);
-		}
-		if (ptr) {
-			bgui_entinfo_draw(world, comp, ptr, egui);
-		}
-		jmgui_separator();
-	}
-}
+
 
 static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 {
@@ -148,7 +114,7 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		break;
 	case GuiTypeEntityInfo:
 		if (el->storage) {
-			iterate_components(world, e, el->storage);
+			bgui_entinfo_iterate_components(world, e, el->storage);
 		}
 		break;
 

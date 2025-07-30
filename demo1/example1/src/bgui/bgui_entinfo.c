@@ -5,6 +5,7 @@
 #include <ecsx.h>
 #include <inttypes.h>
 #include "bgui_entlink.h"
+#include "../IconsForkAwesome.h"
 
 enum ImGuiTreeNodeFlags_ {
 	ImGuiTreeNodeFlags_None = 0,
@@ -178,18 +179,7 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 		return -1;
 	}
 
-	{
-		// Draw table header columns
-		char const *name = ecs_get_name(world, type);
-		jmgui_table_begin(name, 5, 0);
-		jmgui_table_setup_column("name", 128, 0);
-		//jmgui_table_setup_column("op", 128|16|32, 6);
-		jmgui_table_setup_column("type", 128|16|32, 20);
-		jmgui_table_setup_column("n", 128|16|32, 4);
-		jmgui_table_setup_column("size", 128|16|32, 4);
-		jmgui_table_setup_column("value", 128, 0);
-		jmgui_table_header_row();
-	}
+
 	ecs_meta_type_op_t *ops = ecs_vec_first_t(&ser->ops, ecs_meta_type_op_t);
 	int32_t count = ecs_vec_count(&ser->ops);
 	for (int i = 0; i < count; ++i) {
@@ -198,6 +188,7 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 			jmgui_tree_pop();
 			continue;
 		} 
+		jmgui_table_next_row(0);
 		// Draw row
 		bool o = col_name(op, i);
 		//col_op(op, i);
@@ -215,6 +206,69 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 			} while ((ops[i].kind != EcsOpPop) || (s > 0));
 		}
 	}
-	jmgui_table_end();
 	return false;
+}
+
+
+
+void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_entity_t subject)
+{
+	{
+		// Draw table header columns
+		char const *name = ecs_get_name(world, subject);
+		jmgui_table_begin(name, 5, 0);
+		jmgui_table_setup_column("name", 128, 0);
+		//jmgui_table_setup_column("op", 128|16|32, 6);
+		jmgui_table_setup_column("type", 128|16|32, 20);
+		jmgui_table_setup_column("n", 128|16|32, 4);
+		jmgui_table_setup_column("size", 128|16|32, 4);
+		jmgui_table_setup_column("value", 128, 0);
+		jmgui_table_header_row();
+	}
+
+	const ecs_type_t *type = ecs_get_type(world, subject);
+	for (int i = 0; i < type->count; i++) {
+		ecs_id_t id = type->array[i];
+		void * ptr = NULL;
+		ecs_entity_t comp = 0;
+		ecs_entity_t tgt = 0;
+		if (ECS_HAS_ID_FLAG(id, PAIR)) {
+			comp = ecs_pair_first(world, id);
+			tgt = ecs_pair_second(world, id);
+		} else {
+			comp = id & ECS_COMPONENT_MASK;
+		}
+		// flecs.meta.quantity EcsComponent has zero size. 
+		// ecs_get_mut_id() fails if EcsComponent.size is zero.
+		EcsComponent const * cc = ecs_get(world, comp, EcsComponent);
+		if (cc && (cc->size > 0)) {
+			ptr = ecs_get_mut_id(world, subject, id);
+		}
+
+
+
+		jmgui_table_next_row(0);
+		jmgui_table_next_column();
+		jmgui_push_id_u64(comp);
+		bool clicked = jmgui_tree_node("", NODE_DEFAULT, 1, 1, 1);
+		jmgui_sameline();
+		if (comp && tgt) {
+			bgui_entlink_draw(world, egui, comp);
+			jmgui_sameline();
+			jmgui_text(ICON_FK_LONG_ARROW_RIGHT);
+			jmgui_sameline();
+			bgui_entlink_draw(world, egui, tgt);
+		} else if (comp) {
+			bgui_entlink_draw(world, egui, comp);
+		}
+		if (clicked) {
+			if (ptr) {
+				bgui_entinfo_draw(world, comp, ptr, egui);
+			}
+			jmgui_tree_pop();
+		}
+		jmgui_pop_id();
+		//jmgui_separator();
+	}
+	jmgui_table_end();
 }

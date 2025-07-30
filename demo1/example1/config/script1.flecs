@@ -23,6 +23,9 @@ root {
 			dummy {
 				gui.Element : {Tab}
 			}
+			meta {
+				gui.Element : {Tab}
+			}
 		}
 	}
 }
@@ -67,5 +70,20 @@ root.window2.tabs.dummy.table2 {
 	} 
 }
 
+
+
+root.window2.tabs.meta.table3 {
+	gui.Element : {NodeTreeReflection, flecs}
+	gui.Table : {table_dummy: 0}
+	(flecs.doc.Description, flecs.core.Query) : {
+		"[in] (flecs.core.Identifier, flecs.core.Name)"
+	}
+	cols {
+		flecs.core.OrderedChildren
+		name1 {
+			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
+		}
+	} 
+}
 
 
