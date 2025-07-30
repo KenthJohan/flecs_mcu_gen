@@ -63,16 +63,18 @@ enum ImGuiDataType_
 
 bool col_name(ecs_meta_type_op_t *op, int i)
 {
+	bool clicked = false;
 	jmgui_table_next_column();
 	char buf[128];
 	//snprintf(buf, sizeof(buf), "%i:%s", i, op->name ? op->name : "?");
 	snprintf(buf, sizeof(buf), "%s", op->name ? op->name : "root");
 	if (op->kind == EcsOpPush) {
-		return jmgui_tree_node(buf, NODE_DEFAULT, 1, 1, 1);
+		clicked = jmgui_tree_node(buf, NODE_DEFAULT, 1, 1, 1);
 	} else {
 		jmgui_tree_node(buf, NODE_DEFAULT | NODE_LEAF, 1, 1, 1);
-		return false;
+		clicked = false;
 	}
+	return clicked;
 }
 
 bool col_op(ecs_meta_type_op_t *op, int i)
@@ -82,11 +84,10 @@ bool col_op(ecs_meta_type_op_t *op, int i)
 	return false;
 }
 
-bool col_type(ecs_world_t * world, ecs_meta_type_op_t *op, int i)
+bool col_type(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
-	char const * name = ecs_get_name(world, op->type);
-	jmgui_text(name);
+	bgui_entlink_draw(world, egui, op->type);
 	return false;
 }
 
@@ -110,7 +111,7 @@ bool col_size(ecs_meta_type_op_t *op, int i)
 
 
 
-bool col_value(ecs_world_t * world, ecs_meta_type_op_t *op, int i, void * ptr)
+bool col_value(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i, void * ptr)
 {
 	void * data = ECS_OFFSET(ptr, op->offset);
 	jmgui_push_id_u64(i);
@@ -149,7 +150,7 @@ bool col_value(ecs_world_t * world, ecs_meta_type_op_t *op, int i, void * ptr)
 		jmgui_text(*(ecs_string_t*)data);
 		break;
 	case EcsOpEntity:
-		jmgui_text(ecs_get_name(world, *(ecs_entity_t*)data));
+		bgui_entlink_draw(world, egui, *(ecs_entity_t*)data);
 		break;
 	default:
 		break;
@@ -160,7 +161,7 @@ bool col_value(ecs_world_t * world, ecs_meta_type_op_t *op, int i, void * ptr)
 
 
 // printf("TREE(%02i) %7s, o:%i\n", i, ecsx_meta_type_op_kind_str(op->kind), sp, o);
-bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr)
+bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_entity_t egui)
 {
 	const EcsComponent *comp = ecs_get(world, type, EcsComponent);
 	if (!comp) {
@@ -200,10 +201,10 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr)
 		// Draw row
 		bool o = col_name(op, i);
 		col_op(op, i);
-		col_type(world, op, i);
+		col_type(world, egui, op, i);
 		col_n(op, i);
 		col_size(op, i);
-		col_value(world, op, i, ptr);
+		col_value(world, egui, op, i, ptr);
 		// Collapse tree view
 		if ((op->kind == EcsOpPush) && (o == false)) {
 			int s = 1;

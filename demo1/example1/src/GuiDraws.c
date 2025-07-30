@@ -8,6 +8,7 @@
 #include "bgui/bgui_entinfo.h"
 #include <Ec.h>
 #include "bgui/bgui_entlink.h"
+#include "IconsForkAwesome.h"
 
 static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e);
 
@@ -36,7 +37,7 @@ static void SystemGuiTraverse1(ecs_world_t *world, ecs_entity_t parent)
 	char *type_str = ecs_type_str(world, type);
 	ecs_os_free(type_str);
 */
-void iterate_components(ecs_world_t *world, ecs_entity_t gent, ecs_entity_t subject)
+void iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_entity_t subject)
 {
 	const ecs_type_t *type = ecs_get_type(world, subject);
 	for (int i = 0; i < type->count; i++) {
@@ -54,14 +55,16 @@ void iterate_components(ecs_world_t *world, ecs_entity_t gent, ecs_entity_t subj
 			ptr = ecs_get_mut_id(world, subject, id);
 		}
 		if (comp && tgt) {
-			bgui_entlink_draw(world, gent, comp);
+			bgui_entlink_draw(world, egui, comp);
 			jmgui_sameline();
-			bgui_entlink_draw(world, gent, tgt);
+			jmgui_text(ICON_FK_LONG_ARROW_RIGHT);
+			jmgui_sameline();
+			bgui_entlink_draw(world, egui, tgt);
 		} else if (comp) {
-			bgui_entlink_draw(world, gent, comp);
+			bgui_entlink_draw(world, egui, comp);
 		}
 		if (ptr) {
-			bgui_entinfo_draw(world, comp, ptr);
+			bgui_entinfo_draw(world, comp, ptr, egui);
 		}
 		jmgui_separator();
 	}
@@ -136,12 +139,12 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		}
 		break;
 	case GuiTypeNodeTreeReflection:
-		if (1) {
+		if (el->storage) {
 			bgui_qtable_draw(world, e, el->storage);
 		}
 		break;
 	case GuiTypeEntityInfo:
-		if (1) {
+		if (el->storage) {
 			iterate_components(world, e, el->storage);
 		}
 		break;
