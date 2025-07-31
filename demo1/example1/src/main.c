@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
 	ecs_log_set_level(-1);
 
 	jmgui_context_t jmgui = {.clear_color = {0.45f, 0.55f, 0.60f, 1.00f}};
-	jmgui_context_init(&jmgui);
+	jmgui_context_init(&jmgui, "flecs_mcu_gen", 2000, 2000);
 
 
 

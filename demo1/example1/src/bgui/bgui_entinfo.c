@@ -254,7 +254,7 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 		}
 
 		jmgui_table_merge_begin();
-		jmgui_table_set_row_color(50,50,60,255);
+		jmgui_table_set_row_color(20,30,30,255);
 		bool clicked = false;
 		if (ptr) {
 			clicked = jmgui_tree_node("", NODE_DEFAULT, 1, 1, 1);
