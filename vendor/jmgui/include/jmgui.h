@@ -58,7 +58,6 @@ unsigned int jmgui_get_id_by_string(const char* str_id);
 unsigned int jmgui_get_last_id();
 void jmgui_dummy(float x, float y);
 bool jmgui_last_hover();
-void jmgui_same_line(float offset_from_start_x, float spacing);
 void jmgui_text_colored(float r, float g, float b, const char* fmt, ...);
 bool jmgui_text_link(const char* label);
 void jmgui_separator();
@@ -79,6 +78,12 @@ bool jmgui_input_scalar_n(const char* label, int data_type, void* p_data, int co
 
 //SetNextItemStorageID
 void jmgui_set_next_item_storage_id(unsigned int id);
+
+
+
+void jmgui_table_merge_begin();
+void jmgui_table_merge_end();
+void jmgui_table_set_row_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 #ifdef __cplusplus
 }

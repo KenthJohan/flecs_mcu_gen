@@ -102,7 +102,8 @@ bool jmgui_tree_node(const char *name, int flags, float r, float g, float b)
 
 bool jmgui_table_begin(const char *name, int columns, int flags)
 {
-	ImGuiTableFlags table_flags = ImGuiTableFlags_BordersV | ImGuiTableFlags_BordersOuterH | ImGuiTableFlags_Resizable | ImGuiTableFlags_RowBg | ImGuiTableFlags_NoBordersInBody;
+	ImGuiTableFlags table_flags = ImGuiTableFlags_BordersV | ImGuiTableFlags_BordersOuterH | ImGuiTableFlags_Resizable | ImGuiTableFlags_NoBordersInBody;
+	//table_flags |= ImGuiTableFlags_RowBg;
 	return ImGui::BeginTable(name, columns, table_flags);
 }
 
@@ -177,10 +178,6 @@ void jmgui_dummy(float x, float y)
 	ImGui::Dummy(ImVec2(x, y));
 }
 
-void jmgui_same_line(float offset_from_start_x, float spacing)
-{
-	ImGui::SameLine();
-}
 
 bool jmgui_last_hover()
 {
@@ -264,4 +261,33 @@ bool jmgui_input_i32(const char *label, int32_t *v, int step, int step_fast, int
 bool jmgui_input_scalar_n(const char* label, int data_type, void* p_data, int components, const void* p_step, const void* p_step_fast, const char* format, int flags)
 {
 	return ImGui::InputScalarN(label, data_type, p_data, components, p_step, p_step_fast, format, flags);
+}
+
+
+void jmgui_table_merge_begin()
+{
+	ImGuiTable *table = ImGui::GetCurrentTable();
+	float min_x = table->Columns[0].MinX;
+	float max_x = table->Columns[table->ColumnsCount - 1].MaxX;
+	float y = ImGui::GetCursorScreenPos().y;
+	float height = ImGui::GetTextLineHeightWithSpacing();
+	ImVec2 min(min_x, y);
+	ImVec2 max(max_x, y + height);
+	// Draw background for merged row
+	//ImGui::GetWindowDrawList()->AddRectFilled(min, max, IM_COL32(100, 100, 255, 50));
+	// Temporarily disable clipping for this merged cell
+	ImGui::PushClipRect(min, max, false);
+	//ImGui::SetCursorScreenPos(min);
+	//ImGui::TextUnformatted("Merged header Merged headerMerged headerMerged headerMerged headerMerged headerMerged headerMerged headerMerged headerMerged headerMerged headerMerged header");
+}
+
+void jmgui_table_merge_end()
+{
+	ImGui::PopClipRect();
+}
+
+
+void jmgui_table_set_row_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+	ImGui::TableSetBgColor(ImGuiTableBgTarget_RowBg0, IM_COL32(r, g, b, a));
 }

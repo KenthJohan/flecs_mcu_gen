@@ -78,12 +78,14 @@ static bool col_name(ecs_meta_type_op_t *op, int i)
 	return clicked;
 }
 
+
 static bool col_op(ecs_meta_type_op_t *op, int i)
 {
 	jmgui_table_next_column();
 	jmgui_text(ecsx_meta_type_op_kind_str(op->kind));
 	return false;
 }
+
 
 static bool col_type(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i)
 {
@@ -191,7 +193,7 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 		jmgui_table_next_row(0);
 		// Draw row
 		bool o = col_name(op, i);
-		//col_op(op, i);
+		col_op(op, i);
 		col_type(world, egui, op, i);
 		col_n(op, i);
 		col_size(op, i);
@@ -216,9 +218,9 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 	{
 		// Draw table header columns
 		char const *name = ecs_get_name(world, subject);
-		jmgui_table_begin(name, 5, 0);
+		jmgui_table_begin(name, 6, 0);
 		jmgui_table_setup_column("name", 128, 0);
-		//jmgui_table_setup_column("op", 128|16|32, 6);
+		jmgui_table_setup_column("op", 128|16|32, 6);
 		jmgui_table_setup_column("type", 128|16|32, 20);
 		jmgui_table_setup_column("n", 128|16|32, 4);
 		jmgui_table_setup_column("size", 128|16|32, 4);
@@ -229,44 +231,55 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 	const ecs_type_t *type = ecs_get_type(world, subject);
 	for (int i = 0; i < type->count; i++) {
 		ecs_id_t id = type->array[i];
-		void * ptr = NULL;
-		ecs_entity_t comp = 0;
-		ecs_entity_t tgt = 0;
+		ecs_entity_t id_comp = 0;
+		ecs_entity_t id_tgt = 0;
 		if (ECS_HAS_ID_FLAG(id, PAIR)) {
-			comp = ecs_pair_first(world, id);
-			tgt = ecs_pair_second(world, id);
+			id_comp = ecs_pair_first(world, id);
+			id_tgt = ecs_pair_second(world, id);
 		} else {
-			comp = id & ECS_COMPONENT_MASK;
-		}
-		// flecs.meta.quantity EcsComponent has zero size. 
-		// ecs_get_mut_id() fails if EcsComponent.size is zero.
-		EcsComponent const * cc = ecs_get(world, comp, EcsComponent);
-		if (cc && (cc->size > 0)) {
-			ptr = ecs_get_mut_id(world, subject, id);
+			id_comp = id & ECS_COMPONENT_MASK;
 		}
 
-
+		jmgui_push_id_u64(id);
 
 		jmgui_table_next_row(0);
 		jmgui_table_next_column();
-		jmgui_push_id_u64(comp);
-		bool clicked = jmgui_tree_node("", NODE_DEFAULT, 1, 1, 1);
+
+		// flecs.meta.quantity EcsComponent has zero size. 
+		// ecs_get_mut_id() fails if EcsComponent.size is zero.
+		EcsComponent const * c = ecs_get(world, id_comp, EcsComponent);
+		void * ptr = NULL;
+		if (c && (c->size > 0)) {
+			ptr = ecs_get_mut_id(world, subject, id);
+		}
+
+		jmgui_table_merge_begin();
+		jmgui_table_set_row_color(50,50,60,255);
+		bool clicked = false;
+		if (ptr) {
+			clicked = jmgui_tree_node("", NODE_DEFAULT, 1, 1, 1);
+		} else {
+			jmgui_tree_node("", NODE_LEAF, 1, 1, 1);
+		}
 		jmgui_sameline();
-		if (comp && tgt) {
-			bgui_entlink_draw(world, egui, comp);
+		if (id_comp) {
+			bgui_entlink_draw(world, egui, id_comp);
+		}
+		if (id_tgt) {
 			jmgui_sameline();
 			jmgui_text(ICON_FK_LONG_ARROW_RIGHT);
 			jmgui_sameline();
-			bgui_entlink_draw(world, egui, tgt);
-		} else if (comp) {
-			bgui_entlink_draw(world, egui, comp);
+			bgui_entlink_draw(world, egui, id_tgt);
 		}
+		jmgui_table_merge_end();
+
 		if (clicked) {
 			if (ptr) {
-				bgui_entinfo_draw(world, comp, ptr, egui);
+				bgui_entinfo_draw(world, id_comp, ptr, egui);
 			}
 			jmgui_tree_pop();
 		}
+
 		jmgui_pop_id();
 		//jmgui_separator();
 	}

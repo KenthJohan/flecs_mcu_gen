@@ -90,8 +90,6 @@ void jmgui_frame_begin(jmgui_context_t *eximgui)
 			eximgui->show_another_window = false;
 		ImGui::End();
 	}
-
-
 }
 
 void jmgui_frame_frame(jmgui_context_t *eximgui)
@@ -177,12 +175,12 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	// - Read 'docs/FONTS.md' for more instructions and details.
 	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
 	// io.Fonts->AddFontDefault();
-	ImFont * font = io->Fonts->AddFontFromFileTTF("/usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf", 18.0f);
-	//io->Fonts->Build();
-	// io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-	// io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-	// io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-	// ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
+	ImFont *font = io->Fonts->AddFontFromFileTTF("/usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf", 22.0f);
+	// io->Fonts->Build();
+	//  io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+	//  io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+	//  io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+	//  ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
 	IM_ASSERT(font != nullptr);
 
 	// https://github.com/ocornut/imgui/blob/master/docs/FONTS.md#excluding-overlapping-ranges
@@ -190,7 +188,6 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	cfg2.MergeMode = true;
 	io->Fonts->AddFontFromFileTTF("config/forkawesome-webfont.ttf", 0.0f, &cfg2);
 
-	
 	/*
 	//static ImWchar ranges[] = { 0x1, UINT16_C(0x1FFFF), 0 };
 	static ImFontConfig cfg = {};
@@ -198,7 +195,6 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	cfg.FontLoaderFlags |= 0;
 	io->Fonts->AddFontFromFileTTF("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf", 16.0f, &cfg);
 	*/
-
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -211,7 +207,6 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	init_info.ColorTargetFormat = SDL_GetGPUSwapchainTextureFormat(eximgui->gpu_device, eximgui->window);
 	init_info.MSAASamples = SDL_GPU_SAMPLECOUNT_1;
 	ImGui_ImplSDLGPU3_Init(&init_info);
-
 
 	return 0;
 }
