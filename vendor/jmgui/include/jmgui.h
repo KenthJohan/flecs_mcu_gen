@@ -2,13 +2,12 @@
 
 #include <SDL3/SDL.h>
 
+#include "jmgui/jmgui_table.h"
+#include "jmgui/jmgui_tabs.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-
-
 
 
 
@@ -43,16 +42,8 @@ void jmgui_pop_id();
 bool jmgui_button(const char *label);
 bool jmgui_button_small(const char *label);
 void jmgui_sameline();
-bool jmgui_table_begin(const char *name, int columns, int flags);
-void jmgui_table_end();
-void jmgui_table_setup_column(const char *name, int flags, float width);
-void jmgui_table_header_row();
-void jmgui_table_next_row(int flags);
-void jmgui_table_next_column();
-bool jmgui_tab_begin(const char *name, int flags);
-void jmgui_tab_end();
-bool jmgui_tab_item_begin(const char *name, int flags);
-void jmgui_tab_item_end();
+
+
 void jmgui_debug_locate(unsigned int id);
 unsigned int jmgui_get_id_by_string(const char* str_id);
 unsigned int jmgui_get_last_id();
@@ -81,9 +72,6 @@ void jmgui_set_next_item_storage_id(unsigned int id);
 
 
 
-void jmgui_table_merge_begin();
-void jmgui_table_merge_end();
-void jmgui_table_set_row_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 #ifdef __cplusplus
 }

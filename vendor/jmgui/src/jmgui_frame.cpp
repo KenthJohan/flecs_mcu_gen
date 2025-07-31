@@ -23,7 +23,7 @@
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
 
-ImGuiIO *io;
+
 
 
 
@@ -78,6 +78,7 @@ void jmgui_frame_begin(jmgui_context_t *eximgui)
 		ImGui::SameLine();
 		ImGui::Text("counter = %d", counter);
 
+		ImGuiIO *io = &ImGui::GetIO();
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io->Framerate, io->Framerate);
 		ImGui::End();
 	}
@@ -162,7 +163,7 @@ int jmgui_context_init(jmgui_context_t *eximgui)
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	io = &ImGui::GetIO();
+	ImGuiIO *io = &ImGui::GetIO();
 	io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 	io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
 

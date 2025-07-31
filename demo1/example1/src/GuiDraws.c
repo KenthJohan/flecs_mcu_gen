@@ -75,15 +75,15 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		}
 	} break;
 	case GuiTypeTabs:
-		if (jmgui_tab_begin(name, 0)) {
+		if (jmgui_tabs_begin(name, 0)) {
 			SystemGuiTraverse1(world, e);
-			jmgui_tab_end();
+			jmgui_tabs_end();
 		}
 		break;
 	case GuiTypeTab:
-		if (jmgui_tab_item_begin(name, 0)) {
+		if (jmgui_tabs_item_begin(name, 0)) {
 			SystemGuiTraverse1(world, e);
-			jmgui_tab_item_end();
+			jmgui_tabs_item_end();
 		}
 		break;
 	case GuiTypeInputText:
