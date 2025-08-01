@@ -14,7 +14,6 @@ void jmgui_table_next_column();
 void jmgui_table_merge_begin();
 void jmgui_table_merge_end();
 void jmgui_table_set_row_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-
 void jmgui_table_set_column_index(int i);
 
 #ifdef __cplusplus

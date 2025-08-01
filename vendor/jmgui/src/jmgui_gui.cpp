@@ -43,60 +43,9 @@ bool jmgui_button_small(const char *label)
 	return r;
 }
 
-void jmgui_text(const char *text)
-{
-	ImGui::Text("%s", text);
-}
-
-void jmgui_textf(const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	ImGui::TextV(fmt, args);
-	va_end(args);
-}
-
-void jmgui_text_colored_va(float r, float g, float b, const char *fmt, va_list args)
-{
-	const ImVec4 col = ImVec4(r, g, b, 1.0f);
-	ImGui::TextColoredV(col, fmt, args);
-}
-
-void jmgui_text_colored(float r, float g, float b, const char *fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	jmgui_text_colored_va(r, g, b, fmt, args);
-	va_end(args);
-}
-
 bool jmgui_collapsing_header(const char *name)
 {
 	return ImGui::CollapsingHeader(name);
-}
-
-bool jmgui_tree(const char *name)
-{
-	return ImGui::TreeNode(name);
-}
-
-void jmgui_tree_pop()
-{
-	ImGui::TreePop();
-}
-
-void jmgui_sameline()
-{
-	ImGui::SameLine();
-}
-
-bool jmgui_tree_node(const char *name, int flags, float r, float g, float b)
-{
-	// const ImVec4 col = ImVec4(r, g, b, 1.0f);
-	// ImGui::PushStyleColor(ImGuiCol_Text, col);
-	bool result = ImGui::TreeNodeEx(name, flags);
-	// ImGui::PopStyleColor(1);
-	return result;
 }
 
 bool jmgui_input_text(const char *label, char *buf, size_t buf_size)
@@ -154,43 +103,9 @@ bool jmgui_last_hover()
 	*/
 }
 
-bool jmgui_text_link(const char *label)
-{
-	return ImGui::TextLink(label);
-}
-
 void jmgui_separator()
 {
 	ImGui::Separator();
-}
-
-void jmgui_color_edit3(float c[3])
-{
-	static ImGuiColorEditFlags base_flags = ImGuiColorEditFlags_None;
-	ImGui::ColorEdit3("MyColor##1", c, base_flags);
-}
-
-void jmgui_get_current_tree_node(unsigned int *id, int *treeflags, int *itemflags)
-{
-	ImGuiContext &g = *GImGui;
-	if (g.TreeNodeStack.size() == 0) {
-		return;
-	}
-	const ImGuiTreeNodeStackData *data = &g.TreeNodeStack.back();
-	if (id) {
-		(*id) = data->ID;
-	}
-	if (treeflags) {
-		(*treeflags) = data->TreeFlags;
-	}
-	if (itemflags) {
-		(*itemflags) = data->ItemFlags;
-	}
-}
-
-unsigned int jmgui_tree_node_get_open(unsigned int storage_id)
-{
-	return ImGui::TreeNodeGetOpen(storage_id);
 }
 
 void jmgui_set_next_item_storage_id(unsigned int id)
@@ -198,58 +113,9 @@ void jmgui_set_next_item_storage_id(unsigned int id)
 	ImGui::SetNextItemStorageID((ImGuiID)id);
 }
 
-bool jmgui_input_i32(const char *label, int32_t *v, int step, int step_fast, int flags)
-{
-	return ImGui::InputInt(label, v, step, step_fast, flags);
-}
 
-bool jmgui_input_scalar_n(const char *label, int data_type, void *p_data, int components, const void *p_step, const void *p_step_fast, const char *format, int flags)
-{
-	return ImGui::InputScalarN(label, data_type, p_data, components, p_step, p_step_fast, format, flags);
-}
 
-void jmgui_color_picker4_str(char * str)
+void jmgui_sameline()
 {
-	if (str == NULL) {
-		return;
-	}
-	if (str[0] != '#') {
-		return;
-	}
-	size_t l = strlen(str);
-	if (l != 9) {
-		return;
-	}
-	char * e = NULL;
-	long v = strtol(str+1, &e, 16);
-	long r = (v >> 24) & 0xFF;
-	long g = (v >> 16) & 0xFF;
-	long b = (v >> 8) & 0xFF;
-	long a = (v >> 0) & 0xFF;
-	ImVec4 c = ImVec4(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f);
-	ImGui::ColorPicker4("##picker", (float *)&c, ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview);
-	snprintf(str+1, 9, "%02X%02X%02X%02X", (unsigned int)(c.x * 255.0f), (unsigned int)(c.y * 255.0f), (unsigned int)(c.z * 255.0f), (unsigned int)(c.w * 255.0f));
-}
-
-void jmgui_color_picker3_str(char * str)
-{
-	if (str == NULL) {
-		return;
-	}
-	if (str[0] != '#') {
-		return;
-	}
-	size_t l = strlen(str);
-	if (l != 7) {
-		return;
-	}
-	char * e = NULL;
-	long v = strtol(str+1, &e, 16);
-	long r = (v >> 16) & 0xFF;
-	long g = (v >> 8) & 0xFF;
-	long b = (v >> 0) & 0xFF;
-	float c[3] = {r / 255.0f, g / 255.0f, b / 255.0f};
-	//ImGui::ColorPicker3("##picker", (float *)&c, ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview);
-	ImGui::ColorEdit3("MyColor##3", (float*)&c, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
-	snprintf(str+1, 7, "%02X%02X%02X", (unsigned int)(c[0] * 255.0f), (unsigned int)(c[1] * 255.0f), (unsigned int)(c[2] * 255.0f));
+	ImGui::SameLine();
 }
