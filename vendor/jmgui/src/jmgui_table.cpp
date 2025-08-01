@@ -59,3 +59,8 @@ void jmgui_table_set_row_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	ImGui::TableSetBgColor(ImGuiTableBgTarget_RowBg0, IM_COL32(r, g, b, a));
 }
+
+void jmgui_table_set_column_index(int i)
+{
+	ImGui::TableSetColumnIndex(i);
+}

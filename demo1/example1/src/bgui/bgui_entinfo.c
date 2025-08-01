@@ -273,6 +273,13 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 		}
 		jmgui_table_merge_end();
 
+		jmgui_table_set_column_index(5);
+		if (ptr) {
+			if (id == ecs_pair(ecs_id(EcsDocDescription), EcsDocColor)){
+				jmgui_color_picker3_str(*(ecs_string_t*)ptr);
+			}
+		}
+
 		if (clicked) {
 			if (ptr) {
 				bgui_entinfo_draw(world, id_comp, ptr, egui);

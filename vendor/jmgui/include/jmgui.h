@@ -40,6 +40,9 @@ bool jmgui_input_scalar_n(const char *label, int data_type, void *p_data, int co
 // SetNextItemStorageID
 void jmgui_set_next_item_storage_id(unsigned int id);
 
+void jmgui_color_picker4_str(char * str);
+void jmgui_color_picker3_str(char * str);
+
 #ifdef __cplusplus
 }
 #endif
