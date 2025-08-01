@@ -59,7 +59,7 @@ enum ImGuiDataType_
     ImGuiDataType_COUNT
 };
 
-#define NODE_DEFAULT (ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_DefaultOpen)
+#define NODE_DEFAULT (ImGuiTreeNodeFlags_DrawLinesFull)
 #define NODE_LEAF (ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet)
 
 static bool col_name(ecs_meta_type_op_t *op, int i)
@@ -254,7 +254,7 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 		}
 
 		jmgui_table_merge_begin();
-		jmgui_table_set_row_color(20,30,30,255);
+		//jmgui_table_set_row_color(20,30,30,255);
 		bool clicked = false;
 		if (ptr) {
 			clicked = jmgui_tree_node("", NODE_DEFAULT, 1, 1, 1);
@@ -277,6 +277,17 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 		if (ptr) {
 			if (id == ecs_pair(ecs_id(EcsDocDescription), EcsDocColor)){
 				jmgui_color_picker3_str(*(ecs_string_t*)ptr);
+			} else if (id_comp == ecs_id(EcsDocDescription)) {
+				jmgui_text(*(ecs_string_t*)ptr);
+			} else if (id_comp == ecs_id(EcsIdentifier)) {
+				EcsIdentifier * identfier = ptr;
+				jmgui_text(identfier->value);
+			} else if ((id_comp == ecs_id(EcSize)) || (id_comp == ecs_id(EcOffset))) {
+				EcInteger * value = ptr;
+				EcsUnit const *u = ecs_get(world, value->unit, EcsUnit);
+				jmgui_textf("%i", value->value);
+				jmgui_sameline();
+				jmgui_text_colored(0.3, 0.3, 0.7, "%s", u->symbol);
 			}
 		}
 
