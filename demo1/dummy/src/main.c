@@ -2,30 +2,28 @@
 #include <stdio.h>
 #include <flecs.h>
 #include <ecsx.h>
+typedef enum {
+	Red,
+	Green,
+	Blue
+} Color;
 
-
-typedef struct {
-	float x;
-	float y;
-} Position;
-
-typedef struct {
-	Position a;
-	Position b;
-} Line;
+typedef void (*Fx)(void *ptr);
 
 typedef struct {
-	int16_t n[6];
-	uint16_t b[6];
-	Position start;
-	Line lines[10];
-} Paint;
+	Fx fx;
+	Color color;
+} Comp;
 
-ECS_COMPONENT_DECLARE(Position);
-ECS_COMPONENT_DECLARE(Line);
-ECS_COMPONENT_DECLARE(Paint);
+void fx1(void *ptr)
+{
+	printf("fx1\n");
+}
 
-
+void fx2(void *ptr)
+{
+	printf("fx2\n");
+}
 
 int main(int argc, char *argv[])
 {
@@ -41,42 +39,37 @@ int main(int argc, char *argv[])
 	ecs_set(world, EcsWorld, EcsRest, {.port = 0});
 	printf("Remote: %s\n", "https://www.flecs.dev/explorer/?remote=true");
 
-	ECS_COMPONENT_DEFINE(world, Position);
-	ECS_COMPONENT_DEFINE(world, Line);
-	ECS_COMPONENT_DEFINE(world, Paint);
+	ECS_COMPONENT(world, Fx);
+	ECS_COMPONENT(world, Color);
+	ECS_COMPONENT(world, Comp);
 
-	ecs_struct(world,
-	{.entity = ecs_id(Position),
-	.members = {
-	{.name = "x", .type = ecs_id(ecs_f32_t)},
-	{.name = "y", .type = ecs_id(ecs_f32_t)}
+	ecs_enum_init(world,
+	&(ecs_enum_desc_t){
+	.entity = ecs_id(Color), // Make sure to use existing id
+	.constants = {
+	{.name = "Red", .value = Red},
+	{.name = "Green", .value = Green},
+	{.name = "Blue", .value = Blue}}});
+
+	ecs_enum_init(world,
+	&(ecs_enum_desc_t){
+	.underlying_type = ecs_id(ecs_uptr_t),
+	.entity = ecs_id(Fx),
+	.constants = {
+	{.name = "null", .value = (ecs_uptr_t)0},
+	{.name = "fx1", .value = (ecs_uptr_t)fx1},
+	{.name = "fx2", .value = (ecs_uptr_t)fx2},
 	}});
 
-	ecs_struct(world,
-	{.entity = ecs_id(Line),
+	ecs_struct_init(world,
+	&(ecs_struct_desc_t){
+	.entity = ecs_id(Comp), // Make sure to use existing id
 	.members = {
-	{.name = "a", .type = ecs_id(Position)},
-	{.name = "b", .type = ecs_id(Position)}
-	}});
+	{.name = "fx", .type = ecs_id(Fx)},
+	{.name = "color", .type = ecs_id(Color)}}});
 
-	ecs_struct(world,
-	{.entity = ecs_id(Paint),
-	.members = {
-	{.name = "n", .type = ecs_id(ecs_i16_t), .count = 6},
-	{.name = "b", .type = ecs_id(ecs_u8_t), .count = 6},
-	{.name = "start", .type = ecs_id(Position)},
-	{.name = "lines", .type = ecs_id(Line), .count = 10}
-	}});
-
-	ecsx_ops_print(world, ecs_id(Paint));
-
-	/*
-	ecs_log_set_level(0);
-	ecs_script_run_file(world, "script1.flecs");
-	ecs_log_set_level(-1);
-	*/
-	
-
+	ecs_script_run(world, "s1", "a{Comp:{fx:0,color:Green}}", NULL);
+	ecs_script_run(world, "s2", "b{Comp:{fx:fx1,color:Green}}", NULL);
 
 	while (1) {
 		ecs_progress(world, 0.0f);
