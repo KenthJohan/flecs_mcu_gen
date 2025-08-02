@@ -108,7 +108,7 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		}
 		break;
 	case GuiTypeNodeTreeReflection:
-		if (el->storage) {
+		if (1) {
 			bgui_qtable_draw(world, e, el->storage);
 		}
 		break;

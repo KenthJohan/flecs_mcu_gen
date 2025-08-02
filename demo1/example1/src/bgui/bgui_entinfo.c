@@ -288,7 +288,13 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 				jmgui_textf("%i", value->value);
 				jmgui_sameline();
 				jmgui_text_colored(0.3, 0.3, 0.7, "%s", u->symbol);
-			}
+			} else if (id == ecs_pair(ecs_id(EcsPoly), EcsQuery)){
+				const EcsPoly *poly_comp = ptr;
+				ecs_query_t *q = poly_comp->poly;
+				char * qs = ecs_query_str(q);
+				jmgui_textf("%s", qs);
+				ecs_os_free(qs);
+			} 
 		}
 
 		if (clicked) {

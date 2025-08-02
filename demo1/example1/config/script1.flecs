@@ -26,6 +26,9 @@ root {
 			meta {
 				gui.Element : {Tab}
 			}
+			systems {
+				gui.Element : {Tab}
+			}
 		}
 	}
 }
@@ -87,3 +90,17 @@ root.window2.tabs.meta.table3 {
 }
 
 
+
+root.window2.tabs.systems.table4 {
+	gui.Element : {NodeTreeReflection, 0}
+	gui.Table : {table_dummy: 0}
+	(flecs.doc.Description, flecs.core.Query) : {
+		"[in] (flecs.core.Identifier, flecs.core.Name), flecs.system.System"
+	}
+	cols {
+		flecs.core.OrderedChildren
+		name1 {
+			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
+		}
+	} 
+}

@@ -62,7 +62,9 @@ int jmgui_qtable_recursive(ecs_entity_t table, ecs_query_t *q, ecs_entity_t esto
 	uint32_t tree_node_flags_leaf = (8 | 256 | 512);
 	uint32_t tree_node_flags = ((1 << 19));
 	ecs_iter_t it = ecs_query_iter(q->world, q);
-	ecs_iter_set_group(&it, estorage);
+	if (estorage) {
+		ecs_iter_set_group(&it, estorage);
+	}
 	while (ecs_query_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];

@@ -19,7 +19,9 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 {
 	ecs_log_push_(0);
 	ecs_iter_t it = ecs_query_iter(world, q);
-	ecs_iter_set_group(&it, parent);
+	if (parent) {
+		ecs_iter_set_group(&it, parent);
+	}
 	while (ecs_query_next(&it)) {
 		for (int i = 0; i < it.count; i++) {
 			ecs_entity_t e = it.entities[i];
@@ -31,31 +33,31 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 
 static void SystemCreateGuiQuery(ecs_iter_t *it)
 {
-	ecs_log_set_level(0);
+	ecs_log_set_level(1);
 	ecsx_trace_system_iter(it);
 	ecs_world_t *world = it->world;
 	ecs_log_push_(0);
 	EcsDocDescription *d = ecs_field(it, EcsDocDescription, 0);
 	for (int i = 0; i < it->count; ++i) {
 		ecs_entity_t e = it->entities[i];
-		char *exp = d[i].value;
-		if (exp == NULL) {
+		char *expr = d[i].value;
+		if (expr == NULL) {
 			continue;
 		}
 		ecsx_trace_ent(world, e, "");
 		ecs_log_push_(0);
-		ecs_trace("ecs_query_init: '%s'", d[i].value);
+		ecs_trace("ecs_query_init expr: '%s'", expr);
 		ecs_query_t *q = ecs_query_init(world,
 		&(ecs_query_desc_t){
 		.entity = e,
-		.expr = d[i].value,
+		.expr = expr,
 		.group_by = EcsChildOf});
 		if (q == NULL) {
 			ecs_err("Failed to create query");
 			ecs_enable(world, e, false);
 			continue;
 		}
-		test_query(world, q, e);
+		test_query(world, q, 0);
 		ecs_log_pop_(0);
 	}
 	ecs_log_pop_(0);
@@ -65,7 +67,7 @@ static void SystemCreateGuiQuery(ecs_iter_t *it)
 static void OnResize(ecs_iter_t *it)
 {
 	ecs_world_t *world = it->world;
-	ecs_log_set_level(0);
+	ecs_log_set_level(-1);
 	ecsx_trace_system_iter(it);
 	ecs_log_push_(0);
 
@@ -115,7 +117,7 @@ static void OnResize(ecs_iter_t *it)
 
 static void SystemCreateGuiObserver(ecs_iter_t *it)
 {
-	ecs_log_set_level(1);
+	ecs_log_set_level(-1);
 	ecs_world_t *world = it->world;
 	ecsx_trace_system_iter(it);
 	ecs_log_push_(0);
