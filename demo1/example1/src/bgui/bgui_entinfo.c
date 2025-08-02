@@ -249,7 +249,10 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 		// ecs_get_mut_id() fails if EcsComponent.size is zero.
 		EcsComponent const * c = ecs_get(world, id_comp, EcsComponent);
 		void * ptr = NULL;
-		if (c && (c->size > 0)) {
+		if (id_comp == EcsConstant) {
+			//const ecs_i64_t *v = ecs_get_pair_second(world, constant, EcsConstant, ecs_i64_t);
+			ptr = ecs_get_mut_id(world, subject, id);
+		} else if (c && (c->size > 0)) {
 			ptr = ecs_get_mut_id(world, subject, id);
 		}
 
@@ -274,6 +277,9 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 		jmgui_table_merge_end();
 
 		jmgui_table_set_column_index(5);
+
+
+
 		if (ptr) {
 			if (id == ecs_pair(ecs_id(EcsDocDescription), EcsDocColor)){
 				jmgui_color_picker3_str(*(ecs_string_t*)ptr);
@@ -294,7 +300,17 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 				char * qs = ecs_query_str(q);
 				jmgui_textf("%s", qs);
 				ecs_os_free(qs);
-			} 
+			} else if (id == ecs_pair(ecs_id(EcsPoly), EcsQuery)){
+				const EcsPoly *poly_comp = ptr;
+				ecs_query_t *q = poly_comp->poly;
+				char * qs = ecs_query_str(q);
+				jmgui_textf("%s", qs);
+				ecs_os_free(qs);
+			} else if (id_tgt == ecs_id(ecs_uptr_t)){
+				ecs_i64_t * v = ptr;
+				v = ptr;
+				jmgui_textf("%ji", *v);
+			}
 		}
 
 		if (clicked) {

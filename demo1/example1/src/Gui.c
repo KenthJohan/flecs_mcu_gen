@@ -1,6 +1,7 @@
 #include "Gui.h"
 #include <ecsx.h>
 #include <stdio.h>
+#include "bgui/bgui_ser.h"
 
 ECS_COMPONENT_DECLARE(GuiRoot);
 ECS_COMPONENT_DECLARE(GuiWindow);
@@ -12,7 +13,9 @@ ECS_COMPONENT_DECLARE(GuiString);
 ECS_COMPONENT_DECLARE(GuiTable);
 ECS_COMPONENT_DECLARE(GuiQueryColumn);
 ECS_COMPONENT_DECLARE(GuiEventClick);
+ECS_COMPONENT_DECLARE(GuiDrawfx);
 ECS_TAG_DECLARE(GuiDebugIdUnit);
+ECS_TAG_DECLARE(GuiClicked);
 ECS_TAG_DECLARE(GuiClicked);
 
 static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
@@ -33,7 +36,7 @@ static void test_query(ecs_world_t *world, ecs_query_t *q, ecs_entity_t parent)
 
 static void SystemCreateGuiQuery(ecs_iter_t *it)
 {
-	ecs_log_set_level(1);
+	ecs_log_set_level(-1);
 	ecsx_trace_system_iter(it);
 	ecs_world_t *world = it->world;
 	ecs_log_push_(0);
@@ -187,6 +190,7 @@ void GuiImport(ecs_world_t *world)
 	ECS_COMPONENT_DEFINE(world, GuiQueryColumn);
 	ECS_COMPONENT_DEFINE(world, GuiEventClick);
 	ECS_COMPONENT_DEFINE(world, GuiObserverDesc);
+	ECS_COMPONENT_DEFINE(world, GuiDrawfx);
 	ECS_TAG_DEFINE(world, GuiClicked);
 
 	// ecs_add_id(world, ecs_id(GuiElement), EcsTraversable);
@@ -201,6 +205,26 @@ void GuiImport(ecs_world_t *world)
 	.copy = ecs_copy(GuiString),
 	.dtor = ecs_dtor(GuiString),
 	});
+
+	/*
+	ecs_struct(world,
+	{.entity = ecs_id(GuiDrawfx),
+	.members = {
+	{.name = "ptr", .type = ecs_id(ecs_uptr_t)}
+	}});
+	*/
+
+	ecs_enum_init(world, &(ecs_enum_desc_t){
+		.entity = ecs_id(GuiDrawfx),
+		.underlying_type = ecs_id(ecs_u64_t),
+		.constants = {
+			{"Draw1", 1},
+			{"query_str", 2},
+		}
+	});
+
+	//bgui_ser_init(world);
+
 
 	GuiDebugIdUnit = ecs_unit_init(world,
 	&(ecs_unit_desc_t){
@@ -228,6 +252,7 @@ void GuiImport(ecs_world_t *world)
 	{.name = "field", .type = ecs_id(ecs_u32_t)},
 	{.name = "type", .type = ecs_id(ecs_entity_t)},
 	{.name = "offset", .type = ecs_id(ecs_u32_t)},
+	{.name = "fx", .type = ecs_id(GuiDrawfx)},
 	}});
 
 	ecs_struct(world,
