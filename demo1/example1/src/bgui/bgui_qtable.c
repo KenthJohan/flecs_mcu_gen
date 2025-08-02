@@ -29,6 +29,9 @@ bool draw(ecs_world_t *world, ecs_entity_t type, void const *ptr, ecs_entity_t e
 		char * qs = ecs_query_str(q);
 		jmgui_textf("%s", qs);
 		ecs_os_free(qs);
+	} else if (type == ecs_id(ecs_entity_t)) {
+		const ecs_entity_t *e = ptr;
+		bgui_entlink_draw(world, egui, *e);
 	} else {
 		char *json = ecs_ptr_to_json(world, type, ptr);
 		if (json) {
@@ -55,6 +58,7 @@ void jmgui_qtable_draw_row(ecs_world_t *world, ecs_iter_t *it, int row, ecs_enti
 		if (it->sources[c->field] == 0) {
 			ptr = ECS_ELEM(ptr, size, row);
 		}
+		ptr = ECS_OFFSET(ptr, c->offset);
 		draw(world, c->type, ptr, e, it->entities[row]);
 		if ((i + 1) >= columns.count) {
 			break;

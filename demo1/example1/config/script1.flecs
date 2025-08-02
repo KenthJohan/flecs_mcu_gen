@@ -106,7 +106,7 @@ root.window2.tabs.systems.table4 {
 			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
 		}
 		q {
-			gui.QueryColumn : {field: 2, type : flecs.core.Query, offset:sum(0,0), fx:Draw1}
+			gui.QueryColumn : {field: 2, type : flecs.core.Query, offset:sum(0,0), fx:0}
 		}
 	} 
 }

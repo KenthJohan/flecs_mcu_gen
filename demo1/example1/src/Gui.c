@@ -218,13 +218,12 @@ void GuiImport(ecs_world_t *world)
 		.entity = ecs_id(GuiDrawfx),
 		.underlying_type = ecs_id(ecs_u64_t),
 		.constants = {
-			{"Draw1", 1},
-			{"query_str", 2},
+			{"null", .value_unsigned = 0},
+			{"Draw1", .value_unsigned = 1},
+			{"query_str", .value_unsigned = 2},
 		}
 	});
-
 	//bgui_ser_init(world);
-
 
 	GuiDebugIdUnit = ecs_unit_init(world,
 	&(ecs_unit_desc_t){

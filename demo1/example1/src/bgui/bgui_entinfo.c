@@ -112,6 +112,15 @@ static bool col_size(ecs_meta_type_op_t *op, int i)
 	return false;
 }
 
+static bool col_offset(ecs_meta_type_op_t *op, int i)
+{
+	jmgui_table_next_column();
+	char buf[128];
+	snprintf(buf, sizeof(buf), "%i", op->offset);
+	jmgui_text(buf);
+	return false;
+}
+
 
 
 static bool col_value(ecs_world_t * world, ecs_entity_t egui, ecs_meta_type_op_t *op, int i, void * ptr)
@@ -197,6 +206,7 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 		col_type(world, egui, op, i);
 		col_n(op, i);
 		col_size(op, i);
+		col_offset(op, i);
 		col_value(world, egui, op, i, ptr);
 		// Collapse tree view
 		if ((op->kind == EcsOpPush) && (o == false)) {
@@ -218,12 +228,13 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 	{
 		// Draw table header columns
 		char const *name = ecs_get_name(world, subject);
-		jmgui_table_begin(name, 6, 0);
+		jmgui_table_begin(name, 7, 0);
 		jmgui_table_setup_column("name", 128, 0);
 		jmgui_table_setup_column("op", 128|16|32, 6);
 		jmgui_table_setup_column("type", 128|16|32, 20);
 		jmgui_table_setup_column("n", 128|16|32, 4);
 		jmgui_table_setup_column("size", 128|16|32, 4);
+		jmgui_table_setup_column("offset", 128|16|32, 4);
 		jmgui_table_setup_column("value", 128, 0);
 		jmgui_table_header_row();
 	}
@@ -276,7 +287,7 @@ void bgui_entinfo_iterate_components(ecs_world_t *world, ecs_entity_t egui, ecs_
 		}
 		jmgui_table_merge_end();
 
-		jmgui_table_set_column_index(5);
+		jmgui_table_set_column_index(6);
 
 
 
