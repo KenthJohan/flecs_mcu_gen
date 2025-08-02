@@ -95,12 +95,15 @@ root.window2.tabs.systems.table4 {
 	gui.Element : {NodeTreeReflection, 0}
 	gui.Table : {table_dummy: 0}
 	(flecs.doc.Description, flecs.core.Query) : {
-		"[in] (flecs.core.Identifier, flecs.core.Name), flecs.system.System"
+		"[in] (flecs.core.Identifier, flecs.core.Name), flecs.system.System, (flecs.core.Poly, flecs.core.Query)"
 	}
 	cols {
 		flecs.core.OrderedChildren
 		name1 {
 			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
+		}
+		q {
+			gui.QueryColumn : {field: 2, type : flecs.core.Query, offset:sum(0,0)}
 		}
 	} 
 }

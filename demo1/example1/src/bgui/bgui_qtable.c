@@ -23,6 +23,12 @@ bool draw(ecs_world_t *world, ecs_entity_t type, void const *ptr, ecs_entity_t e
 		jmgui_text_colored(0.3, 0.3, 0.7, "%s", u->symbol);
 	} else if (type == ecs_id(EcsIdentifier)) {
 		bgui_entlink_draw(world, egui, edata);
+	} else if (type == EcsQuery) {
+		const EcsPoly *poly_comp = ptr;
+		ecs_query_t *q = poly_comp->poly;
+		char * qs = ecs_query_str(q);
+		jmgui_textf("%s", qs);
+		ecs_os_free(qs);
 	} else {
 		char *json = ecs_ptr_to_json(world, type, ptr);
 		if (json) {
