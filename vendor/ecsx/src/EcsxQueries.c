@@ -60,7 +60,7 @@ void EcsxQueriesImport(ecs_world_t *world)
 
 	ecs_system_init(world,
 	&(ecs_system_desc_t){
-	.entity = ecs_entity(world, {.name = "CreateGuiQuery", .add = ecs_ids(ecs_dependson(EcsPostFrame))}),
+	.entity = ecs_entity(world, {.name = "CreateGuiQuery", .add = ecs_ids(ecs_dependson(EcsOnUpdate))}),
 	.callback = SystemCreateGuiQuery,
 	.immediate = true,
 	.query.terms = {

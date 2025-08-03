@@ -90,7 +90,6 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 			}
 			ecs_os_strncpy(buf, ptr->value, sizeof(buf));
 			if (jmgui_input_text(name, buf, sizeof(buf))) {
-				/* Safe, value gets copied by copy hook */
 				ecs_set(world, el->storage, EcsDocDescription, {.value = ECS_CONST_CAST(char *, buf)});
 			}
 			el->id = jmgui_get_id_by_string(name);
