@@ -1,12 +1,11 @@
 #include "GuiDraws.h"
 #include "Gui.h"
-#include "bgui/bgui.h"
 #include <jmgui.h>
 #include <stdio.h>
 #include <ecsx.h>
+#include <Ec.h>
 #include "bgui/bgui_qtable.h"
 #include "bgui/bgui_entinfo.h"
-#include <Ec.h>
 #include "bgui/bgui_entlink.h"
 #include "IconsForkAwesome.h"
 
@@ -29,16 +28,6 @@ static void SystemGuiTraverse1(ecs_world_t *world, ecs_entity_t parent)
 	}
 }
 
-
-/*
-	char *id_str = ecs_id_str(world, id);
-	jmgui_text_link(id_str);
-	ecs_os_free(id_str);
-	char *type_str = ecs_type_str(world, type);
-	ecs_os_free(type_str);
-*/
-
-
 static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 {
 	GuiElement *el = ecs_get_mut(world, e, GuiElement);
@@ -48,7 +37,7 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 	}
 	char name[128] = {0};
 	{
-		char const * name1 = NULL;
+		char const *name1 = NULL;
 		if (name1 == NULL) {
 			name1 = ecs_doc_get_name(world, e);
 			snprintf(name, sizeof(name), "%s", name1);

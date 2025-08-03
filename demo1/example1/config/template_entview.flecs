@@ -1,48 +1,50 @@
+views {
+	gui.Root
+}
+
 template template_entview {
 	prop e_gui = flecs.meta.entity: 0
 	prop e_data = flecs.meta.entity: 0
-	gui.Root
-	window {
-		(flecs.doc.Description, flecs.core.Name) : {"popup {$e_data}"}
-		gui.Element : {Window}
-		tabs {
-			gui.Element : {Tabs}
-			view {
-				gui.Element : {Tab}
-				components {
-					gui.Element : {EntityInfo, $e_data}
+	(flecs.core.ChildOf, views)
+	(flecs.doc.Description, flecs.core.Name) : {"popup {$e_data}"}
+	gui.Element : {Window}
+	tabs {
+		gui.Element : {Tabs}
+		view {
+			gui.Element : {Tab}
+			components {
+				gui.Element : {EntityInfo, $e_data}
+			}
+			members {
+				gui.Element : {NodeTreeReflection, $e_data}
+				gui.Table : {table_dummy: 0}
+				(flecs.doc.Description, flecs.core.Query) : {
+					"[in] (flecs.core.Identifier, flecs.core.Name), flecs.meta.member"
 				}
-				members {
-					gui.Element : {NodeTreeReflection, $e_data}
-					gui.Table : {table_dummy: 0}
-					(flecs.doc.Description, flecs.core.Query) : {
-						"[in] (flecs.core.Identifier, flecs.core.Name), flecs.meta.member"
+				cols {
+					flecs.core.OrderedChildren
+					name {
+						gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
 					}
-					cols {
-						flecs.core.OrderedChildren
-						name {
-							gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
-						}
-						type {
-							gui.QueryColumn : {field: 1, type : flecs.meta.entity, offset:sum(0,0)}
-						}
-						count {
-							gui.QueryColumn : {field: 1, type : flecs.meta.i32, offset:8}
-						}
-						unit {
-							gui.QueryColumn : {field: 1, type : flecs.meta.entity, offset:16}
-						}
-						offset {
-							gui.QueryColumn : {field: 1, type : flecs.meta.i32, offset:24}
-						}
+					type {
+						gui.QueryColumn : {field: 1, type : flecs.meta.entity, offset:sum(0,0)}
+					}
+					count6 {
+						gui.QueryColumn : {field: 1, type : flecs.meta.i32, offset:8}
+					}
+					unit {
+						gui.QueryColumn : {field: 1, type : flecs.meta.entity, offset:16}
+					}
+					offset {
+						gui.QueryColumn : {field: 1, type : flecs.meta.i32, offset:24}
 					}
 				}
 			}
-			tab1 {
-				gui.Element : {Tab}
-				input1 {
-					gui.Element : {InputText, storage.input1}
-				}
+		}
+		tab1 {
+			gui.Element : {Tab}
+			input1 {
+				gui.Element : {InputText, storage.input1}
 			}
 		}
 	}

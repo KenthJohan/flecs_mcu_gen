@@ -7,16 +7,16 @@
 #include "Gui.h"
 #include "GuiDraws.h"
 
+static ecs_os_api_t os_api_default = {0};
+
 void main_abort()
 {
 	exit(1);
 }
 
-ecs_os_api_log_t log_backup = NULL;
-
 void main_log(int32_t level, const char *file, int32_t line, const char *msg)
 {
-	log_backup(level, file, line, msg);
+	os_api_default.log_(level, file, line, msg);
 	switch (level) {
 	case -3:
 		printf("Break here\n");
@@ -82,8 +82,8 @@ static void load_mcu(ecs_world_t *world)
 int main(int argc, char *argv[])
 {
 	ecs_os_set_api_defaults();
-	ecs_os_api_t os_api = ecs_os_get_api();
-	log_backup = os_api.log_;
+	os_api_default = ecs_os_get_api();
+	ecs_os_api_t os_api = os_api_default;
 	os_api.log_ = main_log;
 	os_api.abort_ = main_abort;
 	ecs_os_set_api(&os_api);
@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
 	ECS_IMPORT(world, Ec);
 	ECS_IMPORT(world, Gui);
 	ECS_IMPORT(world, GuiDraws);
+	ECS_IMPORT(world, EcsxQueries);
 
 	ecs_set(world, EcsWorld, EcsRest, {.port = 0});
 	printf("Remote: %s\n", "https://www.flecs.dev/explorer/?remote=true");
