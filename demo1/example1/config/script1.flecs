@@ -122,5 +122,5 @@ root.window2.tabs.guitab.table5 {
 		name1 {
 			gui.QueryColumn : {field: 0, type : flecs.core.Identifier, offset:sum(0,0)}
 		}
-	} 
+	}
 }

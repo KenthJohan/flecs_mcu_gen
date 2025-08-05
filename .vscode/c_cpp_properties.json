@@ -10,7 +10,8 @@
                 "UNICODE",
                 "_UNICODE",
                 "_GNU_SOURCE",
-				"FLECS_SCRIPT_MATH"
+				"FLECS_SCRIPT_MATH",
+				"FLECS_META"
             ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",

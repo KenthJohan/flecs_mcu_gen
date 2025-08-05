@@ -32,3 +32,13 @@ bool jmgui_text_link(const char *label)
 {
 	return ImGui::TextLink(label);
 }
+
+
+void jmgui_textf_wrap(const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	ImGui::TextWrappedV(fmt, args);
+	va_end(args);
+}
+
