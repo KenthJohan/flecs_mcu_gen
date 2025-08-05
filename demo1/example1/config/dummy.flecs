@@ -18,5 +18,13 @@ struct Room {
 }
 
 aaa {
+	Position
+}
+
+bbb {
+	Rectangle
+}
+
+ccc {
 	Room
 }
