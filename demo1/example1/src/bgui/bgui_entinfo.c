@@ -97,27 +97,23 @@ static bool col_type(ecs_world_t * world, ecs_entity_t egui, ecs_meta_op_t *op, 
 static bool col_n(ecs_meta_op_t *op, int i)
 {
 	jmgui_table_next_column();
-	char buf[128];
-	snprintf(buf, sizeof(buf), "%i", op->op_count);
-	jmgui_text(buf);
+	jmgui_textf("%i", op->op_count);
 	return false;
 }
 
 static bool col_size(ecs_meta_op_t *op, int i)
 {
 	jmgui_table_next_column();
-	char buf[128];
-	snprintf(buf, sizeof(buf), "%i", op->elem_size);
-	jmgui_text(buf);
+	if (op->type_info) {
+		jmgui_textf("%i", op->type_info->size);
+	}
 	return false;
 }
 
 static bool col_offset(ecs_meta_op_t *op, int i)
 {
 	jmgui_table_next_column();
-	char buf[128];
-	snprintf(buf, sizeof(buf), "%i", op->offset);
-	jmgui_text(buf);
+	jmgui_textf("%i", op->offset);
 	return false;
 }
 
@@ -214,9 +210,10 @@ bool bgui_entinfo_draw(ecs_world_t *world, ecs_entity_t type, void *ptr, ecs_ent
 			int s = 1;
 			do {
 				i++;
-				s -= (ops[i].kind == EcsOpPop);
-				s += (ops[i].kind < EcsOpPop);
-			} while ((ops[i].kind != EcsOpPop) || (s > 0));
+				op = ops + i;
+				s -= (op->kind == EcsOpPop);
+				s += (op->kind < EcsOpPop);
+			} while ((op->kind != EcsOpPop) || (s > 0));
 		}
 	}
 	return false;
