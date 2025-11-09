@@ -70,10 +70,16 @@ static void SystemGuiTraverse2(ecs_world_t *world, ecs_entity_t e)
 		}
 		break;
 	case GuiTypeTab:
+	{
 		if (jmgui_tabs_item_begin(name, 0)) {
+			if (jmgui_is_item_active()) {
+				printf("jmgui_is_item_active\n");
+			}
 			SystemGuiTraverse1(world, e);
 			jmgui_tabs_item_end();
 		}
+
+	}
 		break;
 	case GuiTypeInputText:
 		if (1) {

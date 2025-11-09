@@ -19,3 +19,31 @@ void jmgui_tabs_item_end()
 {
 	ImGui::EndTabItem();
 }
+
+
+
+void jmgui_get_cursor_pos(float *x, float *y)
+{
+	ImVec2 a = ImGui::GetCursorPos();
+	*x = a.x;
+	*y = a.y;
+}
+
+void jmgui_set_cursor_pos(float x, float y)
+{
+	ImVec2 a = {x, y};
+	ImGui::SetCursorPos(a);
+}
+
+bool jmgui_is_item_active()
+{
+	return ImGui::IsItemActive();
+}
+
+
+void jmgui_get_mouse_delta(float *x, float *y)
+{
+	ImVec2 a = ImGui::GetIO().MouseDelta;
+	*x = a.x;
+	*y = a.y;
+}
