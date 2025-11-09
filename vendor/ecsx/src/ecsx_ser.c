@@ -129,7 +129,7 @@ int ecsx_expr_ser_bitmask(const ecs_world_t *world, ecs_entity_t type, const voi
 
 	/* Multiple flags can be set at a given time. Iterate through all the flags
 	 * and append the ones that are set. */
-	ecs_map_iter_t it = ecs_map_iter(&bitmask_type->constants);
+	ecs_map_iter_t it = ecs_map_iter(&bitmask_type);
 	int count = 0;
 	while (ecs_map_next(&it)) {
 		ecs_bitmask_constant_t *c = ecs_map_ptr(&it);
