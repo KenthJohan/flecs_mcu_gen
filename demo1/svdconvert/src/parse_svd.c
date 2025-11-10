@@ -144,12 +144,24 @@ void iterate_peripherals(mxml_node_t *node, mxml_node_t *top, result_t *result)
 	}
 }
 
-int parse_svd_init(result_t *result)
+void if_file_exists(char const * filename)
+{
+	FILE *f = fopen(filename, "r");
+	if (f) {
+		fclose(f);
+	} else {
+		printf("File not found: %s\n", filename);
+		exit(1);
+	}
+}
+
+int parse_svd_init(result_t *result, char const * filename)
 {
 	mxml_node_t *tree;
 	mxml_options_t *options = mxmlOptionsNew();
 	mxmlOptionsSetTypeValue(options, MXML_TYPE_OPAQUE);
-	tree = mxmlLoadFilename(NULL, options, "config/STM32G030.svd");
+	if_file_exists(filename);
+	tree = mxmlLoadFilename(NULL, options, filename);
 	mxml_node_t *node = tree;
 	node = mxmlFindElement(node, tree, "peripherals", NULL, NULL, MXML_DESCEND_ALL);
 	result_flecs_entity_open(result, "peripherals", NULL, NULL, NULL);

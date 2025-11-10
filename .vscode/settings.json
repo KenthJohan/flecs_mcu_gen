@@ -47,7 +47,8 @@
 		"bgui_entinfo.h": "c",
 		"ecsx_ser.h": "c",
 		"printf.h": "c",
-		"stdint.h": "c"
+		"stdint.h": "c",
+		"config.h": "c"
 	},
 	"terminal.integrated.env.linux": {
 		"GTK_PATH": ""

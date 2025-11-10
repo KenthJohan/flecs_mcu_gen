@@ -19,6 +19,7 @@
 
 /* Headers of public dependencies */
 #include <flecs.h>
+#include <Ec.h>
 #include <mxml.h>
 
 #endif

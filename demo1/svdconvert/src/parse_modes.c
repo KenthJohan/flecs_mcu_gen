@@ -128,15 +128,16 @@ void node_print_pins(ecs_world_t *world, mxml_node_t *node, mxml_node_t *top, re
 	result_flecs_entity_close(result);
 }
 
-int parse_modes_init(ecs_world_t *world, result_t *result)
+int parse_modes_init(ecs_world_t *world, result_t *result, char const * filename)
 {
 	mxml_node_t *tree;
 	mxml_options_t *options = mxmlOptionsNew();
 	mxmlOptionsSetTypeValue(options, MXML_TYPE_OPAQUE);
-	tree = mxmlLoadFilename(NULL, options, "config/GPIO-STM32G03x_gpio_v1_0_Modes.xml");
+	tree = mxmlLoadFilename(NULL, options, filename);
 	mxml_node_t *node = tree;
 	node = mxmlFindElement(node, tree, "IP", NULL, NULL, MXML_DESCEND_ALL);
 	node_print_signals(world, mxmlGetFirstChild(node), tree, result);
 	node_print_pins(world, mxmlGetFirstChild(node), tree, result);
+	fflush(result->file);
 	return tree != NULL;
 }

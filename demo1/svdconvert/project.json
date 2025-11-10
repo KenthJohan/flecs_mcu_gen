@@ -6,6 +6,7 @@
 		"public": false,
 		"use": [
 			"flecs",
+			"Ec",
 			"mxml"
 		]
 	},
@@ -16,6 +17,7 @@
 		],
 		"lib": [
 			"flecs",
+			"Ec",
 			"m",
 			"mxml"
 		],
